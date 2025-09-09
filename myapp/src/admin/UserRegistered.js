@@ -45,7 +45,7 @@ const openModal = (mode, user = {}) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/get-users/', {
+        const response = await axios.get('https://backendvss.pythonanywhere.com/api/get-users/', {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('access')}` },
 
         });
@@ -113,7 +113,7 @@ const handleChange = (e) => {
 
 const handleAction = async () => {
   try {
-    await axios.post('http://localhost:8000/api/manage-users/', {
+    await axios.post('https://backendvss.pythonanywhere.com/api/manage-users/', {
       action: modalMode,
       user: editFormData
     });
@@ -130,7 +130,7 @@ const handleAction = async () => {
  const handleDelete = async (userId) => {
 
     try {
-      const response = await axios.delete(`http://localhost:8000/api/users/${userId}/delete/`, {
+      const response = await axios.delete(`https://backendvss.pythonanywhere.com/api/users/${userId}/delete/`, {
         headers: {
          'Authorization': `Bearer ${localStorage.getItem('access')}` // if using JWT
         },

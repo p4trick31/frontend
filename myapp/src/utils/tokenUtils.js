@@ -6,7 +6,7 @@ export async function refreshAccessToken() {
     const refreshToken = localStorage.getItem('refresh');
     if (!refreshToken) return null;
 
-    const response = await axios.post('http://localhost:8000/api/token/refresh/', {
+    const response = await axios.post('https://backendvss.pythonanywhere.com/api/token/refresh/', {
       refresh: refreshToken,
     });
 

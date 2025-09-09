@@ -2,7 +2,7 @@ export default function TestEmailButton() {
   const handleSendEmail = async () => {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch("http://localhost:8000/api/test-send-email/", {
+      const res = await fetch("https://backendvss.pythonanywhere.com/api/test-send-email/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -23,7 +23,7 @@ const PendingRenewalPage = () => {
   try {
     const token = localStorage.getItem('token'); // adjust key if different
 
-    const response = await axios.get('http://localhost:8000/api/renewal/', {
+    const response = await axios.get('https://backendvss.pythonanywhere.com/api/renewal/', {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -61,7 +61,7 @@ const PendingRenewalPage = () => {
 
     try {
       await axios.patch(
-        `http://localhost:8000/api/renewal/${selectedRenewalId}/update_picture/`,
+        `https://backendvss.pythonanywhere.com/api/renewal/${selectedRenewalId}/update_picture/`,
         formData,
         {
           headers: {
@@ -137,7 +137,7 @@ const PendingRenewalPage = () => {
       <div style={photoWrapper}>
               {renewal.picture_id && (
                 <img
-                  src={renewal.picture_id.startsWith('http') ? renewal.picture_id : `http://localhost:8000${renewal.picture_id}`}
+                  src={renewal.picture_id.startsWith('http') ? renewal.picture_id : `https://backendvss.pythonanywhere.com${renewal.picture_id}`}
                   alt="Picture ID"
                   style={pictureStyle}
                 />

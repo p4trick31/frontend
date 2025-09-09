@@ -45,7 +45,7 @@ const SignupForm = () => {
     };
 
     try {
-        const response = await axios.post('http://localhost:8000/api/signup/', signupData);
+        const response = await axios.post('https://backendvss.pythonanywhere.com/api/signup/', signupData);
         if (response && response.data) {
             setMessage('✅ User created successfully! You can now login.');
             setSuccess(true);

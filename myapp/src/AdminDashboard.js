@@ -48,7 +48,7 @@ const AdminDashboard = ({onLogout}) => {
 
   const fetchReports = async () => {
     try {
-      let res = await axios.get("http://localhost:8000/api/submit-report/", {
+      let res = await axios.get("https://backendvss.pythonanywhere.com/api/submit-report/", {
         headers: { Authorization: `Bearer ${localStorage.getItem("access")}` },
       });
       setReports(res.data);
@@ -60,7 +60,7 @@ const AdminDashboard = ({onLogout}) => {
           localStorage.setItem("access", newToken);
           try {
             let retryRes = await axios.get(
-              "http://localhost:8000/api/submit-report/",
+              "https://backendvss.pythonanywhere.com/api/submit-report/",
               { headers: { Authorization: `Bearer ${newToken}` } }
             );
             setReports(retryRes.data);
@@ -83,14 +83,14 @@ useEffect(() => {
 
       try {
         // Fetch users
-        const userResponse = await axios.get('http://localhost:8000/api/get-users/', {
+        const userResponse = await axios.get('https://backendvss.pythonanywhere.com/api/get-users/', {
           headers: { Authorization: `Bearer ${token}` },
         });
         const users = userResponse.data;
         console.log(token)
 
         // Fetch applications
-        const applicationResponse = await axios.get('http://localhost:8000/api/applications/', {
+        const applicationResponse = await axios.get('https://backendvss.pythonanywhere.com/api/applications/', {
           headers: { Authorization: `Bearer ${token}` },
         });
         const applications = applicationResponse.data;
@@ -119,12 +119,12 @@ useEffect(() => {
           localStorage.setItem('access', newToken);
 
           // Retry requests with new token
-          const userResponse = await axios.get('http://localhost:8000/api/get-users/', {
+          const userResponse = await axios.get('https://backendvss.pythonanywhere.com/api/get-users/', {
             headers: { Authorization: `Bearer ${newToken}` },
           });
           const users = userResponse.data;
 
-          const applicationResponse = await axios.get('http://localhost:8000/api/applications/', {
+          const applicationResponse = await axios.get('https://backendvss.pythonanywhere.com/api/applications/', {
             headers: { Authorization: `Bearer ${newToken}` },
           });
           const applications = applicationResponse.data;

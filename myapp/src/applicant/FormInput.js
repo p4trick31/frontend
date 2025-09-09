@@ -9,7 +9,7 @@ async function refreshAccessToken() {
     const refreshToken = localStorage.getItem('refresh');
     if (!refreshToken) return null;
 
-    const response = await axios.post('http://localhost:8000/api/token/refresh/', {
+    const response = await axios.post('https://backendvss.pythonanywhere.com/api/token/refresh/', {
       refresh: refreshToken,
     });
 
@@ -89,7 +89,7 @@ const ApplicationForm = () => {
         return;
       }
 
-      const response = await axios.get('http://localhost:8000/api/application/pending', {
+      const response = await axios.get('https://backendvss.pythonanywhere.com/api/application/pending', {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -108,7 +108,7 @@ const ApplicationForm = () => {
         try {
           setLoading(true);
           const token = localStorage.getItem('token');
-          const response = await axios.get(`http://localhost:8000/api/application/${id}/`, {
+          const response = await axios.get(`https://backendvss.pythonanywhere.com/api/application/${id}/`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           const data = response.data;
@@ -400,13 +400,13 @@ if (formData.photos.length) {
 
       if (id) {
         response = await axios.patch(
-          `http://localhost:8000/api/application/${id}/`,
+          `https://backendvss.pythonanywhere.com/api/application/${id}/`,
           formDataToSubmit,
           config
         );
       } else {
         response = await axios.post(
-          `http://localhost:8000/api/application/`,
+          `https://backendvss.pythonanywhere.com/api/application/`,
           formDataToSubmit,
           config
         );

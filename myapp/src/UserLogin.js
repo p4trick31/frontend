@@ -21,7 +21,7 @@ const LoginForm = ({ onLoginSuccess }) => {
         const loginData = { username, password };
 
         try {
-            const response = await axios.post('http://localhost:8000/api/login/', loginData);
+            const response = await axios.post('https://backendvss.pythonanywhere.com/api/login/', loginData);
             if (response.data && response.data.access && response.data.refresh) {
                 localStorage.setItem('token', response.data.access);
                 localStorage.setItem('refresh', response.data.refresh);

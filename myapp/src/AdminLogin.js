@@ -25,7 +25,7 @@ const AdminLoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
     const loginData = { username: adminUsername, password: adminPassword };
 
     try {
-        const response = await axios.post('http://localhost:8000/api/admin/login/', loginData);
+        const response = await axios.post('https://backendvss.pythonanywhere.com/api/admin/login/', loginData);
 
         if (response.data && response.data.access) {
             localStorage.setItem('access', response.data.access);

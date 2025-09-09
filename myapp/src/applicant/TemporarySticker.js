@@ -12,7 +12,7 @@ async function refreshAccessToken() {
     const refreshToken = localStorage.getItem('refresh');
     if (!refreshToken) return null;
 
-    const response = await axios.post('http://localhost:8000/api/token/refresh/', {
+    const response = await axios.post('https://backendvss.pythonanywhere.com/api/token/refresh/', {
       refresh: refreshToken,
     });
 
@@ -39,7 +39,7 @@ useEffect(() => {
   const fetchForm = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:8000/api/form-view/${id}/`, {
+      const response = await axios.get(`https://backendvss.pythonanywhere.com/api/form-view/${id}/`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -55,7 +55,7 @@ useEffect(() => {
         const newToken = await refreshAccessToken();
         if (newToken) {
           try {
-            const retryResponse = await axios.get(`http://localhost:8000/api/form-view/${id}/`, {
+            const retryResponse = await axios.get(`https://backendvss.pythonanywhere.com/api/form-view/${id}/`, {
               headers: { Authorization: `Bearer ${newToken}` }
             });
 

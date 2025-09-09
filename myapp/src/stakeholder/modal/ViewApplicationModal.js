@@ -92,7 +92,7 @@ useEffect(() => {
     try {
       const token = localStorage.getItem('access'); // or 'access' if you want to standardize
 
-      const res = await axios.get('http://localhost:8000/api/current-user/', {
+      const res = await axios.get('https://backendvss.pythonanywhere.com/api/current-user/', {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -108,7 +108,7 @@ useEffect(() => {
           localStorage.setItem("access", newToken);
 
           try {
-            const retryRes = await axios.get('http://localhost:8000/api/current-user/', {
+            const retryRes = await axios.get('https://backendvss.pythonanywhere.com/api/current-user/', {
               headers: { Authorization: `Bearer ${newToken}` },
             });
 
@@ -131,7 +131,7 @@ useEffect(() => {
 const client1ApproveApplication = async () => {
   try {
     await axios.post(
-      `http://localhost:8000/api/application/${application.id}/approve/`,
+      `https://backendvss.pythonanywhere.com/api/application/${application.id}/approve/`,
       {},
       {
         headers: {
@@ -150,7 +150,7 @@ const client1ApproveApplication = async () => {
 const client2ApproveApplication = async () => {
   try {
     await axios.post(
-      `http://localhost:8000/api/application/get_submitted/${application.id}/client2_approve/`,
+      `https://backendvss.pythonanywhere.com/api/application/get_submitted/${application.id}/client2_approve/`,
       {},
       {
         headers: {
@@ -235,7 +235,7 @@ const client2ApproveApplication = async () => {
 
     try {
       await axios.post(
-        `http://localhost:8000/api/application/${application.id}/disapprove/`,
+        `https://backendvss.pythonanywhere.com/api/application/${application.id}/disapprove/`,
         {},
         {
           headers: {
@@ -314,7 +314,7 @@ const client2ApproveApplication = async () => {
   <div>
    <div style={{ display: 'flex', justifyContent: 'left' }}>
           {application.picture_id ? (
-  <img src={`http://localhost:8000/${application.picture_id}`} 
+  <img src={`https://backendvss.pythonanywhere.com/${application.picture_id}`} 
               alt="Uploaded"
               style={{
                 width: '120px',
@@ -406,7 +406,7 @@ const client2ApproveApplication = async () => {
    <div style={{ flex: 1.2, position: 'relative', textAlign: 'center' }}>
   {(() => {
     const prependURL = (path) =>
-      path?.startsWith('http') ? path : `http://localhost:8000/${path}`;
+      path?.startsWith('http') ? path : `https://backendvss.pythonanywhere.com/${path}`;
 
     const images = [];
 

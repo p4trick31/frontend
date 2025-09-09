@@ -20,7 +20,7 @@ const ApplicationList = () => {
     const fetchApplications = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('http://localhost:8000/api/all-applications/', {
+        const response = await axios.get('https://backendvss.pythonanywhere.com/api/all-applications/', {
           headers: { Authorization: `Bearer ${localStorage.getItem('access')}` },
         });
         setApplications(response.data);
@@ -295,9 +295,9 @@ const applyFilters = (search, date, type, status = 'all') => {
                   <img
                     src={
                       app.picture_id
-                        ? `http://localhost:8000${app.picture_id}`
+                        ? `https://backendvss.pythonanywhere.com${app.picture_id}`
                         : app.photos
-                        ? `http://localhost:8000${app.photos}`
+                        ? `https://backendvss.pythonanywhere.com${app.photos}`
                         : '/default-profile.png'
                     }
                     alt="Profile"
@@ -482,7 +482,7 @@ const applyFilters = (search, date, type, status = 'all') => {
     </time>
   </p>
   <img
-    src={selectedApp.picture_id ? `http://localhost:8000${selectedApp.picture_id}` : '/default-profile.png'}
+    src={selectedApp.picture_id ? `https://backendvss.pythonanywhere.com${selectedApp.picture_id}` : '/default-profile.png'}
     alt="Applicant Profile"
     style={{
       width: '100px',

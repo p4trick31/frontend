@@ -30,7 +30,7 @@ useEffect(() => {
   const fetchCurrentUser = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:8000/api/current-user/", {
+      const res = await axios.get("https://backendvss.pythonanywhere.com/api/current-user/", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCurrentUser(res.data);
@@ -53,7 +53,7 @@ useEffect(() => {
   try {
     const token = localStorage.getItem('token'); // adjust key if different
 
-    const response = await axios.get('http://localhost:8000/api/renewal/', {
+    const response = await axios.get('https://backendvss.pythonanywhere.com/api/renewal/', {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -77,7 +77,7 @@ useEffect(() => {
       const token = localStorage.getItem('token');
       if (!token) return;
 
-      const response = await axios.get('http://localhost:8000/api/application/', {
+      const response = await axios.get('https://backendvss.pythonanywhere.com/api/application/', {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -89,7 +89,7 @@ useEffect(() => {
         if (newAccessToken) {
           // Retry the request with new token
           try {
-            const retryResponse = await axios.get('http://localhost:8000/api/application/', {
+            const retryResponse = await axios.get('https://backendvss.pythonanywhere.com/api/application/', {
               headers: { Authorization: `Bearer ${newAccessToken}` },
             });
             setApplications(retryResponse.data);
@@ -124,7 +124,7 @@ useEffect(() => {
 
 const handleSave = async () => {
   try {
-    await axios.put("http://localhost:8000/api/update-user/", {
+    await axios.put("https://backendvss.pythonanywhere.com/api/update-user/", {
       id: currentUser.id,       
       username: editedData.username,
       email: editedData.email,
@@ -164,7 +164,7 @@ useEffect(() => {
         let token = localStorage.getItem("token");
         if (!token) return;
 
-        let res = await fetch("http://localhost:8000/api/notifications/", {
+        let res = await fetch("https://backendvss.pythonanywhere.com/api/notifications/", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -174,7 +174,7 @@ useEffect(() => {
           const newAccessToken = await refreshAccessToken();
           if (newAccessToken) {
             token = newAccessToken;
-            res = await fetch("http://localhost:8000/api/notifications/", {
+            res = await fetch("https://backendvss.pythonanywhere.com/api/notifications/", {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -210,7 +210,7 @@ useEffect(() => {
       let token = localStorage.getItem("token");
       if (!token) return;
 
-      let res = await fetch("http://localhost:8000/api/notifications/", {
+      let res = await fetch("https://backendvss.pythonanywhere.com/api/notifications/", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -220,7 +220,7 @@ useEffect(() => {
         const newAccessToken = await refreshAccessToken();
         if (newAccessToken) {
           token = newAccessToken;
-          res = await fetch("http://localhost:8000/api/notifications/", {
+          res = await fetch("https://backendvss.pythonanywhere.com/api/notifications/", {
             headers: {
               Authorization: `Bearer ${token}`,
             },

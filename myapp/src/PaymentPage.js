@@ -19,7 +19,7 @@ const PaymentPage = () => {
     useEffect(() => {
         const fetchUserApplications = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/get-application-id/', {
+                const response = await axios.get('https://backendvss.pythonanywhere.com/api/get-application-id/', {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
                 });
 
@@ -47,7 +47,7 @@ const PaymentPage = () => {
         setLoading(true);  // Set loading to true when the payment is being processed
 
         try {
-            const response = await axios.post(`http://localhost:8000/api/payment/process/${selectedApplicationId}/`, {
+            const response = await axios.post(`https://backendvss.pythonanywhere.com/api/payment/process/${selectedApplicationId}/`, {
                 payment_method: paymentMethod,
                 amount: amount,
                 reference_number: referenceNumber,
@@ -73,7 +73,7 @@ const PaymentPage = () => {
         if (paymentStatus === 'pending') {
             const checkPaymentStatus = async () => {
                 try {
-                    const response = await axios.get(`http://localhost:8000/api/applications/${applicationId}/`, {
+                    const response = await axios.get(`https://backendvss.pythonanywhere.com/api/applications/${applicationId}/`, {
                         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
                     });
 

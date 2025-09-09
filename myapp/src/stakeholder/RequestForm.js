@@ -88,7 +88,7 @@ const refreshPage = () => {
 
 const handleSave = async () => {
   try {
-    await axios.put("http://localhost:8000/api/update-user/", {
+    await axios.put("https://backendvss.pythonanywhere.com/api/update-user/", {
       id: currentUser.id,          // ✅ include ID
       username: editedData.username,
       email: editedData.email,
@@ -132,7 +132,7 @@ useEffect(() => {
     try {
       const token = localStorage.getItem('access'); // or 'access' if you want to standardize
 
-      const res = await axios.get('http://localhost:8000/api/current-user/', {
+      const res = await axios.get('https://backendvss.pythonanywhere.com/api/current-user/', {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -146,7 +146,7 @@ useEffect(() => {
 
       const signature = res.data.profile?.signature;
       if (signature) {
-        const fullURL = `http://localhost:8000${signature}`;
+        const fullURL = `https://backendvss.pythonanywhere.com${signature}`;
         setSignatureImg(fullURL);
         
       }
@@ -158,7 +158,7 @@ useEffect(() => {
           localStorage.setItem("access", newToken);
 
           try {
-            const retryRes = await axios.get('http://localhost:8000/api/current-user/', {
+            const retryRes = await axios.get('https://backendvss.pythonanywhere.com/api/current-user/', {
               headers: { Authorization: `Bearer ${newToken}` },
             });
 
@@ -167,7 +167,7 @@ useEffect(() => {
 
             const signature = retryRes.data.profile?.signature;
             if (signature) {
-              const fullURL = `http://localhost:8000${signature}`;
+              const fullURL = `https://backendvss.pythonanywhere.com${signature}`;
               setSignatureImg(fullURL);
               
             }
@@ -190,7 +190,7 @@ useEffect(() => {
 
 const handleSaveSignature = async (base64Signature) => {
   try {
-    const response = await fetch('http://localhost:8000/api/save-signature/', {
+    const response = await fetch('https://backendvss.pythonanywhere.com/api/save-signature/', {
       method: 'POST',
       
       headers: {
@@ -206,7 +206,7 @@ const handleSaveSignature = async (base64Signature) => {
       const result = await response.json();
 
       if (result.signature_url) {
-        const fullURL = `http://localhost:8000${result.signature_url}?t=${Date.now()}`; // cache busting
+        const fullURL = `https://backendvss.pythonanywhere.com${result.signature_url}?t=${Date.now()}`; // cache busting
         setSignatureImg(fullURL);
       }
 
@@ -244,7 +244,7 @@ useEffect(() => {
 const fetchApplications = async () => {
     try {
       let token = localStorage.getItem('access');
-      const res = await axios.get('http://localhost:8000/api/applications/', {
+      const res = await axios.get('https://backendvss.pythonanywhere.com/api/applications/', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setApplications(res.data);
@@ -254,7 +254,7 @@ const fetchApplications = async () => {
         const newToken = await refreshAccessToken();
         if (newToken) {
           try {
-            const retryRes = await axios.get('http://localhost:8000/api/applications/', {
+            const retryRes = await axios.get('https://backendvss.pythonanywhere.com/api/applications/', {
               headers: { Authorization: `Bearer ${newToken}` }
             });
             setApplications(retryRes.data);
@@ -280,7 +280,7 @@ useEffect(() => {
   const fetchRenewals = async () => {
     try {
       let token = localStorage.getItem('access');
-      const res = await axios.get('http://localhost:8000/api/renewal/', {
+      const res = await axios.get('https://backendvss.pythonanywhere.com/api/renewal/', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setRenewals(res.data);
@@ -291,7 +291,7 @@ useEffect(() => {
         const newToken = await refreshAccessToken(); // assumes this function is available
         if (newToken) {
           try {
-            const retryRes = await axios.get('http://localhost:8000/api/renewal/', {
+            const retryRes = await axios.get('https://backendvss.pythonanywhere.com/api/renewal/', {
               headers: { Authorization: `Bearer ${newToken}` },
             });
             setRenewals(retryRes.data);
@@ -314,7 +314,7 @@ const handleApprove = async (id) => {
   try {
     const token = localStorage.getItem('access');
     await axios.put(
-      `http://localhost:8000/api/renewal/${id}/approve/`,
+      `https://backendvss.pythonanywhere.com/api/renewal/${id}/approve/`,
       {},
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -327,7 +327,7 @@ const handleClientApprove = async (id) => {
   try {
     const token = localStorage.getItem('access');
     await axios.post(
-      `http://localhost:8000/api/renewal/${id}/client2_approve/`,
+      `https://backendvss.pythonanywhere.com/api/renewal/${id}/client2_approve/`,
       {},
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -462,7 +462,7 @@ const checkedRenewals = renewals.filter((r) => r.is_checked === true);
   const getClientName = async () => {
   try {
     let token = localStorage.getItem('token');
-    const res = await axios.get('http://localhost:8000/api/get-users/', {
+    const res = await axios.get('https://backendvss.pythonanywhere.com/api/get-users/', {
       headers: { Authorization: `Bearer ${token}` },
     });
     const user = res.data[0];
@@ -471,7 +471,7 @@ const checkedRenewals = renewals.filter((r) => r.is_checked === true);
     if (err.response && err.response.status === 401) {
       const newToken = await refreshAccessToken();
       if (newToken) {
-        const retryRes = await axios.get('http://localhost:8000/api/get-users/', {
+        const retryRes = await axios.get('https://backendvss.pythonanywhere.com/api/get-users/', {
           headers: { Authorization: `Bearer ${newToken}` },
         });
         const user = retryRes.data[0];
@@ -490,7 +490,7 @@ const checkedRenewals = renewals.filter((r) => r.is_checked === true);
     const clientName = await getClientName();
     let token = localStorage.getItem('token');
 
-    await axios.post(`http://localhost:8000/api/application/${id}/approve/`, {
+    await axios.post(`https://backendvss.pythonanywhere.com/api/application/${id}/approve/`, {
       checked_by: clientName,
     }, {
       headers: { Authorization: `Bearer ${token}` },
@@ -509,7 +509,7 @@ const checkedRenewals = renewals.filter((r) => r.is_checked === true);
       const newToken = await refreshAccessToken();
       if (newToken) {
         const clientName = await getClientName();
-        await axios.post(`http://localhost:8000/api/application/${id}/approve/`, {
+        await axios.post(`https://backendvss.pythonanywhere.com/api/application/${id}/approve/`, {
           checked_by: clientName,
         }, {
           headers: { Authorization: `Bearer ${newToken}` },
@@ -534,7 +534,7 @@ const checkedRenewals = renewals.filter((r) => r.is_checked === true);
     const clientName = await getClientName();
     let token = localStorage.getItem('token');
 
-    await axios.post(`http://localhost:8000/api/application/${id}/disapprove/`, {
+    await axios.post(`https://backendvss.pythonanywhere.com/api/application/${id}/disapprove/`, {
       disapproved_by: clientName,
     }, {
       headers: { Authorization: `Bearer ${token}` },
@@ -553,7 +553,7 @@ const checkedRenewals = renewals.filter((r) => r.is_checked === true);
       const newToken = await refreshAccessToken();
       if (newToken) {
         const clientName = await getClientName();
-        await axios.post(`http://localhost:8000/api/application/${id}/disapprove/`, {
+        await axios.post(`https://backendvss.pythonanywhere.com/api/application/${id}/disapprove/`, {
           disapproved_by: clientName,
         }, {
           headers: { Authorization: `Bearer ${newToken}` },
@@ -1165,7 +1165,7 @@ const checkedRenewals = renewals.filter((r) => r.is_checked === true);
               <td style={tableCellStyle}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px'}}>
                   <img
-                      src={`http://localhost:8000${app.picture_id}`}
+                      src={`https://backendvss.pythonanywhere.com${app.picture_id}`}
                     alt="Profile"
                     style={{
                       width: '40px',
@@ -1342,7 +1342,7 @@ const checkedRenewals = renewals.filter((r) => r.is_checked === true);
                       src={
       item.picture_id.startsWith('http')
         ? item.picture_id
-        : `http://localhost:8000${item.picture_id}`
+        : `https://backendvss.pythonanywhere.com${item.picture_id}`
     }
                     alt="Profile"
                     style={{
@@ -1774,7 +1774,7 @@ const checkedRenewals = renewals.filter((r) => r.is_checked === true);
       }
 
       await axios.post(
-        'http://localhost:8000/api/submit-report/',
+        'https://backendvss.pythonanywhere.com/api/submit-report/',
         { reason: reportReason, message: reportMessage },
         {
           headers: { Authorization: `Bearer ${token}` },

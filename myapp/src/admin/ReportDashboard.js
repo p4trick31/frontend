@@ -21,7 +21,7 @@ const ReportPage = () => {
 
   const fetchReports = async () => {
     try {
-      let res = await axios.get("http://localhost:8000/api/submit-report/", {
+      let res = await axios.get("https://backendvss.pythonanywhere.com/api/submit-report/", {
         headers: { Authorization: `Bearer ${localStorage.getItem("access")}` },
       });
       setReports(res.data);
@@ -33,7 +33,7 @@ const ReportPage = () => {
           localStorage.setItem("access", newToken);
           try {
             let retryRes = await axios.get(
-              "http://localhost:8000/api/submit-report/",
+              "https://backendvss.pythonanywhere.com/api/submit-report/",
               { headers: { Authorization: `Bearer ${newToken}` } }
             );
             setReports(retryRes.data);
@@ -87,7 +87,7 @@ const handleSendResponse = async () => {
     setSuccess(false);
 
     const res = await axios.post(
-      `http://localhost:8000/api/respond-report/${selectedReport.id}/`,
+      `https://backendvss.pythonanywhere.com/api/respond-report/${selectedReport.id}/`,
       {
         reason: responseReason,
         message: responseMessage,

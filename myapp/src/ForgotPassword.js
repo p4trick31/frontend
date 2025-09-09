@@ -28,7 +28,7 @@ const ForgotPassword = () => {
   setErrorMessage(""); // clear previous errors
 
   try {
-    const res = await fetch(`http://localhost:8000/api/check-username/${username}/`);
+    const res = await fetch(`https://backendvss.pythonanywhere.com/api/check-username/${username}/`);
     const data = await res.json();
 
     console.log(res.data)
@@ -48,7 +48,7 @@ const ForgotPassword = () => {
 
 const handleSendCode = async () => {
   try {
-    const res = await fetch(`http://localhost:8000/api/send-code/${username}/`);
+    const res = await fetch(`https://backendvss.pythonanywhere.com/api/send-code/${username}/`);
     const data = await res.json();
 
     if (data.success) {
@@ -66,7 +66,7 @@ const handleSendCode = async () => {
 const handleCodeSubmit = async (e) => {
   e.preventDefault();
   try {
-    const res = await fetch("http://localhost:8000/api/verify_code/", {
+    const res = await fetch("https://backendvss.pythonanywhere.com/api/verify_code/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, code }),  // <-- send username too

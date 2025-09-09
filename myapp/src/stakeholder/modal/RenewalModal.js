@@ -25,7 +25,7 @@ useEffect(() => {
     try {
       const token = localStorage.getItem('access'); // or 'access' if you want to standardize
 
-      const res = await axios.get('http://localhost:8000/api/current-user/', {
+      const res = await axios.get('https://backendvss.pythonanywhere.com/api/current-user/', {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -43,7 +43,7 @@ useEffect(() => {
           localStorage.setItem("access", newToken);
 
           try {
-            const retryRes = await axios.get('http://localhost:8000/api/current-user/', {
+            const retryRes = await axios.get('https://backendvss.pythonanywhere.com/api/current-user/', {
               headers: { Authorization: `Bearer ${newToken}` },
             });
 

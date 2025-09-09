@@ -33,7 +33,7 @@ const ClientLogin = ({ onLoginSuccess }) => {
         const loginData = { username, password };
 
         try {
-            const response = await axios.post('http://localhost:8000/api/loginClient/', loginData);
+            const response = await axios.post('https://backendvss.pythonanywhere.com/api/loginClient/', loginData);
             if (response.data && response.data.access) {
                 localStorage.setItem('access', response.data.access);
                 localStorage.setItem('refresh', response.data.refresh);

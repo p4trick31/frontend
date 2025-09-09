@@ -52,7 +52,7 @@ const fetchData = async () => {
 
     let response;
     try {
-      response = await axios.get('http://localhost:8000/api/all-applications/', {
+      response = await axios.get('https://backendvss.pythonanywhere.com/api/all-applications/', {
         headers: { Authorization: `Bearer ${token}` },
       }); 
       console.log(response.data)
@@ -60,7 +60,7 @@ const fetchData = async () => {
       if (err.response && err.response.status === 401) {
         const newToken = await refreshAccessToken();
         if (!newToken) return;
-        response = await axios.get('http://localhost:8000/api/all-applications/', {
+        response = await axios.get('https://backendvss.pythonanywhere.com/api/all-applications/', {
           headers: { Authorization: `Bearer ${newToken}` },
         });
       } else {

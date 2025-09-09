@@ -44,7 +44,7 @@ export default function PushNotificationModal() {
       const seenThisSession = sessionStorage.getItem("seenSubscriptionModal") === "true";
       if (seenThisSession) return;
 
-      const res = await fetch("http://localhost:8000/api/get-user-subscription-status/", {
+      const res = await fetch("https://backendvss.pythonanywhere.com/api/get-user-subscription-status/", {
         headers: {
           "Authorization": `Bearer ${token}`,
         },
@@ -98,7 +98,7 @@ export default function PushNotificationModal() {
         console.log("Old subscription unsubscribed!");
       }
 
-      const response = await fetch('http://localhost:8000/api/webpush/vapid_public_key');
+      const response = await fetch('https://backendvss.pythonanywhere.com/api/webpush/vapid_public_key');
       const vapidPublicKey = await response.text();
       console.log("Fetched VAPID public key:", vapidPublicKey);
 
@@ -120,7 +120,7 @@ export default function PushNotificationModal() {
       const token = localStorage.getItem("token");
       console.log("Token from localStorage:", token);
 
-      const res = await fetch("http://localhost:8000/api/webpush/save_information/", {
+      const res = await fetch("https://backendvss.pythonanywhere.com/api/webpush/save_information/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

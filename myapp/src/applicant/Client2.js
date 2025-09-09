@@ -11,7 +11,7 @@ async function refreshAccessToken() {
     const refreshToken = localStorage.getItem('refresh');
     if (!refreshToken) return null;
 
-    const response = await axios.post('http://localhost:8000/api/token/refresh/', {
+    const response = await axios.post('https://backendvss.pythonanywhere.com/api/token/refresh/', {
       refresh: refreshToken,
     });
 
@@ -38,7 +38,7 @@ const Person2Page = () => {
     setLoading(true);
     setError('');
     try {
-      const response = await axios.get('http://localhost:8000/api/application/get_submitted', {
+      const response = await axios.get('https://backendvss.pythonanywhere.com/api/application/get_submitted', {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
       console.log("API response:", response.data);
@@ -48,7 +48,7 @@ const Person2Page = () => {
       const statusMap = {};
       const statusPromises = response.data.map(async (app) => {
         try {
-          const statusResponse = await axios.get(`http://localhost:8000/api/application/get_submitted/${app.id}/client2_approve/`, {
+          const statusResponse = await axios.get(`https://backendvss.pythonanywhere.com/api/application/get_submitted/${app.id}/client2_approve/`, {
             headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
           });
           statusMap[app.id] = statusResponse.data.is_client2_approved;
@@ -107,7 +107,7 @@ const Person2Page = () => {
           applications.map(application => (
             <div key={application.id} style={styles.card}>
               <img 
-                src={`http://localhost:8000${application.picture_id}`} 
+                src={`https://backendvss.pythonanywhere.com${application.picture_id}`} 
                 alt="Application ID" 
                 style={{
                   width: '100px',        // adjust as needed

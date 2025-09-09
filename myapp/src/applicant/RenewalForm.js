@@ -134,7 +134,7 @@ document.head.appendChild(style);
 
 
   const submitRequest = async (accessToken) => {
-    return await fetch('http://localhost:8000/api/renewal/', {
+    return await fetch('https://backendvss.pythonanywhere.com/api/renewal/', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${accessToken}`,

@@ -10,7 +10,7 @@ async function refreshAccessToken() {
     const refreshToken = localStorage.getItem('refresh');
     if (!refreshToken) return null;
 
-    const response = await axios.post('http://localhost:8000/api/token/refresh/', {
+    const response = await axios.post('https://backendvss.pythonanywhere.com/api/token/refresh/', {
       refresh: refreshToken,
     });
 
@@ -41,7 +41,7 @@ const Person1Page = () => {
     setLoading(true);
     setError('');
     try {
-      const response = await axios.get('http://localhost:8000/api/application/', {
+      const response = await axios.get('https://backendvss.pythonanywhere.com/api/application/', {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
       console.log("API response:", response.data);
@@ -56,13 +56,13 @@ const Person1Page = () => {
       const disapprovalMap = {};
       const statusPromises = response.data.map(async (app) => {
         try {
-          const statusResponse = await axios.get(`http://localhost:8000/api/application/${app.id}/approve/`, {
+          const statusResponse = await axios.get(`https://backendvss.pythonanywhere.com/api/application/${app.id}/approve/`, {
             headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
           });
 
           statusMap[app.id] = statusResponse.data.is_approved;
 
-          const disapprovalResponse = await axios.get(`http://localhost:8000/api/application/${app.id}/disapprove/`, {
+          const disapprovalResponse = await axios.get(`https://backendvss.pythonanywhere.com/api/application/${app.id}/disapprove/`, {
             headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
           });
           disapprovalMap[app.id] = disapprovalResponse.data.is_disapproved;

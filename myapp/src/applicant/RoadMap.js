@@ -20,7 +20,7 @@ const StepsPage = () => {
       try {
         const token = localStorage.getItem('token');
   
-        const response = await axios.get('http://localhost:8000/api/get-application-id/', {
+        const response = await axios.get('https://backendvss.pythonanywhere.com/api/get-application-id/', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         console.log(response.data)

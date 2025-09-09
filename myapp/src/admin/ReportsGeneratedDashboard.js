@@ -24,7 +24,7 @@ const saveReportToDB = async (reportText) => {
     };
 
     console.log("📤 Sending to API:", payload);
-    const response = await axios.post("http://127.0.0.1:8000/api/daily-reports/", payload);
+    const response = await axios.post("https://backendvss.pythonanywhere.com/api/daily-reports/", payload);
     console.log("✅ Saved report:", response.data);
   } catch (error) {
     console.error("❌ Error saving report:", error.response?.data || error.message);
@@ -91,7 +91,7 @@ const formatDate = (dateStr) => {
 
       let response;
       try {
-        response = await axios.get("http://localhost:8000/api/all-applications/", {
+        response = await axios.get("https://backendvss.pythonanywhere.com/api/all-applications/", {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log("adh",response.data)
@@ -99,7 +99,7 @@ const formatDate = (dateStr) => {
         if (err.response && err.response.status === 401) {
           const newToken = await refreshAccessToken();
           if (!newToken) return;
-          response = await axios.get("http://localhost:8000/api/all-applications/", {
+          response = await axios.get("https://backendvss.pythonanywhere.com/api/all-applications/", {
             headers: { Authorization: `Bearer ${newToken}` },
           });
           
