@@ -23,7 +23,7 @@ function ToggleButton({ showLogin, toggleForm, isClient }) {
                 {`
                 /* Main container styling */
                 .form-toggle {
-                    width: 90%;
+                    width: 70%;
                     max-width: 400px;
                     display: flex;
                     gap: 10px;
@@ -60,12 +60,7 @@ function ToggleButton({ showLogin, toggleForm, isClient }) {
                 .form-toggle button:hover:not(:disabled) {
                     background-color: #d1fae5; /* Slightly darker light green on hover */
                 }
-                    @media (max-width: 360px) {
-    .form-toggle {
-        width: 80%;
-        padding: 10px;
-        gap: 5px;
-    }
+
                 `}
             </style>
         </div>
