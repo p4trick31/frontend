@@ -229,7 +229,8 @@ const Person1Page = () => {
         border: '1px solid #e5e7eb',
         borderRadius: '8px',
         padding: '8px',
-        width: '130px',
+        width: '100px',
+        maxWidth: '70%',
         textAlign: 'center',
         cursor: 'pointer',
         boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
@@ -240,7 +241,7 @@ const Person1Page = () => {
     >
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <FaInfoCircle style={{ color: '#065f46', marginRight: '6px' }} />
-        <span style={{ fontWeight: 'bold', color: '#065f46' }}>Checker Info</span>
+        <span style={{ fontWeight: 'bold', color: '#065f46',fontSize: '14px' }}>Checker Info</span>
       </div>
 
       {isHovered && (
@@ -441,7 +442,7 @@ subText: {
     backgroundColor: '#f9fafb',
     borderRadius: '10px',
     boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-    padding: '20px',
+    padding: '10px',
     marginBottom: '20px',
     textAlign: 'left',
   },
@@ -526,7 +527,7 @@ messageDisapproved: {
     padding: '30px',
     borderRadius: '10px',
     textAlign: 'center',
-    width: '300px',
+    width: '270px',
   },
   modalButton: {
     marginTop: '20px',
