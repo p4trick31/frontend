@@ -237,7 +237,7 @@ function useFadeInOnScroll() {
                         <FaBars />
                       </button>
 
-                      <h3>Registration Vehicle Gate Pass Sticker System</h3>
+                      <h3>Vehicle Gate Pass Sticker System</h3>
                     </div>
 
                     {/* Nav container */}

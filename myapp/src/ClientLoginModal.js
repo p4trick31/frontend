@@ -13,7 +13,7 @@ const ClientModal = ({ isOpen, onClose, onLoginSuccess }) => {
   if (!isOpen) return null;
 
   // Responsive modal width
-  const modalWidth = windowWidth <= 600 ? '70%' : '90%';
+  const modalWidth = windowWidth <= 600 ? '75%' : '90%';
 
   return (
     <div style={styles.modalOverlay}>
