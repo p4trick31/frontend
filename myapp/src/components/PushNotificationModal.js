@@ -191,7 +191,7 @@ export default function PushNotificationModal() {
             padding: '30px',
             borderRadius: '10px',
             textAlign: 'center',
-            maxWidth: '300px',
+            maxWidth: '270px',
             boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
             borderTop: '6px solid #facc15'
           }}>
