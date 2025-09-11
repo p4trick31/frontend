@@ -861,7 +861,7 @@ The system performs data validation to verify if the vehicle is eligible for ren
               textAlign: 'center',
               boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
               width: '90%',
-              maxWidth: '300px',
+              maxWidth: '270px',
             }}
           >
             <h3 style={{ marginBottom: '15px' }}>Are you sure you want to logout?</h3>
@@ -913,7 +913,7 @@ The system performs data validation to verify if the vehicle is eligible for ren
               backgroundColor: '#ffffff',
               padding: '25px',
               borderRadius: '10px',
-              maxWidth: '300px',
+              maxWidth: '270px',
               textAlign: 'center',
               boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
             }}
@@ -978,7 +978,7 @@ The system performs data validation to verify if the vehicle is eligible for ren
               backgroundColor: '#ffffff',
               padding: '25px',
               borderRadius: '10px',
-              maxWidth: '300px',
+              maxWidth: '270px',
               textAlign: 'center',
               boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
             }}
@@ -1028,7 +1028,7 @@ The system performs data validation to verify if the vehicle is eligible for ren
         backgroundColor: '#ffffff',
         padding: '25px',
         borderRadius: '10px',
-        maxWidth: '320px',
+        maxWidth: '270px',
         textAlign: 'center',
         boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
       }}
