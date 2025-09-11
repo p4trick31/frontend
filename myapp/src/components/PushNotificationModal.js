@@ -201,6 +201,7 @@ export default function PushNotificationModal() {
               Stay updated about your <strong>vehicle sticker application</strong> status.
               Enable notifications to receive important updates.
             </p>
+            <div style={{ display: 'flex', justifyContent: 'center' , gap: '20px',flexDirection: 'row'}}>
 
             <button onClick={handleCancel} style={{
               margin: '10px',
@@ -210,7 +211,8 @@ export default function PushNotificationModal() {
               border: '1px solid #065f46',
               borderRadius: '6px',
               fontSize: '16px',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              width: '140px'
             }}>
               No, Thanks
             </button>
@@ -222,10 +224,12 @@ export default function PushNotificationModal() {
               border: 'none',
               borderRadius: '6px',
               fontSize: '16px',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              width: '140px'
             }}>
               Yes, Enable
             </button>
+            </div>
           </div>
         </div>
       )}
