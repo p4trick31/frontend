@@ -91,7 +91,7 @@ subText: {
     backgroundColor: '#f9fafb',
     borderRadius: '10px',
     boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-    padding: '20px',
+    padding: '5px',
     marginBottom: '20px',
     textAlign: 'left',
   },
