@@ -419,8 +419,8 @@ useEffect(() => {
       onClick={(e) => e.stopPropagation()}
       style={{
         marginTop: "70px",
-        marginRight: "40px",
-        width: "300px",
+        marginRight: "20px",
+        width: "270px",
         maxHeight: "350px", // ✅ scrollable
         overflowY: "auto",
         backgroundColor: "#ffffff",

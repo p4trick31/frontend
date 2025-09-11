@@ -103,7 +103,7 @@ const isStep3Clickable = stickerDoneStatus === 'active' || stickerDoneStatus ===
                   person1Status === 'disapproved'
                     ? '#dc2626'
                     : person1Status === 'lightGreen'
-                    ? '#86efac'
+                    ? '#8fd8aaff'
                     : isStep1Clickable
                     ? '#065f46'
                     : '#d1d5db',
@@ -140,7 +140,7 @@ const isStep3Clickable = stickerDoneStatus === 'active' || stickerDoneStatus ===
                 ...styles.planet,
                backgroundColor:
                 person2Status === 'lightGreen'
-                  ? '#86efac'
+                  ? '#8fd8aaff'
                   : isStep2Clickable
                   ? '#065f46'
                   : '#d1d5db',
@@ -175,7 +175,7 @@ const isStep3Clickable = stickerDoneStatus === 'active' || stickerDoneStatus ===
                 ...styles.planet,
                 backgroundColor:
                   stickerDoneStatus === 'lightGreen'
-                    ? '#86efac'
+                    ? '#8fd8aaff'
                     : isStep3Clickable
                     ? '#065f46'
                     : '#d1d5db',
@@ -305,8 +305,8 @@ statusTitle: {
     alignItems: 'center',
   },
   planet: {
-    width: '100px',
-    height: '100px',
+    width: '80px',
+    height: '80px',
     borderRadius: '50%',
     color: '#fff',
     display: 'flex',
@@ -353,7 +353,7 @@ statusTitle: {
     fontSize: '14px',
     marginTop: '5px',
     boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-    width: '230px',
+    width: '200px',
   },
   stepTitle: {
     fontSize: '16px',
