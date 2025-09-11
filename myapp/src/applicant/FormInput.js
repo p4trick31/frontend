@@ -75,7 +75,7 @@ const ApplicationForm = () => {
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-
+  const isMobile = window.innerWidth <= 600;
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -1025,23 +1025,27 @@ if (formData.photos.length) {
     style={{
       marginRight: '12px',
       marginTop: '4px',
-      width: '25px',
-      height: '25px',
+      width: '30px',
+      height: '30px',
       cursor: 'pointer'
     }}
   />
-  <label
-    htmlFor="certify"
-    style={{
-      fontFamily: 'Times New Roman, serif',
-      fontSize: '18px',
-      color: '#065f46',
-      lineHeight: '1.5',
-      cursor: 'pointer'
-    }}
-  >
-    <strong>I CERTIFY</strong> that this information is true and correct pursuant to pertinent laws and regulations.
-  </label>
+<label
+  htmlFor="certify"
+  style={{
+    fontFamily: 'Times New Roman, serif',
+    fontSize: isMobile ? '14px' : '18px',   // smaller font on mobile
+    color: '#065f46',
+    lineHeight: isMobile ? '1.3' : '1.5',   // tighter line spacing for small screens
+    cursor: 'pointer',
+    textAlign: isMobile ? 'justify' : 'left', // better readability on small screens
+    display: 'block',
+    marginTop: isMobile ? '10px' : '0'
+  }}
+>
+  <strong>I CERTIFY</strong> that this information is true and correct pursuant
+  to pertinent laws and regulations.
+</label>
 </div>
 
 
@@ -1259,6 +1263,7 @@ const SuccessModal = ({ id, onClose, navigate }) => {
 
 
 
+const isMobile = window.innerWidth <= 600;
 
 // Styles same as before
 const containerStyle = {
@@ -1271,14 +1276,41 @@ const headerStyle = { display: 'flex', flexDirection: 'column', alignItems: 'cen
 const logoStyle = { width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px' };
 const textStyle = { margin: '2px 0', textAlign: 'center' };
 const formTitleStyle = { margin: '10px 0', color: '#065f46', fontWeight: '700' };
-const formStyle = { maxWidth: '600px', width: '100%', margin: '0 auto', border: '1px solid #e5e7eb', borderRadius: '8px', padding: '20px', backgroundColor: '#ffffff', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.05)' };
+const formStyle = {
+  maxWidth: isMobile ? '95%' : '600px',
+  width: '100%',
+  margin: '0 auto',
+  border: '1px solid #e5e7eb',
+  borderRadius: '8px',
+  padding: isMobile ? '15px' : '20px',
+  backgroundColor: '#ffffff',
+  boxShadow: '0 4px 10px rgba(0, 0, 0, 0.05)',
+};
 const fieldContainerStyle = { display: 'flex', flexDirection: 'column', marginBottom: '16px' };
 const labelStyle = { marginBottom: '5px', fontWeight: '600', color: '#374151' };
-const inputStyle = { padding: '8px', border: '1px solid #d1d5db', borderRadius: '5px' };
-const submitButtonStyle = { width: '100%', padding: '12px', backgroundColor: '#065f46', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontSize: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '10px' };
+const inputStyle = {
+  padding: isMobile ? '10px' : '8px',
+  border: '1px solid #d1d5db',
+  borderRadius: '5px',
+  fontSize: isMobile ? '14px' : '16px',
+};
+const submitButtonStyle = {
+  width: '100%',
+  padding: isMobile ? '10px' : '12px',
+  backgroundColor: '#065f46',
+  color: '#fff',
+  border: 'none',
+  borderRadius: '6px',
+  cursor: 'pointer',
+  fontSize: isMobile ? '14px' : '16px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginTop: '10px',
+};
 const backButtonStyle = { width: '100%', padding: '12px', backgroundColor: 'white', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.05)', border: '1px solid #065f46 ', color: '#1f2937', borderRadius: '6px', cursor: 'pointer', fontSize: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '10px' };
 const pendingMessageStyle = { color: '#d97706', marginTop: '20px', fontSize: '1.1em', fontWeight: 'bold', textAlign: 'center' };
-const confirmModalStyle = { position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: '#fff', padding: '20px', borderRadius: '8px', width: '90%', maxWidth: '400px', boxShadow: '0 5px 15px rgba(0,0,0,0.3)', zIndex: 2000, textAlign: 'center' };
+const confirmModalStyle = { position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: '#fff', padding: '20px', borderRadius: '8px', width: '90%', maxWidth: '280px', boxShadow: '0 5px 15px rgba(0,0,0,0.3)', zIndex: 2000, textAlign: 'center' };
 const successModalStyle = {
   position: 'fixed',
   top: '50%',
@@ -1288,7 +1320,7 @@ const successModalStyle = {
   padding: '30px 20px',
   borderRadius: '10px',
   width: '90%',
-  maxWidth: '400px',
+  maxWidth: '270px',
   boxShadow: '0 10px 25px rgba(0, 0, 0, 0.3)',
   zIndex: 2000,
   textAlign: 'center',
