@@ -22,19 +22,27 @@ function ToggleButton({ showLogin, toggleForm, isClient }) {
             <style>
                 {`
                 /* Main container styling */
-                .form-toggle {
-                    width: 70%;
-                    max-width: 400px;
-                    display: flex;
-                    gap: 10px;
-                    justify-content: center;
-                    margin: 30px auto;
-                    padding: 20px;
-                    background-color: #ffffff;
-                    border-radius: 12px;
-                    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                }
+                 .form-toggle {
+  width: 70%;
+  max-width: 400px;
+  position: fixed;      /* stick to viewport */
+  top: 50%;             /* push down */
+  left: 50%;            /* push right */
+  transform: translate(-50%, -50%); /* exact center */
+  z-index: 1000;        /* keep above */
+  
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin: 0; /* not needed anymore */
+  
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
                 /* Button styling */
                 .form-toggle button {
