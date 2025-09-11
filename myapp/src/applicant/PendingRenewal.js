@@ -83,18 +83,18 @@ const PendingRenewalPage = () => {
 
   return (
    
-    <div style={{ padding: '40px', textAlign: 'center' }}>
+    <div style={{ padding: '10px', textAlign: 'center' }}>
         <button onClick={() => navigate('/dashboard')} style={styles.backButton}>
                 <FaArrowLeft />
               </button>
-     <div style={{ textAlign: 'center', color: '#1f2937', margin: '10px 0' }}>
-          <h4 style={{ margin: '5px 0' }}>Republic of the Philippines</h4>
-          <h3 style={{ margin: '5px 0' }}>DR. EMILIO B. ESPINOSA, SR. MEMORIAL</h3>
-          <h4 style={{ margin: '5px 0' }}>STATE COLLEGE OF AGRICULTURE AND TECHNOLOGY</h4>
-          <h5 style={{ margin: '5px 0' }}>(Masbate State College)</h5>
-          <h5 style={{ margin: '5px 0' }}>PRODUCTION AND COMMERCIALIZATION</h5>
-          <h5 style={{ margin: '5px 0', color: '#065f46' }}>www.debesmscat.edu.ph</h5>
-          <h5 style={{ margin: '5px 0' }}>(DEBESMSCAT Vehicle Pass)</h5>
+     <div style={{ textAlign: 'center', color: '#1f2937', margin: '40px 0' }}>
+          <h4 style={{ margin: '3px 0' }}>Republic of the Philippines</h4>
+          <h3 style={{ margin: '3px 0' }}>DR. EMILIO B. ESPINOSA, SR. MEMORIAL</h3>
+          <h4 style={{ margin: '3px 0' }}>STATE COLLEGE OF AGRICULTURE AND TECHNOLOGY</h4>
+          <h5 style={{ margin: '3px 0' }}>(Masbate State College)</h5>
+          <h5 style={{ margin: '3px 0' }}>PRODUCTION AND COMMERCIALIZATION</h5>
+          <h5 style={{ margin: '3px 0', color: '#065f46' }}>www.debesmscat.edu.ph</h5>
+          <h5 style={{ margin: '3px 0' }}>(DEBESMSCAT Vehicle Pass)</h5>
     </div>
       <h2 style={{ color: '#065f46', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
         <FaClock />
@@ -110,7 +110,7 @@ const PendingRenewalPage = () => {
     <div key={renewal.id} style={{
       border: '1px solid #ccc',
       borderRadius: '12px',
-      padding: '30px',
+      padding: '20px',
       margin: '20px auto',
       maxWidth: '700px',
       boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
@@ -152,7 +152,7 @@ const PendingRenewalPage = () => {
               <img
                 src={URL.createObjectURL(newPicture)}
                 alt="Preview"
-                style={{ marginTop: '15px', width: '120px', height: '120px', objectFit: 'cover', borderRadius: '8px' }}
+                style={{ marginTop: '15px', width: '80px', height: '80px', objectFit: 'cover', borderRadius: '8px' }}
               />
             )}
             <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', gap: '15px' }}>
@@ -353,8 +353,8 @@ const photoWrapper = {
 };
 
 const pictureStyle = {
-  width: '120px',
-  height: '120px',
+  width: '80px',
+  height: '80px',
   borderRadius: '8px',
   objectFit: 'cover',
   display: 'block',
@@ -379,7 +379,7 @@ const modalContent = {
   padding: '30px',
   borderRadius: '10px',
   textAlign: 'center',
-  width: '400px'
+  width: '270px'
 };
 const styles = {
     backButton: {
