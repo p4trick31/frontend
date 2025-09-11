@@ -15,6 +15,8 @@ const AdminLoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
 
     const handleLogin = async (e) => {
     e.preventDefault();
@@ -60,6 +62,8 @@ const AdminLoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
 };
 
     if (!isOpen) return null;
+
+     const modalWidth = windowWidth <= 600 ? '80%' : '90%';
 
    return (
     <div style={styles.modalBackground}>
@@ -166,7 +170,6 @@ const styles = {
         backgroundColor: '#ffffff',
         padding: '1.5rem',
         borderRadius: '12px',
-        width: '90%',
         maxWidth: '400px',
         boxShadow: '0 6px 18px rgba(0, 0, 0, 0.1)',
         textAlign: 'center',
