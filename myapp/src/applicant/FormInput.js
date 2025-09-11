@@ -1267,8 +1267,7 @@ const isMobile = window.innerWidth <= 600;
 
 // Styles same as before
 const containerStyle = {
-  margin: '20px',
-  padding: '20px',
+  margin: '10px',
   backgroundColor: '#f9fafb',
   fontFamily: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif'
 };
