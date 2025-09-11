@@ -30,7 +30,7 @@ function ToggleButton({ showLogin, toggleForm, isClient }) {
                     justify-content: center;
                     margin: 30px auto;
                     padding: 20px;
-                    background-color: #ffffff;
+                    background-color: #363232ff;
                     border-radius: 12px;
                     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
                     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
