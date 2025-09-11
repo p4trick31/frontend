@@ -320,36 +320,51 @@ function useFadeInOnScroll() {
                               </button>
 
                               {/* Nav links */}
-                              {[
-                                { label: 'About', onClick: null, href: '#About' },
-                                { label: 'Inquiry', onClick: null, href: '#Inquiry' },
-                                { label: 'FAQ\'s', onClick: null, href: '#FAQs' },
-                                { label: 'Contact', onClick: null, href: '#Contacts' },
+                         {[
+  { label: 'About', target: 'About' },
+  { label: 'Inquiry', target: 'Inquiry' },
+  { label: "FAQ's", target: 'FAQs' },
+  { label: 'FAQs', target: 'FAQs' },
+].map((item, index) => (
+  <a
+    key={index}
+    href={`#${item.target}`}
+    onClick={(e) => {
+      e.preventDefault(); // stop default jump
+      const section = document.getElementById(item.target);
+      if (section) {
+        const headerOffset = 80; // adjust for fixed header height
+        const elementPosition = section.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - headerOffset;
 
-                              ].map((item, index) => (
-                                <a
-                                  key={index}
-                                  href={item.href}
-                                  style={{
-                                    textDecoration: 'none',
-                                    color: '#333',
-                                    padding: '10px',
-                                    borderRadius: '4px',
-                                    transition: 'background-color 0.2s, color 0.2s',
-                                  }}
-                                  onMouseEnter={(e) => {
-                                    e.currentTarget.style.backgroundColor = '#f0c93d';
-                                    e.currentTarget.style.color = '#fff';
-                                  }}
-                                  onMouseLeave={(e) => {
-                                    e.currentTarget.style.backgroundColor = 'transparent';
-                                    e.currentTarget.style.color = '#333';
-                                  }}
-                                >
-                                  {item.label}
-                                </a>
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        });
+      }
+      toggleNav(); // ✅ closes nav after click
+    }}
+    style={{
+      textDecoration: 'none',
+      color: '#333',
+      padding: '10px',
+      borderRadius: '4px',
+      transition: 'background-color 0.2s, color 0.2s',
+      cursor: 'pointer',
+    }}
+    onMouseEnter={(e) => {
+      e.currentTarget.style.backgroundColor = '#f0c93d';
+      e.currentTarget.style.color = '#fff';
+    }}
+    onMouseLeave={(e) => {
+      e.currentTarget.style.backgroundColor = 'transparent';
+      e.currentTarget.style.color = '#333';
+    }}
+  >
+    {item.label}
+  </a>
+))}
 
-                              ))}
 
                               {/* Admin button */}
                               <button

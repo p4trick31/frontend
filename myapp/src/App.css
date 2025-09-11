@@ -51,6 +51,7 @@ ul {
   gap: 2rem;
   margin-top: 2rem;
   flex-direction: row;
+  scroll-margin-top: 100px; 
 }
 
 .left-section,
