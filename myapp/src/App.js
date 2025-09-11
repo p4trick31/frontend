@@ -414,7 +414,7 @@ function useFadeInOnScroll() {
 
                               </div>
                               <h1>Vehicle Sticker System</h1>
-                              <p>
+                               <p style={{ fontSize: '18px', lineHeight: '1.6', margin: '0 10px', color: '#333' }}>
                                 Registering for your vehicle sticker online is quick and convenient. Just fill out the form, upload the documents, and track your application easily.
                               </p>
                             </div>
