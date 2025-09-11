@@ -62,7 +62,7 @@ function ToggleButton({ showLogin, toggleForm, isClient }) {
                 }
                     @media (max-width: 360px) {
     .form-toggle {
-        width: 95%;
+        width: 80%;
         padding: 10px;
         gap: 5px;
     }
