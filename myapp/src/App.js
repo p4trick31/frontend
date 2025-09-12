@@ -735,7 +735,7 @@ function useFadeInOnScroll() {
                              <Route path="/pending-renewal" element={<PendingRenewalPage />} />
 
                        
-                    
+                            <Route path="*" element={<Navigate to="/" />} />
 
         
       </Routes>
