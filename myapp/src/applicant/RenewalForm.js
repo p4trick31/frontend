@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaPlusCircle, FaTimesCircle, FaCheckCircle, FaSpinner} from 'react-icons/fa';
 import { refreshAccessToken } from '../utils/tokenUtils'; // adjust path as needed
+import { backgroundSize } from 'html2canvas/dist/types/css/property-descriptors/background-size';
 
 
 const RenewalForm = ({ onSubmit, applicationId }) => {
@@ -567,7 +568,7 @@ const styles = {
   container: {
     maxWidth: '700px',
     margin: 'auto',
-    padding: '15px',
+    padding: '10px',
     backgroundColor: '#ffffff',
     borderRadius: '10px',
     boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
@@ -653,6 +654,7 @@ const styles = {
 previewImageBox: {
   position: 'relative',
   maxWidth: '100px',
+  height: '100px',
   border: '1px solid #e5e7eb',
   borderRadius: '8px',
   overflow: 'hidden',
@@ -661,8 +663,9 @@ previewImageBox: {
 
 previewImage: {
   width: '100%',
-  height: 'auto',
+  height: '100%',
   display: 'block',
+  objectFit: 'cover',
 },
 
 
@@ -674,7 +677,7 @@ removeIcon: {
   borderRadius: '50%',
   color: '#dc2626',
   cursor: 'pointer',
-  fontSize: '18px',
+  fontSize: '14px',
   padding: '2px',
 },
 
