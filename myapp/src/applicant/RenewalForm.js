@@ -594,7 +594,7 @@ const styles = {
     textAlign: 'center',
     color: '#1f2937',
     marginBottom: '30px',
-    marginTop: '4s0px',
+    marginTop: '40px',
   },
   title: {
     marginBottom: '25px',
