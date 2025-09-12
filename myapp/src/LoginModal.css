@@ -27,7 +27,7 @@
 @media (max-width: 480px) {
   .modal-content {
     max-width: 75%; /* shrink modal for small screens */
-    margin: 0 10px; /* add margin so it doesn’t touch edges */
+    margin-right: 30px; /* add margin so it doesn’t touch edges */
   }
 }
 
