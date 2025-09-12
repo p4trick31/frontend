@@ -21,11 +21,20 @@ const RenewalForm = ({ onSubmit, applicationId }) => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [fileError, setFileError] = useState('');
 
 
   const handleChange = (e) => {
     const { name, files, value } = e.target;
     const file = files ? files[0] : null;
+
+    if (file) {
+      // 🔹 Validate file size (5 MB max)
+      if (file.size > 5 * 1024 * 1024) {
+        setFileError('File size exceeds 5MB. Please upload a smaller image.');
+        return;
+      }
+    }
     if (file && files.length > 1) return;
     setFormData((prev) => ({
       ...prev,
@@ -208,6 +217,22 @@ document.head.appendChild(style);
         </div>
       )}
 
+            {fileError && (
+          <div style={modalBackdropStyle}>
+            <div style={modalBoxStyle}>
+              <FaTimesCircle style={errorIconStyle} />
+              <h3 style={{ color: '#b91c1c' }}>Upload Error</h3>
+              <p>{fileError}</p>
+
+              <div style={{ textAlign: 'right', marginTop: '20px' }}>
+                <button onClick={() => setFileError('')} style={cancelBtnStyle}>
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
       <form onSubmit={(e) => {
         e.preventDefault();
         setShowConfirmModal(true);
@@ -283,7 +308,7 @@ document.head.appendChild(style);
         type="file"
         name="orcrFile"
         onChange={handleChange}
-        accept="image/*,application/pdf"
+        accept="image/*"
         required
         style={{ display: 'none' }}
       />
@@ -306,7 +331,7 @@ document.head.appendChild(style);
     </div>
   )}
 
-  <small style={styles.note}>Accepted: JPG, PNG, PDF (Max 5MB)</small>
+  <small style={styles.note}>Accepted: JPG, PNG(Max 5MB)</small>
 </div>
 
 
@@ -463,7 +488,7 @@ document.head.appendChild(style);
 };
 
 const formGroupStyle = {
-  margin: '20px',
+  margin: '10px',
 };
 
 const labelStyle = {
@@ -533,7 +558,7 @@ const modalBoxStyle = {
   backgroundColor: '#fff',
   padding: '30px',
   borderRadius: '10px',
-  maxWidth: '400px',
+  maxWidth: '270px',
   textAlign: 'center',
   boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
 };
@@ -542,7 +567,7 @@ const styles = {
   container: {
     maxWidth: '700px',
     margin: 'auto',
-    padding: '30px',
+    padding: '15px',
     backgroundColor: '#ffffff',
     borderRadius: '10px',
     boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
@@ -587,8 +612,8 @@ const styles = {
   },
   buttonRow: {
     display: 'flex',
-    margin: '30px',
-    gap: '30px',
+    margin: '10px',
+    gap: '20px',
   },
   noticeBox: {
     backgroundColor: '#fefce8',
@@ -627,7 +652,7 @@ const styles = {
 
 previewImageBox: {
   position: 'relative',
-  maxWidth: '250px',
+  maxWidth: '100px',
   border: '1px solid #e5e7eb',
   borderRadius: '8px',
   overflow: 'hidden',
