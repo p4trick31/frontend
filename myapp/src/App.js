@@ -324,7 +324,7 @@ function useFadeInOnScroll() {
   { label: 'About', target: 'About' },
   { label: 'Inquiry', target: 'Inquiry' },
   { label: "FAQ's", target: 'FAQs' },
-  { label: 'FAQs', target: 'FAQs' },
+  { label: 'Contact', target: 'FAQs' },
 ].map((item, index) => (
   <a
     key={index}
@@ -431,8 +431,9 @@ function useFadeInOnScroll() {
                                     marginRight: '10px',
                                     height: '50px',
                                     width: '150px',
-                                    backgroundColor: isHovered ? '#facc15' : '#d4af37',
-                                    color: '#fff',
+                                    border: '1px solid #d4af37',
+                                    color: isHovered ? '#fff' : '#f0c93d',
+                                    backgroundColor: isHovered ? '#f0c93d' : '#fff',
                                     fontSize: '15px',
                                     display: 'flex',
                                     flexDirection: 'row',
@@ -445,7 +446,7 @@ function useFadeInOnScroll() {
                                   onMouseLeave={() => setIsHovered(false)}
                                 >
                                   <FaUserPlus style={{ fontSize: '18px', marginRight: '6px' }} />
-                                  Register
+                                  Apply Now
                                 </button>
 
                                 <button
@@ -455,8 +456,9 @@ function useFadeInOnScroll() {
                                     borderRadius: '6px',
                                     height: '50px',
                                     width: '150px',
-                                    backgroundColor: isClientHovered ? '#d4af37' : '#f0c93d',
-                                    color: '#fff',
+                                    border: '1px solid #d4af37',
+                                    color: isClientHovered ? '#fff' : '#f0c93d',
+                                    backgroundColor: isClientHovered ? '#f0c93d' : '#fff',
                                     fontSize: '15px',
                                     display: 'flex',
                                     flexDirection: 'row',
@@ -469,7 +471,7 @@ function useFadeInOnScroll() {
                                   onMouseLeave={() => setIsClientHovered(false)}
                                 >
                                   <FaUsers style={{ fontSize: '18px', marginRight: '6px' }} />
-                                  Client
+                                  Admin Personnel
                                 </button>
                               </div>
 
