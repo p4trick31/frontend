@@ -52,7 +52,7 @@ useEffect(() => {
         const newToken = await refreshAccessToken();
         if (newToken) {
           try {
-            const retryResponse = await axios.get(`https://backendvss.pythonanywhere.com/api/users/users/`, {
+            const retryResponse = await axios.get(`https://backendvss.pythonanywhere.com/api/users/`, {
               headers: { Authorization: `Bearer ${newToken}` }
             });
 
