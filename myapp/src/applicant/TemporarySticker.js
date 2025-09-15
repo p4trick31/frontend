@@ -33,6 +33,48 @@ const StickerDonePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const [superusers, setSuperusers] = useState([]);
+
+ 
+useEffect(() => {
+  const fetchSuperusers = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`https://backendvss.pythonanywhere.com/api/users/`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      setSuperusers(response.data);
+      console.log('Superusers:', response.data);
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        // Try refreshing token
+        const newToken = await refreshAccessToken();
+        if (newToken) {
+          try {
+            const retryResponse = await axios.get(`https://backendvss.pythonanywhere.com/api/users/users/`, {
+              headers: { Authorization: `Bearer ${newToken}` }
+            });
+
+            setSuperusers(retryResponse.data);
+          } catch (retryErr) {
+            console.error('Retry failed:', retryErr);
+            setError('Failed to fetch users after retry.');
+          }
+        } else {
+          setError('Session expired. Please log in again.');
+        }
+      } else {
+        console.error('Error fetching users:', err);
+        setError('Users not found or server error.');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchSuperusers();
+}, []);
 
  
 useEffect(() => {
@@ -161,17 +203,36 @@ const generatePDF = () => {
           <div style={styles.pdfFieldRow}><strong>Name:</strong> {applicationData.name}</div>
           <div style={styles.pdfFieldRow}><strong>O.R. No./Date:</strong> {applicationData.or_no}</div>
         </div>
+ <div style={styles.signatureSection}>
+<div style={styles.signatureBox}>
+  <p style={styles.signatureLabel}>Authorized Name</p>
 
-        <div style={styles.signatureSection}>
-          <div style={styles.signatureBox}>
-            <p style={styles.signatureLabel}>Authorized Signature</p>
-            <div style={styles.signatureLine}></div>
-          </div>
-          <div style={styles.signatureBox}>
-            <p style={styles.signatureLabel}>Date Issued</p>
-            <div style={styles.signatureLine}></div>
-          </div>
-        </div>
+  {/* Filter users who are superusers */}
+  {superusers
+    .filter(user => user.is_superuser)
+    .map(user => (
+      <p key={user.id} style={styles.signatureText}>
+        {user.first_name} {user.last_name}
+      </p>
+    ))}
+
+  <div style={styles.signatureLine}></div>
+</div>
+
+  <div style={styles.signatureBox}>
+    <p style={styles.signatureLabel}>Date Issued</p>
+    {/* Text above the signature line */}
+    <p style={styles.signatureText}>
+  {new Date(applicationData.client2_approved_time).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })}
+</p>
+
+    <div style={styles.signatureLine}></div>
+  </div>
+</div>
 
         <div style={styles.footerBox}>
           <p>Form Code: <strong>FM-SS-03</strong></p>
@@ -318,11 +379,17 @@ const styles = {
     alignItems: 'center',
     width: '45%',
   },
-  signatureLine: {
-    borderBottom: '1px solid #000',
-    width: '100%',
-    marginTop: '30px',
-  },
+  signatureText: {
+  fontSize: '14px',
+  textAlign: 'center',
+  marginBottom: '4px', // space between text and line
+},
+signatureLine: {
+  borderBottom: '1px solid black',
+  width: '200px',
+  height: '1px',
+  margin: '0 auto',
+},
   signatureLabel: {
     fontSize: '14px',
     fontStyle: 'italic',
