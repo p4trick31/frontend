@@ -120,17 +120,14 @@ const formatDate = (dateStr) => {
 
 
 
-
 const generateReport = (raw) => {
-  const todayStr = new Date().toISOString().split("T")[0]; 
-// → "2025-08-28"
-
+  const todayStr = new Date().toISOString().split("T")[0]; // e.g., "2025-09-15"
   let storedReports = JSON.parse(localStorage.getItem("reports_history")) || [];
 
-  // Keep previous reports as-is
+  // Remove today's old report if it exists (avoid duplicates)
   const frozenReports = storedReports.filter(r => r.date !== todayStr);
 
-  // Group only today's applications
+  // Filter today's applications only
   const todaysApps = raw.filter(app => {
     const relevantDates = [
       app.created_at,
@@ -141,18 +138,14 @@ const generateReport = (raw) => {
       app.approved_at,
     ].filter(Boolean);
 
-    return relevantDates.some(d => new Date(d).toLocaleDateString() === todayStr);
+    // Check if any relevant date is today
+    return relevantDates.some(d => {
+      const dateObj = new Date(d);
+      return dateObj.toISOString().split("T")[0] === todayStr;
+    });
   });
 
-  if (todaysApps.length === 0) {
-    // Nothing new for today, just keep frozen reports
-    setReports(frozenReports);
-    return;
-  }
-
-
-
-
+  // Group by status (applications vs renewals)
   const group = {
     applications: {
       "Checking Application": 0,
@@ -184,7 +177,9 @@ const generateReport = (raw) => {
           group.vehicleTypeCount[app.vehicle_type] =
             (group.vehicleTypeCount[app.vehicle_type] || 0) + 1;
         }
-      } else if (status === "Disapproved") group.applications["Application Disapproved"]++;
+      } else if (status === "Disapproved") {
+        group.applications["Application Disapproved"]++;
+      }
     } else {
       if (status === "Checking Renewal") group.renewals["Checking Renewal"]++;
       else if (status === "Waiting Approval") group.renewals["Renewal Waiting Approval"]++;
@@ -199,8 +194,11 @@ const generateReport = (raw) => {
     }
   });
 
+  // Build report text
   const reportText = `
-As of ${formatDate(todayStr)}, the system processed ${Object.values(group.applications).reduce((a, b) => a + b, 0)} new applications and ${Object.values(group.renewals).reduce((a, b) => a + b, 0)} renewals.
+As of ${formatDate(todayStr)}, the system processed 
+${Object.values(group.applications).reduce((a, b) => a + b, 0)} new applications 
+and ${Object.values(group.renewals).reduce((a, b) => a + b, 0)} renewals.
 
 For new applications:
 - Under Checking: ${group.applications["Checking Application"]}
@@ -218,20 +216,30 @@ User Activity:
 - Users Completed Renewals: ${group.uniqueRenewalUsers.size}
 
 Vehicle Types:
-${Object.entries(group.vehicleTypeCount).map(([type, count]) => `${type} (${count})`).join(", ") || "No data"}.
+${Object.entries(group.vehicleTypeCount)
+  .map(([type, count]) => `${type} (${count})`)
+  .join(", ") || "No data"}.
 `;
 
+  // Create today's report
   const reportRecord = { date: todayStr, text: reportText.trim() };
 
-// Save to localStorage (your old logic)
-storedReports = [...frozenReports, reportRecord];
-storedReports.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-localStorage.setItem("reports_history", JSON.stringify(storedReports));
-setReports(storedReports);
+  // Merge today's report with history
+  storedReports = [...frozenReports, reportRecord];
 
-// Save to DB
-saveReportToDB(reportRecord);
+  // Sort reports by date (latest first)
+  storedReports.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  // Save back to localStorage
+  localStorage.setItem("reports_history", JSON.stringify(storedReports));
+
+  // Update state so UI shows all history
+  setReports(storedReports);
+
+  // Save to DB
+  saveReportToDB(reportRecord);
 };
+
 
 
   useEffect(() => {
