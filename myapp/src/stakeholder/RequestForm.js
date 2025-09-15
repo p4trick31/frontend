@@ -432,7 +432,7 @@ const combinedData = [...normalizedApplications, ...normalizedRenewals].filter(i
       address: app.address,
       type: app.is_renewal ? 'Renewal' : 'New',
       status: app.status,
-      approved_at: userPosition === 'peronnel1' ?  app.approved_time : app.client2_approved_time,
+      approved_at: userPosition === 'personnel1' ?  app.approved_time : app.client2_approved_time,
 
     })),
 
