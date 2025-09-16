@@ -463,6 +463,12 @@ if (formData.photos.length) {
 }
 };
 
+ const closePopup = () => {
+  setShowPopup(false);
+  setTimeout(() => {
+    navigate('/dashboard');
+  }, 300); // wait for modal to fade out
+};
 
   return (
     <div style={containerStyle}>
