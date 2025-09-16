@@ -495,19 +495,18 @@ function useFadeInOnScroll() {
                         <div className="about-left fade-in-section">
                           <div className="about-box fade-in-section">
                             <h3>Our Story</h3>
-                            <p>Welcome to the Vehicle Sticker Application Portal. Here you can apply for, track, and manage your vehicle stickers with ease.</p>
+                                                       <p>   The Production and Commercialization & Security Services Unit of DEBESMSCAT was created to ensure safety, order, and discipline on campus. With the increasing number of vehicles, the Vehicle Pass Sticker Program was introduced to regulate traffic, secure the welfare of the community, and allow entry only to authorized vehicles.
+
+More than just a requirement, the sticker represents shared responsibility. By complying, students, employees, and partners help keep the campus safe, organized, and conducive to learning.</p>
                           </div>
                           <div className="about-box fade-in-section">
-                            <h3>Application Form</h3>
-                            <p>Fill out the online form with your vehicle details, owner information, and required documents.</p>
-                          </div>
-                          <div className="about-box fade-in-section">
-                            <h3>Requirements</h3>
+                           <h3>Requirements</h3>
                             <p>To apply for a vehicle sticker, you must provide:</p>
                             <ul>
                               <li>Proof of vehicle ownership (registration document)</li>
                               <li>Valid identification (driver's license or ID card)</li>
                               <li>Proof of insurance</li>
+                              <li>MC Unit Stock/Standard pipe</li>
                             </ul>
                           </div>
                         
@@ -515,25 +514,26 @@ function useFadeInOnScroll() {
 
                         <div className="about-right fade-in-section">
                           <div className="about-box fade-in-section">
-                            <h3>Approval Process</h3>
+                                 <h3>Approval Process</h3>
                             <p>The approval process typically includes:</p>
                             <ul>
-                              <li>Submission of the application</li>
-                              <li>Verification of documents</li>
-                              <li>Approval notification via email or SMS</li>
-                              <li>Payment of fees</li>
+                              <li>Applicant fills out the application form and attaches required documents.</li>
+                              <li>Security Guard/Assigned Personnel inspects the documents and vehicle.</li>
+                              <li>Approval is secured from signatory personnel.</li>
+                              <li>Applicant pays at the cashier, then returns to personnel for sticker issuance.</li>
+                              <li>Personnel counterchecks documents and receipt, writes the assigned Sticker Number, and releases the sticker to the client. Documents are then filed.</li>
                             </ul>
                           </div>
                         
 
                           <div className="terms-box fade-in-section">
-                            <h3>Terms and Conditions</h3>
+                               <h3>Terms and Conditions</h3>
                             <p>By applying for a vehicle sticker, you agree to comply with all relevant laws and regulations. Please read our full terms:</p>
                             <ul>
                               <li>Incomplete requirements will not be processed.</li>
                               <li>Only CLEAR scotch tape is allowed for protecting the sticker.</li>
-                              <li>Tampering or unauthorized transfer leads to revocation.</li>
-                              <li>Follow campus rules and regulations strictly.</li>
+                              <li>Unauthorized transfer or tampering of stickers is strictly prohibited and punishable by revocation.</li>
+                              <li>All applicants must follow campus rules and regulations.</li>
                             </ul>
                           </div>
                         </div>
@@ -543,10 +543,12 @@ function useFadeInOnScroll() {
 
                     <div id="Inquiry" className="section inquiry-section fade-in-section">
                       <div className="faq-box fade-in-section">
-                      <h2>Inquiries</h2>
+                           <h2>Inquiries</h2>
                       <p>For specific questions or concerns regarding your application, please email or contact us using the information below. We are here to help you during office hours.</p>
-                      <p>Email: admission_debesmscat.edu.ph</p>
-                      <p>Phone: 00993296513</p>
+                        <ul>
+                              <li>Security Office / Assigned Personnel of Dr. Emilio B. Espinosa Sr. Memorial State College of Agriculture and Technology (DEBESMSCAT)</li>
+                              <li>Visit the official website: admission_debesmscat.edu.ph</li>
+                            </ul>
                       </div>
                     </div>
 
@@ -554,15 +556,31 @@ function useFadeInOnScroll() {
                       
                       <div className="faq-box fade-in-section">
                             <h2>Frequently Asked Questions</h2>
-                      <p>Need more details? Check our FAQs section or contact us directly for personalized assistance.</p>
-                            <h4>How long does it take to receive my sticker?</h4>
-                            <p>Processing usually takes 5-7 business days.</p>
+                            <h4>Who can apply for a Vehicle Pass Sticker?</h4>
+                            <ul>
+                              <li>Employees of the institution</li>
+                              <li>Students (and/or assigned drivers)</li>
+                              <li>Tricycle operators</li>
+                              <li>PUVs/Delivery vehicles (e.g., tricycle, motorbike, trucks, vans)</li>
+                            </ul>
                             <h4>How much are the required fees?</h4>
                             <ul>
                               <li>Motorcycle/Tricycle (Service Delivery) - ₱100</li>
                               <li>Private Car/ALV/SUV/Pick-up - ₱250</li>
                               <li>Delivery Trucks/Vans - ₱500</li>
                               <li>PUV/PUJ/PUB - ₱1,000</li>
+                            </ul>
+                            <h4>Can I still apply if I already paid but have incomplete requirements?</h4>
+                            <ul>
+                              <li>No. Incomplete requirements will not be processed. You must comply first.</li>
+                            </ul>
+                            <h4>What happens if I tamper or transfer my vehicle pass sticker?</h4>
+                            <ul>
+                              <li>It is a major offense and may lead to revocation (removal of sticker).</li>
+                            </ul>
+                            <h4>How should the sticker be attached?</h4>
+                            <ul>
+                              <li>Only CLEAR scotch tape is allowed for covering/protecting the sticker.</li>
                             </ul>
                           </div>
                                  <div className="faq-box fade-in-section">

@@ -128,7 +128,7 @@ ul {
   background-color: #ffffff;
   border-radius: 10px;
   margin-top: 2rem;
-  padding: 2rem;
+  padding: 1rem;
   border: 2px solid #e5e7eb;
 }
 
@@ -155,6 +155,7 @@ ul {
 .terms-box p,
 .faq-box p {
   margin: 0.5rem 0;
+  text-align: justify;
 }
 
 .about-box ul,
