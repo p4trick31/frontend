@@ -565,7 +565,7 @@ useEffect(() => {
   src={
     selectedForm.signature2.startsWith('http')
       ? selectedForm.signature2
-      : `http://localhost:8000${selectedForm.signature2}`
+      : `https://backendvss.pythonanywhere.com${selectedForm.signature2}`
   }
   alt="Approver's Signature"
   style={{
