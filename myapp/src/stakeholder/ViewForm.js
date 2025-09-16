@@ -560,21 +560,23 @@ useEffect(() => {
   <div style={{ textAlign: 'center' }}>
     <p style={{ fontSize: '16px' }}>Approved by:</p>
     {selectedForm.signature2 && (
-  <img
-    src={
-      selectedForm.signature2.startsWith('http')
-        ? selectedForm.signature2
-        : `https://backendvss.pythonanywhere.com${selectedForm.signature2}`
-    }
-    alt="Approver's Signature"
-    style={{
-      display: 'flex',
-      position: 'absolute',
-      width: '100px',
-      marginLeft: '100px',
-      marginTop: '-40px',
-    }}
-  />
+ <img
+  crossOrigin="anonymous"
+  src={
+    selectedForm.signature2.startsWith('http')
+      ? selectedForm.signature2
+      : `http://localhost:8000${selectedForm.signature2}`
+  }
+  alt="Approver's Signature"
+  style={{
+    display: 'flex',
+    position: 'absolute',
+    width: '100px',
+    marginLeft: '100px',
+    marginTop: '-40px',
+  }}
+/>
+
 )}
     <div style={{ borderBottom: '1px solid black', width: '300px', paddingBottom: '3px' }}>
       <strong>NONALYN D. TOMBOCON</strong>
