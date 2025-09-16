@@ -409,13 +409,13 @@ if (formData.photos.length) {
 
   if (id) {
     response = await axios.patch(
-      `http://localhost:8000/api/application/${id}/`,
+      `https://backendvss.pythonanywhere.com/api/application/${id}/`,
       formDataToSubmit,
       config
     );
   } else {
     response = await axios.post(
-      `http://localhost:8000/api/application/`,
+      `https://backendvss.pythonanywhere.com/api/application/`,
       formDataToSubmit,
       config
     );
