@@ -55,6 +55,7 @@ const ViewApplicationModal = ({ application, selectedForm, onClose, onApprove, o
   const [successMessage, setSuccessMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [userPosition, setUserPosition] = useState(null);
+  const [isImageLoading, setIsImageLoading] = useState(false);
 
 
 
@@ -404,106 +405,139 @@ const client2ApproveApplication = async () => {
   </div>
      </div>
    <div style={{ flex: 1.2, position: 'relative', textAlign: 'center' }}>
-  {(() => {
-    const prependURL = (path) =>
-      path?.startsWith('http') ? path : `https://backendvss.pythonanywhere.com/${path}`;
 
-    const images = [];
 
-    
-    if (application.picture_id) {
-      images.push({ label: 'Picture ID', url: prependURL(application.picture_id) });
-    }
-    if (application.photos) {
-      images.push({ label: 'OR/CR Photo', url: prependURL(application.photos) });
-    }
-    if (application.license_photos) {
-      images.push({ label: 'License Photo', url: prependURL(application.license_photos) });
-    }
-    if (application.vehicle_photos) {
-      images.push({ label: ' Vehicle View', url: prependURL(application.vehicle_photos) });
-    }
-    if (application.pipe_photos) {
-      images.push({ label: ' Pipe of Vehicle', url: prependURL(application.pipe_photos) });
-    }
+{(() => {
+  const prependURL = (path) =>
+    path?.startsWith('http') ? path : `https://backendvss.pythonanywhere.com/${path}`;
 
-    const currentImage = images[currentPhotoIndex];
+  const images = [];
 
-    
-    
-    return images.length > 0 ? (
-      <>
-        <h3 style={{ marginBottom: '10px', fontSize: '18px', color: '#333' }}>
-          {currentImage.label}
-        </h3>
-        <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
-          {isFullscreen && (
-  <div
-    style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.85)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 1000,
-    }}
-    onClick={() => setIsFullscreen(false)}
-  >
-    <img
-      src={currentImage.url}
-      alt={currentImage.label}
-      style={{
-        maxWidth: '90%',
-        maxHeight: '90%',
-        objectFit: 'contain',
-        borderRadius: '12px',
-        boxShadow: '0 0 20px rgba(255,255,255,0.2)',
-      }}
-    />
-    <button
-      onClick={() => setIsFullscreen(false)}
-      style={{
-        position: 'absolute',
-        top: '20px',
-        right: '20px',
-        background: 'transparent',
-        border: 'none',
-        fontSize: '32px',
-        color: '#fff',
-        cursor: 'pointer',
-      }}
-    >
-      <X size={32} color="#fff" />
-    </button>
-  </div>
-)}
+  if (application.picture_id) {
+    images.push({ label: 'Picture ID', url: prependURL(application.picture_id) });
+  }
+  if (application.photos) {
+    images.push({ label: 'OR/CR Photo', url: prependURL(application.photos) });
+  }
+  if (application.license_photos) {
+    images.push({ label: 'License Photo', url: prependURL(application.license_photos) });
+  }
+  if (application.vehicle_photos) {
+    images.push({ label: 'Vehicle View', url: prependURL(application.vehicle_photos) });
+  }
+  if (application.pipe_photos) {
+    images.push({ label: 'Pipe of Vehicle', url: prependURL(application.pipe_photos) });
+  }
 
-          <button
-            onClick={() => setCurrentPhotoIndex((prev) => Math.max(prev - 1, 0))}
-            disabled={currentPhotoIndex === 0}
+  const currentImage = images[currentPhotoIndex];
+
+  return images.length > 0 ? (
+    <>
+      <h3 style={{ marginBottom: '10px', fontSize: '18px', color: '#333' }}>
+        {currentImage.label}
+      </h3>
+      <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
+        {isFullscreen && (
+          <div
             style={{
-              position: 'absolute',
-              top: '50%',
-              left: '40px',
-              transform: 'translateY(-50%)',
-              backgroundColor: '#065f46',
-              border: 'none',
-              padding: '8px',
-              borderRadius: '50%',
-              boxShadow: '0 2px 6px rgba(0, 0, 0, 0.2)',
-              cursor: currentPhotoIndex === 0 ? 'not-allowed' : 'pointer',
-              transition: 'background 0.2s ease',
-              zIndex: 1,
-              color: '#065f46'
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.85)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 1000,
             }}
+            onClick={() => setIsFullscreen(false)}
           >
-            <ArrowLeft size={24} color={currentPhotoIndex === 0 ? '#aaa' : '#fafafa'} />
-          </button>
+            <img
+              src={currentImage.url}
+              alt={currentImage.label}
+              style={{
+                maxWidth: '90%',
+                maxHeight: '90%',
+                objectFit: 'contain',
+                borderRadius: '12px',
+                boxShadow: '0 0 20px rgba(255,255,255,0.2)',
+              }}
+              onLoad={() => setIsImageLoading(false)}
+            />
+            <button
+              onClick={() => setIsFullscreen(false)}
+              style={{
+                position: 'absolute',
+                top: '20px',
+                right: '20px',
+                background: 'transparent',
+                border: 'none',
+                fontSize: '32px',
+                color: '#fff',
+                cursor: 'pointer',
+              }}
+            >
+              <X size={32} color="#fff" />
+            </button>
+          </div>
+        )}
 
+        {/* Left button */}
+        <button
+          onClick={() => {
+            setIsImageLoading(true);
+            setCurrentPhotoIndex((prev) => Math.max(prev - 1, 0));
+          }}
+          disabled={currentPhotoIndex === 0}
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '40px',
+            transform: 'translateY(-50%)',
+            backgroundColor: '#065f46',
+            border: 'none',
+            padding: '8px',
+            borderRadius: '50%',
+            boxShadow: '0 2px 6px rgba(0, 0, 0, 0.2)',
+            cursor: currentPhotoIndex === 0 ? 'not-allowed' : 'pointer',
+            transition: 'background 0.2s ease',
+            zIndex: 1,
+            color: '#065f46',
+          }}
+        >
+          <ArrowLeft size={24} color={currentPhotoIndex === 0 ? '#aaa' : '#fafafa'} />
+        </button>
+
+        {/* Image with loader */}
+        <div style={{ width: '420px', height: '320px', position: 'relative' }}>
+          {isImageLoading && (
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: '#fafafa',
+                borderRadius: '10px',
+              }}
+            >
+              <div
+                style={{
+                  border: '4px solid #f3f3f3',
+                  borderTop: '4px solid #3498db',
+                  borderRadius: '50%',
+                  width: '40px',
+                  height: '40px',
+                  animation: 'spin 1s linear infinite',
+                }}
+              />
+            </div>
+          )}
           <img
             src={currentImage.url}
             alt={currentImage.label}
@@ -516,39 +550,47 @@ const client2ApproveApplication = async () => {
               border: '1px solid #ccc',
               background: '#fafafa',
               cursor: 'pointer',
+              display: isImageLoading ? 'none' : 'block',
             }}
             onClick={() => setIsFullscreen(true)}
+            onLoad={() => setIsImageLoading(false)}
           />
-
-
-          <button
-            onClick={() => setCurrentPhotoIndex((prev) => Math.min(prev + 1, images.length - 1))}
-            disabled={currentPhotoIndex === images.length - 1}
-            style={{
-              position: 'absolute',
-              top: '50%',
-              right: '40px',
-              transform: 'translateY(-50%)',
-              backgroundColor: '#065f46',
-              border: 'none',
-              padding: '8px',
-              borderRadius: '50%',
-              boxShadow: '0 2px 6px rgba(0, 0, 0, 0.2)',
-              cursor:
-                currentPhotoIndex === images.length - 1 ? 'not-allowed' : 'pointer',
-              transition: 'background 0.2s ease',
-              zIndex: 1,
-              
-            }}
-          >
-            <ArrowRight size={24} color={currentPhotoIndex === images.length - 1 ? '#aaa' : '#fafafa'} />
-          </button>
         </div>
-      </>
-    ) : (
-      <p>No images uploaded</p>
-    );
-  })()}
+
+        {/* Right button */}
+        <button
+          onClick={() => {
+            setIsImageLoading(true);
+            setCurrentPhotoIndex((prev) => Math.min(prev + 1, images.length - 1));
+          }}
+          disabled={currentPhotoIndex === images.length - 1}
+          style={{
+            position: 'absolute',
+            top: '50%',
+            right: '40px',
+            transform: 'translateY(-50%)',
+            backgroundColor: '#065f46',
+            border: 'none',
+            padding: '8px',
+            borderRadius: '50%',
+            boxShadow: '0 2px 6px rgba(0, 0, 0, 0.2)',
+            cursor: currentPhotoIndex === images.length - 1 ? 'not-allowed' : 'pointer',
+            transition: 'background 0.2s ease',
+            zIndex: 1,
+          }}
+        >
+          <ArrowRight
+            size={24}
+            color={currentPhotoIndex === images.length - 1 ? '#aaa' : '#fafafa'}
+          />
+        </button>
+      </div>
+    </>
+  ) : (
+    <p>No images uploaded</p>
+  );
+})()}
+
   
   
 </div>
