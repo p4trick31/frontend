@@ -116,8 +116,8 @@ const Person1Page = () => {
 
       <hr style={styles.hr} />
 
-      <div style={styles.appBox}>
-            {loading ? (
+      <div className="appBox" style={styles.appBox}>
+  {loading ? (
     <div style={styles.loadingBox}>
       <div style={styles.spinner}></div>
       <p style={styles.loadingText}>Loading application data...</p>
@@ -446,6 +446,7 @@ subText: {
     alignItems: 'center',
     justifyContent: 'center',
     height: '200px',
+    width: '100%',
   },
   loadingText: {
     fontSize: '16px',
@@ -563,6 +564,25 @@ messageDisapproved: {
     cursor: 'pointer',
     fontSize: '14px',
   },
+  
 };
+const styleSheet = document.styleSheets[0];
+styleSheet.insertRule(`
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`, styleSheet.cssRules.length);
+
+styleSheet.insertRule(`
+  @media (max-width: 768px) {
+    .appBox {
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+  }
+`, styleSheet.cssRules.length);
+
 export default Person1Page;
 
