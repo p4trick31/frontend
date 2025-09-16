@@ -98,9 +98,13 @@ const Person2Page = () => {
 
       <hr style={styles.hr} />
 
-      <div style={styles.appBox}>
-        {loading ? (
-          <p>Loading application data...</p>
+      
+      <div className="appBox" style={styles.appBox}>
+  {loading ? (
+    <div style={styles.loadingBox}>
+      <div style={styles.spinner}></div>
+      <p style={styles.loadingText}>Loading application data...</p>
+    </div>
         ) : error ? (
           <p style={{ color: 'red' }}>{error}</p>
         ) : applications.length > 0 ? (
@@ -311,6 +315,29 @@ const styles = {
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
+  },
+  
+  loadingBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '200px',
+    width: '100%',
+  },
+  loadingText: {
+    fontSize: '16px',
+    color: '#555',
+    marginTop: '10px',
+    fontFamily: 'Arial, sans-serif',
+  },
+  spinner: {
+    border: '4px solid #f3f3f3',
+    borderTop: '4px solid #3498db',
+    borderRadius: '50%',
+    width: '40px',
+    height: '40px',
+    animation: 'spin 1s linear infinite',
   },
   card: {
     backgroundColor: '#f9fafb',
