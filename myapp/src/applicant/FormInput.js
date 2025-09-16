@@ -74,6 +74,7 @@ const ApplicationForm = () => {
   const [formErrors, setFormErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const isMobile = window.innerWidth <= 600;
 
@@ -385,82 +386,82 @@ if (formData.photos.length) {
   }
 
   try {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    setShowConfirmModal(false);
+  setShowConfirmModal(false);
+  setSubmitting(true);
+  setUploadProgress(0);
 
-    // 👉 Step 2: Show loading spinner
-    setSubmitting(true);
-
-  setTimeout(async () => {
-      let response;
-
-      if (id) {
-        response = await axios.patch(
-          `https://backendvss.pythonanywhere.com/api/application/${id}/`,
-          formDataToSubmit,
-          config
-        );
-      } else {
-        response = await axios.post(
-          `https://backendvss.pythonanywhere.com/api/application/`,
-          formDataToSubmit,
-          config
-        );
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    onUploadProgress: (progressEvent) => {
+      if (progressEvent.total) {
+        const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+        setUploadProgress(percent);
       }
+    },
+  };
 
-      // 👉 Step 4: Success flow
-      setSubmittedDataId(response.data.id);
-      setErrorMessage('');
-      setFormData({
-        date: '',
-        name: '',
-        address: '',
-        contact: '',
-        birthday: '',
-        age: '',
-        vehicle_register: '',
-        or_no: '',
-        vehicle_type: 'motorcycle',
-        plate_number: '',
-        color: '',
-        chassis_no: '',
-        model_make: '',
-        engine_no: '',
-        photos: [],
-        picture_id: [],
-        license: [],
-        vehicle_photos: [],
-        pipe_photos: []
-      });
+  let response;
 
-      setSubmitting(false); // Hide spinner
-      setShowPopup(true);   // Show success modal
+  // ✅ Delay request by 1 second
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    }, 3000);
-
-  } catch (error) {
-    console.error('❌ Submit failed:', error);
-    setErrorMessage(
-      error.response?.data?.detail ||
-      JSON.stringify(error.response?.data) ||
-      'Failed to submit. Please check your data.'
+  if (id) {
+    response = await axios.patch(
+      `http://localhost:8000/api/application/${id}/`,
+      formDataToSubmit,
+      config
     );
-    setSubmitting(false);
+  } else {
+    response = await axios.post(
+      `http://localhost:8000/api/application/`,
+      formDataToSubmit,
+      config
+    );
   }
-};
 
+  // ✅ Success
+  setSubmittedDataId(response.data.id);
+  setErrorMessage('');
+  setFormData({
+    date: '',
+    name: '',
+    address: '',
+    contact: '',
+    birthday: '',
+    age: '',
+    vehicle_register: '',
+    or_no: '',
+    vehicle_type: 'motorcycle',
+    plate_number: '',
+    color: '',
+    chassis_no: '',
+    model_make: '',
+    engine_no: '',
+    photos: [],
+    picture_id: [],
+    license: [],
+    vehicle_photos: [],
+    pipe_photos: []
+  });
 
- const closePopup = () => {
-  setShowPopup(false);
+  setUploadProgress(100); // Force circle full
   setTimeout(() => {
-    navigate('/dashboard');
-  }, 300); // wait for modal to fade out
-};
+    setSubmitting(false);
+    setShowPopup(true);
+  }, 1000);
 
+} catch (error) {
+  console.error('❌ Submit failed:', error);
+  setErrorMessage(
+    error.response?.data?.detail ||
+    JSON.stringify(error.response?.data) ||
+    'Failed to submit. Please check your data.'
+  );
+  setSubmitting(false);
+}
+};
 
 
   return (
@@ -1075,35 +1076,57 @@ if (formData.photos.length) {
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 9999,
+    backgroundColor: 'rgba(255,255,255,0.6)',
   }}>
     <div style={{
-      padding: '20px 40px',
-      backgroundColor: 'white',
-      border: '1px solid #ccc',
-      borderRadius: '10px',
-      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-      display: 'flex',
-      alignItems: 'center',
-      fontSize: '20px',
-      color: '#065f46',
+      textAlign: 'center',
+      background: '#fff',
+      padding: '30px 50px',
+      borderRadius: '15px',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
     }}>
-      <FaSpinner
-        style={{
-          animation: 'spin 1s linear infinite',
-          WebkitAnimation: 'spin 1s linear infinite',
-        }}
-      />
-      <span style={{ marginLeft: '10px' }}>Submitting...</span>
+      {/* Progress Circle */}
+      <div style={{ position: 'relative', width: '100px', height: '100px', margin: '0 auto' }}>
+        <svg width="100" height="100">
+          <circle
+            cx="50"
+            cy="50"
+            r="45"
+            stroke="#e6e6e6"
+            strokeWidth="8"
+            fill="none"
+          />
+          <circle
+            cx="50"
+            cy="50"
+            r="45"
+            stroke="#3498db"
+            strokeWidth="8"
+            fill="none"
+            strokeLinecap="round"
+            strokeDasharray={2 * Math.PI * 45}
+            strokeDashoffset={2 * Math.PI * 45 * (1 - uploadProgress / 100)}
+            style={{
+              transition: 'stroke-dashoffset 0.3s ease',
+            }}
+          />
+        </svg>
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          fontSize: '16px',
+          fontWeight: 'bold',
+          color: '#065f46',
+        }}>
+          {uploadProgress < 100 ? `${uploadProgress}%` : "Done!"}
+        </div>
+      </div>
+      <p style={{ marginTop: '15px', color: '#333', fontSize: '14px' }}>
+        {uploadProgress < 100 ? "Submitting..." : "Completed!"}
+      </p>
     </div>
-
-    {/* Inline style injection for keyframes */}
-    <style>
-      {`
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-      `}
-    </style>
   </div>
 )}
 
