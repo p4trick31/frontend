@@ -346,6 +346,7 @@ useEffect(() => {
         : `https://backendvss.pythonanywhere.com${selectedForm.picture_id}`
     }
     alt="Uploaded Photos"
+    crossOrigin="anonymous"
     style={{
       width: '150px',
       height: '150px',
