@@ -246,7 +246,7 @@ const disapproveApplication = async () => {
     let token = localStorage.getItem("access");
 
     await axios.post(
-      `http://localhost:8000/api/application/${application.id}/disapprove/`,
+      `https://backendvss.pythonanywhere.com/api/application/${application.id}/disapprove/`,
       {
         reason: selectedReason,
         message: disapproveMessage || "",
