@@ -56,6 +56,9 @@ const ViewApplicationModal = ({ application, selectedForm, onClose, onApprove, o
   const [isLoading, setIsLoading] = useState(false);
   const [userPosition, setUserPosition] = useState(null);
   const [isImageLoading, setIsImageLoading] = useState(false);
+  const [showReasonModal, setshowReasonModal] = useState(false);
+  const [selectedReason, setSelectedReason] = useState('');
+  const [disapproveMessage, setDisapproveMessage] = useState('');
 
 
 
@@ -231,39 +234,54 @@ const client2ApproveApplication = async () => {
 };
 
 
-  const disapproveApplication = async () => {
-    setIsLoading(true);
+const disapproveApplication = async () => {
+  if (!selectedReason) {
+    alert("Please select a reason for disapproval.");
+    return;
+  }
 
-    try {
-      await axios.post(
-        `https://backendvss.pythonanywhere.com/api/application/${application.id}/disapprove/`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      ); // in approveApplication
-     
-      onDisapprove();
-     
+  setIsLoading(true);
 
-      setSuccessMessage("Application disapproved successfully!");
-      setShowSuccessModal(true);
+  try {
+    let token = localStorage.getItem("access");
 
-      setTimeout(() => {
-        setShowSuccessModal(false);
-        onClose();
-      }, 2000);
-      setShowDisapproveConfirm(false)
-    } catch (error) {
-      console.error('Disapproval failed:', error);
-      alert('Disapproval failed');
-    }  finally {
-   
+    await axios.post(
+      `http://localhost:8000/api/application/${application.id}/disapprove/`,
+      {
+        reason: selectedReason,
+        message: disapproveMessage || "",
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    // Callback to refresh parent data
+    onDisapprove();
+
+    // Show success modal
+    setSuccessMessage("Application disapproved successfully!");
+    setShowSuccessModal(true);
+
+    setTimeout(() => {
+      setShowSuccessModal(false);
+      onClose();
+    }, 2000);
+
+    // Close disapprove modal & reset fields
+    setShowDisapproveConfirm(false);
+    setSelectedReason("");
+    setDisapproveMessage("");
+
+  } catch (error) {
+    console.error("Disapproval failed:", error);
+    alert("Disapproval failed");
+  } finally {
     setIsLoading(false);
   }
-  };
+};
 
 
 
@@ -632,7 +650,7 @@ const client2ApproveApplication = async () => {
 </button>
 {userPosition !== 'personnel2' && (
   <button
-    onClick={() => setShowDisapproveConfirm(true)}
+    onClick={() => setshowReasonModal(true)}
     style={{ ...buttonStyle, backgroundColor: '#f44336', color: 'white' }}
   >
     Disapprove
@@ -706,7 +724,75 @@ const client2ApproveApplication = async () => {
 
 
      
-       
+        {showReasonModal && (
+  <>
+    <div style={overlayStyle} />
+    <div style={confirmationModalStyle}>
+      <h3>Disapproval Reason</h3>
+      <p>Please select a reason and add a message before disapproving this application.</p>
+      
+      <div style={{ marginTop: 15 }}>
+        <label>
+          Reason:
+          <select
+            value={selectedReason}
+            onChange={(e) => setSelectedReason(e.target.value)}
+            style={{ width: '100%', padding: 8, marginTop: 5 }}
+          >
+            <option value="">--Select Reason--</option>
+            <option value="Incomplete Requirements">Incomplete Requirements</option>
+            <option value="Invalid Information">Invalid Information</option>
+            <option value="Valid ID Not Provided">Valid ID Not Provided</option>
+            <option value="Proof of Insurance Missing">Proof of Insurance Missing</option>
+            <option value="MC Unit Stock/Standard Pipe Missing">MC Unit Stock/Standard Pipe Missing</option>
+            <option value="Vehicle Details Mismatch">Vehicle Details Mismatch</option>
+            <option value="Expired Registration">Expired Registration</option>
+            <option value="Duplicate Application">Duplicate Application</option>
+            <option value="Unauthorized Vehicle Owner">Unauthorized Vehicle Owner</option>
+            <option value="Incorrect Vehicle Type">Incorrect Vehicle Type</option>
+
+            <option value="Other">Other</option>
+          </select>
+        </label>
+      </div>
+
+      <div style={{ marginTop: 15 }}>
+        <label>
+          Message:
+          <textarea
+            value={disapproveMessage}
+            onChange={(e) => setDisapproveMessage(e.target.value)}
+            style={{ width: '100%', padding: 8, marginTop: 5 }}
+            rows={3}
+          />
+        </label>
+      </div>
+
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 20 }}>
+        <button
+          onClick={() => setshowReasonModal(false)}
+          style={{ ...buttonStyle, backgroundColor: '#ccc', marginRight: 8 }}
+        >
+          Cancel
+        </button>
+        <button
+          onClick={() => {
+            if (!selectedReason) {
+              alert("Please select a reason.");
+              return;
+            }
+            setshowReasonModal(false);
+            setShowDisapproveConfirm(true);
+          }}
+          style={{ ...buttonStyle, backgroundColor: '#f44336', color: 'white' }}
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </>
+)}
+
       
 
 
@@ -716,7 +802,10 @@ const client2ApproveApplication = async () => {
           <div style={overlayStyle} />
           <div style={confirmationModalStyle}>
             <h3>Confirm Disapproval</h3>
+
             <p>Are you sure you want to disapprove this application?</p>
+            <p><strong>Reason:</strong> {selectedReason}</p>
+             <p><strong>Message:</strong> {disapproveMessage}</p>
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
               <button
                 onClick={() => {
