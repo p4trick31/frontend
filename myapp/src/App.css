@@ -64,7 +64,7 @@ ul {
 }
 
 .left-section {
-  background-color: #f0fdf4;
+  background-color: #fff;
 }
 
 .left-section h1 {
@@ -314,6 +314,7 @@ button:focus,
   .left-section,
   .right-section {
     padding: 1rem;
+    font-size: 18px;
   }
 
   .left-section h1 {

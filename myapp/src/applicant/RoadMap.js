@@ -188,7 +188,7 @@ const isStep3Clickable = stickerDoneStatus === 'active' || stickerDoneStatus ===
           </div>
           <div style={styles.textWrapper}>
             <p style={styles.stepTitle}>Sticker Ready</p>
-            <p style={styles.stepSubtitle}>Your sticker is ready to claim</p>
+<p style={styles.stepSubtitle}>Ready to pay for generated sticker form</p>
             <FaInfoCircle
               style={styles.infoIcon}
               onMouseEnter={() => setHoveredStep(3)}

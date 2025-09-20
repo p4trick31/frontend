@@ -22,7 +22,7 @@ import RenewalForm  from './applicant/RenewalForm';
 import ForgotPassword from './ForgotPassword';
 import TemporarySticker from './applicant/TemporarySticker';
 import { FaUserShield, FaUserPlus, FaUsers, FaBars, FaTimes, FaSyncAlt  } from 'react-icons/fa';
-import debesLogo from './pic/DEBES.jpg';
+import debesLogo from './pic/DEBES.png';
 
 // In your routing setu
 
@@ -229,7 +229,7 @@ function useFadeInOnScroll() {
                         style={{
                           backgroundColor: 'transparent',
                           border: 'none',
-                          color: 'goldenrod',
+                          color: '#eab308',
                           fontSize: '28px',
                           cursor: 'pointer',
                         }}
@@ -391,8 +391,8 @@ function useFadeInOnScroll() {
 
                           <div className="section fade-in-section">
                             <div className="left-section fade-in-section">
-                              <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <img src={debesLogo} alt="Logo" style={{ width: '80px', marginRight: '10px' }} />
+                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start'  }}>
+                               
                                 <div
                                   style={{
                                     textAlign: 'left',
@@ -402,20 +402,32 @@ function useFadeInOnScroll() {
                                     fontSize: '20px',
                                     opacity: 1,
                                     marginTop: '10px',
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    alignItems: 'flex-start',
+                                    justifyContent: 'center',
+                                    gap: '2px',
                                   }}
                                 >
-                                  <p style={{ margin: '4px 0', fontWeight: 500 }}>Republic of the Philippines</p>
-                                  <p style={{ margin: '1px 0' }}>Dr. Emilio B. Espinosa Sr. Memorial</p>
-                                  <p style={{ margin: '1px 0' }}>State College of Agriculture and Technology</p>
-                                  <p style={{ margin: '1px 0', fontSize: '15px', opacity: 0.8 }}>
+                                  <div>
+                                     <img src={debesLogo} alt="Logo" style={{ width: '80px', marginRight: '10px' }} />
+                                  </div>
+                                  <div>
+                                  <p style={{ margin: '4px 0', fontWeight: 600, fontFamily: 'Cambria, Cochin, Georgia, Times, "Times New Roman", serif' }}>Republic of the Philippines</p>
+                                  <p style={{ margin: '0' }}>Dr. Emilio B. Espinosa Sr. Memorial</p>
+                                  <p style={{ margin: '0' }}>State College of Agriculture and Technology</p>
+                                  <p style={{ margin: '0', fontSize: '15px', opacity: 0.8 }}>
                                     www.debesmscat.edu.ph | Cabitan, Mandaon, Masbate
                                   </p>
+
+                                  </div>
+                      
                                 </div>
 
                               </div>
-                              <h1>Vehicle Sticker System</h1>
+                              <h1>Application Approval for Vehicle Sticker</h1>
                                <p style={{ fontSize: '18px', lineHeight: '1.6', margin: '0 10px', color: '#333' }}>
-                                Registering for your vehicle sticker online is quick and convenient. Just fill out the form, upload the documents, and track your application easily.
+                                 Getting your vehicle sticker is now easier than ever! Just fill out the form, upload your documents, and keep track of your application—all from the comfort of your own device.
                               </p>
                             </div>
 
