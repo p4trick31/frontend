@@ -169,23 +169,22 @@ const Person1Page = () => {
                 ) : disapprovalStatus[application.id] ? (
                  <div style={styles.messageDisapproved}>
                  
-                  <div>
-                    <p style={{ margin: 0 }}>
-                      Unfortunately, your application has been disapproved by our checker person.
-                    </p>
-                    <p style={{ marginTop: '8px' }}>
-                      Please provide clear upload valid photos, including your ID picture and vehicle photo. This is required for verification by the checker.
-                    </p>
-                         {application.disapprove_reason && (
-                      <p style={{ marginTop: '8px' }}>
-                        <strong>Reason:</strong> {application.disapprove_reason}
-                      </p>
-                    )}
-                    {application.disapprove_message && (
-                      <p style={{ marginTop: '8px' }}>
-                        <strong>Message:</strong> {application.disapprove_message}
-                      </p>
-                    )}
+                           <div>
+  <p style={{ margin: 0 }}>
+    We regret to inform you that your application has been disapproved by the reviewing personnel.
+  </p>
+
+  {application.disapprove_reason && (
+    <p style={{ marginTop: '8px' }}>
+      <strong>Reason for Disapproval:</strong> {application.disapprove_reason}
+    </p>
+  )}
+  {application.disapprove_message && (
+    <p style={{ marginTop: '8px' }}>
+      <strong>Additional Notes:</strong> {application.disapprove_message}
+    </p>
+  )}
+
                     <button
                     style={styles.tryAgainButton}
                     onClick={() => {
