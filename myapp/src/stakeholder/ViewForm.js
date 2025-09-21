@@ -635,7 +635,7 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    height: "100%",
+    height: '100vh',
     width: '100%',
   },
   loadingText: {
