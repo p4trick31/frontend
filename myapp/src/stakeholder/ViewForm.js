@@ -181,7 +181,7 @@ if (loading)
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "200px",
+        height: "100vh", // full viewport height
         flexDirection: "column",
       }}
     >
