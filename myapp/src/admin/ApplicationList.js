@@ -182,18 +182,19 @@ const applyFilters = (search, date, type, status = 'all') => {
 
 
 
+   if (loading) return (
+             <div style={styles.loadingBox}>
+        <div style={styles.spinner}></div>
+        <p style={styles.loadingText}>Loading... please wait!</p>
+      </div>
+  );
 
 
   return (
     <div style={{ padding: '70px 50px', fontFamily: 'Arial, sans-serif', color: '#333' }}>
       <h2 style={{fontSize: '24px', fontWeight: 'bold', marginBottom: '30px', color: '#111827'}}>Application List</h2>
 
-      {loading && (
-                 <div style={styles.loadingBox}>
-        <div style={styles.spinner}></div>
-        <p style={styles.loadingText}>Loading... please wait!</p>
-      </div>
-      )}
+
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       {/* Search and Filter */}

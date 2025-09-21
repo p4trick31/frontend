@@ -281,17 +281,19 @@ ${Object.entries(group.vehicleTypeCount)
     fontSize: "0.9rem",
   };
 
+  if (loading) return (
+             <div style={styles.loadingBox}>
+        <div style={styles.spinner}></div>
+        <p style={styles.loadingText}>Loading... please wait!</p>
+      </div>
+  );
+
+
   return (
     <div style={containerStyle}>
       <h2 style={headerStyle}>Daily Report Summary</h2>
 
-      {/* 🔹 Local (today only if not yet finalized) */}
-      {loading ? (
-                        <div style={styles.loadingBox}>
-        <div style={styles.spinner}></div>
-        <p style={styles.loadingText}>Loading... please wait!</p>
-      </div>
-      ) : reports.length > 0 ? (
+  {reports.length > 0 ? (
         reports
           .filter((r) => !r.isFinal) // show only today's live
           .map((r, i) => (
