@@ -17,7 +17,7 @@ const ReportsGeneratedDashboard = () => {
       if (!token) return;
 
       await axios.post(
-        "http://localhost:8000/api/daily-reports/",
+        "https://backendvss.pythonanywhere.com/api/daily-reports/",
         { date: report.date, text: report.text },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -39,14 +39,14 @@ const ReportsGeneratedDashboard = () => {
 
       let response;
       try {
-        response = await axios.get("http://localhost:8000/api/daily-reports/", {
+        response = await axios.get("https://backendvss.pythonanywhere.com/api/daily-reports/", {
           headers: { Authorization: `Bearer ${token}` },
         });
       } catch (err) {
         if (err.response?.status === 401) {
           const newToken = await refreshAccessToken();
           if (!newToken) return;
-          response = await axios.get("http://localhost:8000/api/daily-reports/", {
+          response = await axios.get("https://backendvss.pythonanywhere.com/api/daily-reports/", {
             headers: { Authorization: `Bearer ${newToken}` },
           });
         } else throw err;
@@ -187,14 +187,14 @@ ${Object.entries(group.vehicleTypeCount)
 
       let response;
       try {
-        response = await axios.get("http://localhost:8000/api/all-applications/", {
+        response = await axios.get("https://backendvss.pythonanywhere.com/api/all-applications/", {
           headers: { Authorization: `Bearer ${token}` },
         });
       } catch (err) {
         if (err.response?.status === 401) {
           const newToken = await refreshAccessToken();
           if (!newToken) return;
-          response = await axios.get("http://localhost:8000/api/all-applications/", {
+          response = await axios.get("https://backendvss.pythonanywhere.com/api/all-applications/", {
             headers: { Authorization: `Bearer ${newToken}` },
           });
         } else throw err;
