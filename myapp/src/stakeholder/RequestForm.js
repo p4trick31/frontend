@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import logo from '../logo.jpg'; // School logo// Placeholder for e-signature
+import logo from '../pic/DEBES.png'; // School logo// Placeholder for e-signature
 import { FaBars, FaSignOutAlt, FaFileAlt, FaBook, FaUserCircle, FaPen, FaPlus, FaEye, FaCheckCircle, FaSign  } from 'react-icons/fa';
 import { FaCalendarDays, FaSignature } from 'react-icons/fa6';
 import LogoutModal from './modal/LogoutModal';
