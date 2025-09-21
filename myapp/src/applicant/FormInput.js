@@ -26,7 +26,7 @@ async function refreshAccessToken() {
 
 const fields = [
   { label: 'Date:', type: 'date', name: 'date', placeholder: '' },
-  { label: 'Name:', type: 'text', name: 'name', placeholder: 'ex: Juan Dela Cruz' },
+  { label: 'Full Name:', type: 'text', name: 'name', placeholder: 'ex: Juan Dela Cruz' },
   { label: 'Address:', type: 'text', name: 'address', placeholder: 'ex: Brgy. Mabuhay, Mandaon, Masbate' },
   { label: 'Contact Number:', type: 'text', name: 'contact', placeholder: 'ex: 09XXXXXXXXX' },
   { label: 'Birthday:', type: 'date', name: 'birthday', placeholder: '' },

@@ -13,7 +13,50 @@ const ApplicationList = () => {
   const [typeFilter, setTypeFilter] = useState('all'); 
   const [statusFilter, setStatusFilter] = useState('all');
   const [selectedApp, setSelectedApp] = useState(null);
-// New filter state
+  const [claiming, setClaiming] = useState(false); // changed from boolean to app object
+  const [claimingAppForConfirmation, setClaimingAppForConfirmation] = useState(null);
+  const [claimApp, setClaimApp] = useState(null); // App being claimed for confirmation
+
+
+
+
+const handleConfirmClaim = async () => {
+  if (!claimingAppForConfirmation) return;
+  setClaiming(true);
+  try {
+    const response = await axios.post(
+      `https://backendvss.pythonanywhere.com/api/applications/${claimingAppForConfirmation.id}/claim/`,
+      {},
+      { headers: { Authorization: `Bearer ${localStorage.getItem('access')}` } }
+    );
+
+    setApplications((prev) =>
+      prev.map((item) =>
+        item.id === claimingAppForConfirmation.id
+          ? { ...item, is_claimed: response.data.is_claimed }
+          : item
+      )
+    );
+
+    setFilteredApplications((prev) =>
+      prev.map((item) =>
+        item.id === claimingAppForConfirmation.id
+          ? { ...item, is_claimed: response.data.is_claimed }
+          : item
+      )
+    );
+  } catch (err) {
+    console.error(err);
+  } finally {
+    setClaiming(false);
+    setClaimingAppForConfirmation(null); // close the modal
+  }
+};
+
+
+
+
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -240,23 +283,27 @@ const applyFilters = (search, date, type, status = 'all') => {
       </div>
 
       {/* Applications Table */}
-   <div
+<div
   style={{
     backgroundColor: '#fff',
     border: '1px solid #ddd',
-    borderRadius: '6px',
+    borderRadius: '8px',
     overflow: 'hidden',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
   }}
 >
   {/* Table Header */}
   <div
     style={{
       display: 'grid',
-      gridTemplateColumns: '80px 1fr 1fr 1fr 1fr 1fr 100px', // fixed 7 columns
-      padding: '10px',
-      backgroundColor: '#f5f5f5',
+      gridTemplateColumns: '80px 1.5fr 2fr 1fr 1fr 1.5fr 1fr 1fr', // 8 columns
+      padding: '12px 15px',
+      backgroundColor: '#f3f4f6',
       fontWeight: '600',
       fontSize: '14px',
+      color: '#111827',
+      borderBottom: '1px solid #e5e7eb',
+      alignItems: 'center',
     }}
   >
     <span>Profile</span>
@@ -265,140 +312,265 @@ const applyFilters = (search, date, type, status = 'all') => {
     <span>Type</span>
     <span>Status</span>
     <span>Submitted At</span>
+    <span>Claimed Sticker</span>
     <span>Action</span>
   </div>
 
   {/* Table Body */}
   <div style={{ maxHeight: '500px', overflowY: 'auto' }}>
     {filteredApplications.length === 0 ? (
-      <p style={{ padding: '10px', color: '#888' }}>No applications found.</p>
+      <p style={{ padding: '15px', color: '#9ca3af', textAlign: 'center' }}>No applications found.</p>
     ) : (
-      
-       filteredApplications.map((app) => {
-              const uniqueKey = `${app.id}-${app.is_renewal ? 'renewal' : 'application'}`;
+      filteredApplications.map((app) => {
+        const uniqueKey = `${app.id}-${app.is_renewal ? 'renewal' : 'application'}`;
 
-              return (
-                <div
-                  key={uniqueKey}
-                  className="application-row"
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: '80px 1fr 1fr 1fr 1fr 1fr 100px',
-                    padding: '10px',
-                    borderBottom: '1px solid #eee',
-                    alignItems: 'center',
-                    fontSize: '14px',
-                  }}
-                   onClick={() => handleViewApplication(app)}
-                >
-                  {/* Profile Picture */}
-                  <img
-                    src={
-                      app.picture_id
-                        ? `https://backendvss.pythonanywhere.com${app.picture_id}`
-                        : app.photos
-                        ? `https://backendvss.pythonanywhere.com${app.photos}`
-                        : '/default-profile.png'
-                    }
-                    alt="Profile"
-                    style={{
-                      width: '50px',
-                      height: '50px',
-                      objectFit: 'cover',
-                      borderRadius: '50%',
-                      border: '1px solid #ccc',
-                    }}
-                    onError={(e) => {
-                      e.target.src = '/default-profile.png';
-                    }}
-                  />
+        return (
+          <div
+            key={uniqueKey}
+            className="application-row"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '80px 1.5fr 2fr 1fr 1fr 1.5fr 1fr 1fr',
+              padding: '12px 15px',
+              borderBottom: '1px solid #f3f4f6',
+              alignItems: 'center',
+              fontSize: '14px',
+              color: '#374151',
+              gap: '5px',
+              transition: 'background 0.2s',
+            }}
+            onClick={() => handleViewApplication(app)}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#f9fafb')}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
+          >
+            {/* Profile */}
+            <img
+              src={
+                app.picture_id
+                  ? `https://backendvss.pythonanywhere.com${app.picture_id}`
+                  : app.photos
+                  ? `https://backendvss.pythonanywhere.com${app.photos}`
+                  : '/default-profile.png'
+              }
+              alt="Profile"
+              style={{
+                width: '50px',
+                height: '50px',
+                objectFit: 'cover',
+                borderRadius: '50%',
+                border: '1px solid #d1d5db',
+              }}
+              onError={(e) => (e.target.src = '/default-profile.png')}
+            />
 
-                  {/* Name */}
-                  <span style={{ fontWeight: '500', color: '#333' }}>
-                    {app.name || app.full_name || 'N/A'}
-                  </span>
+            {/* Name */}
+            <span style={{ fontWeight: '500' }}>{app.name || app.full_name || 'N/A'}</span>
 
-                  {/* Address */}
-                  <span style={{ color: '#666' }}>{app.address || 'N/A'}</span>
+            {/* Address */}
+            <span style={{ color: '#6b7280', fontSize: '13px' }}>{app.address || 'N/A'}</span>
 
-                  {/* Type */}
-                  <span style={{ color: app.is_renewal ? '#007bff' : '#17a2b8' }}>
-                    {app.is_renewal ? 'Renewal' : 'Application'}
-                  </span>
+            {/* Type */}
+            <span
+              style={{
+                color: app.is_renewal ? '#3b82f6' : '#06b6d4',
+                fontWeight: '500',
+              }}
+            >
+              {app.is_renewal ? 'Renewal' : 'Application'}
+            </span>
 
-                  {/* Status */}
-                  <span
-                    style={{
-                      color:
-                        app.status === 'Application Done' || app.status === 'Renewal Done'
-                          ? '#28a745' // green for Completed
-                          : app.status === 'Disapproved'
-                          ? '#dc3545' // red for Disapproved
-                          : ['Checking Renewal', 'Checking Application', 'Waiting Approval'].includes(
-                              app.status
-                            )
-                          ? '#fd7e14' // orange for Pending
-                          : '#6c757d', // grey fallback
-                      fontWeight: '600',
-                    }}
-                  >
-                    {app.status === 'Application Done' || app.status === 'Renewal Done'
-                      ? 'Completed'
-                      : app.status === 'Disapproved'
-                      ? 'Disapproved'
-                      : ['Checking Renewal', 'Checking Application', 'Waiting Approval'].includes(app.status)
-                      ? 'Pending'
-                      : app.status || 'N/A'}
-                  </span>
+            {/* Status */}
+            <span
+              style={{
+                color:
+                  app.status === 'Application Done' || app.status === 'Renewal Done'
+                    ? '#16a34a'
+                    : app.status === 'Disapproved'
+                    ? '#dc2626'
+                    : '#f59e0b',
+                fontWeight: '600',
+                fontSize: '13px',
+              }}
+            >
+              {app.status === 'Application Done' || app.status === 'Renewal Done'
+                ? 'Completed'
+                : app.status === 'Disapproved'
+                ? 'Disapproved'
+                : ['Checking Renewal', 'Checking Application', 'Waiting Approval'].includes(app.status)
+                ? 'Pending'
+                : 'N/A'}
+            </span>
 
-                  {/* Release */}
-                  {/* Submitted At */}
-<span style={{ color: '#666' }}>
-  {app.created_at
-    ? new Date(app.created_at).toLocaleString('en-US', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric',
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true,
-      })
-    : 'N/A'}
-</span>
+            {/* Submitted At */}
+            <span style={{ color: '#6b7280', fontSize: '13px' }}>
+              {app.created_at
+                ? new Date(app.created_at).toLocaleString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true,
+                  })
+                : 'N/A'}
+            </span>
 
-
-                  {/* Action Button */}
-    <button
-  onClick={() => handleViewApplication(app)}
-  style={{
-    backgroundColor: '#ffffff',
-    color: '#374151',
-    border: 'none',
-    padding: '6px',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    fontSize: '20px',
-    width: '40px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    transition: 'background-color 0.3s ease',
+            {/* Claimed Button */}
+<button
+  onClick={(e) => {
+    e.stopPropagation();
+    setClaimingAppForConfirmation(app);
   }}
-  onMouseEnter={(e) => (e.currentTarget.style.color = '#007bff')}
-  onMouseLeave={(e) => (e.currentTarget.style.color = ' #374151')}
-  aria-label="View Application"
-  title="View Application"
+  disabled={
+    claiming ||
+    app.status === 'Disapproved' ||
+    (['Application Done', 'Renewal Done'].includes(app.status) && app.is_claimed) ||
+    ['Checking Renewal', 'Checking Application', 'Waiting Approval'].includes(app.status)
+  }
+  style={{
+    backgroundColor:
+      app.status === 'Disapproved'
+        ? '#6b7280' // gray for disapproved
+        : ['Checking Renewal', 'Checking Application', 'Waiting Approval'].includes(app.status)
+        ? '#6b7280' // gray for pending/waiting
+        : app.is_claimed
+        ? '#10b981' // green for claimed
+        : ['Application Done', 'Renewal Done'].includes(app.status)
+        ? '#34d399' // green for set as claimed
+        : '#6b7280', // fallback gray
+    color: '#fff',
+    border: 'none',
+    padding: '6px 12px',
+    borderRadius: '4px',
+    cursor:
+      app.is_claimed ||
+      app.status === 'Disapproved' ||
+      ['Checking Renewal', 'Checking Application', 'Waiting Approval'].includes(app.status)
+        ? 'not-allowed'
+        : 'pointer',
+    fontSize: '13px',
+  }}
 >
-  <FiEye />
+  {app.status === 'Disapproved'
+    ? 'Not Claimed'
+    : ['Checking Renewal', 'Checking Application', 'Waiting Approval'].includes(app.status)
+    ? 'Waiting'
+    : app.is_claimed
+    ? 'Claimed'
+    : ['Application Done', 'Renewal Done'].includes(app.status)
+    ? 'Set as Claimed'
+    : 'Not Claimed'}
 </button>
 
-                </div>
-              );
-            })
-          )}
 
-        </div>
+
+
+            {/* View Action */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleViewApplication(app);
+              }}
+              style={{
+                backgroundColor: '#f9fafb',
+                color: '#374151',
+                border: 'none',
+                padding: '6px',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontSize: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <FiEye /> View
+            </button>
+          </div>
+        );
+      })
+    )}
+  </div>
+</div>
+
+
+
+{claimingAppForConfirmation && (
+  <>
+    {/* Overlay */}
+    <div
+      style={{
+        position: 'fixed',
+        inset: 0,
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        zIndex: 999,
+      }}
+      onClick={() => setClaimingAppForConfirmation(null)}
+    />
+
+    {/* Modal */}
+    <div
+      style={{
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        backgroundColor: '#fff',
+        padding: '25px 30px',
+        borderRadius: '10px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+        zIndex: 1000,
+        textAlign: 'center',
+        minWidth: '280px',
+        fontFamily: 'Arial, sans-serif',
+        color: '#111827',
+      }}
+    >
+      <h3 style={{ marginBottom: '15px', fontWeight: '600' }}>
+        Confirm Claim
+      </h3>
+      <p style={{ marginBottom: '20px', fontSize: '14px', color: '#4b5563', fontWeight: '600' }}>
+        Are you sure this application has been claimed sticker?
+      </p>
+
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+        <button
+          onClick={handleConfirmClaim}
+          style={{
+            flex: 1,
+            backgroundColor: '#10b981',
+            color: '#fff',
+            border: 'none',
+            padding: '8px 0',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontWeight: '500',
+            transition: 'background-color 0.2s',
+          }}
+        >
+          Yes
+        </button>
+        <button
+          onClick={() => setClaimingAppForConfirmation(null)}
+          style={{
+            flex: 1,
+            backgroundColor: '#e5e7eb',
+            color: '#374151',
+            border: 'none',
+            padding: '8px 0',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontWeight: '500',
+            transition: 'background-color 0.2s',
+          }}
+        >
+          No
+        </button>
       </div>
+    </div>
+  </>
+)}
+
       {selectedApp && (
         <div
           onClick={closeModal}
@@ -449,6 +621,8 @@ const applyFilters = (search, date, type, status = 'all') => {
             >
               <FiX />
             </button>
+
+
 
             {/* Modal Content */}
 <div
