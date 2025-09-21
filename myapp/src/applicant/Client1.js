@@ -454,7 +454,7 @@ subText: {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '200px',
+    height: '100vh',
     width: '100%',
   },
   loadingText: {
