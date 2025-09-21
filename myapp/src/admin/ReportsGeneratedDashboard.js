@@ -287,7 +287,10 @@ ${Object.entries(group.vehicleTypeCount)
 
       {/* 🔹 Local (today only if not yet finalized) */}
       {loading ? (
-        <p>Loading reports...</p>
+                        <div style={styles.loadingBox}>
+        <div style={styles.spinner}></div>
+        <p style={styles.loadingText}>Loading... please wait!</p>
+      </div>
       ) : reports.length > 0 ? (
         reports
           .filter((r) => !r.isFinal) // show only today's live
@@ -404,5 +407,38 @@ ${Object.entries(group.vehicleTypeCount)
     </div>
   );
 };
+
+
+const styles = {
+  loadingBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100vh',
+    width: '100%',
+  },
+  loadingText: {
+    fontSize: '16px',
+    color: '#555',
+    marginTop: '10px',
+    fontFamily: 'Arial, sans-serif',
+  },
+  spinner: {
+    border: '4px solid #f3f3f3',
+    borderTop: '4px solid #3498db',
+    borderRadius: '50%',
+    width: '40px',
+    height: '40px',
+    animation: 'spin 1s linear infinite',
+  },
+}
+const styleSheet = document.styleSheets[0];
+styleSheet.insertRule(`
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`, styleSheet.cssRules.length);
 
 export default ReportsGeneratedDashboard;

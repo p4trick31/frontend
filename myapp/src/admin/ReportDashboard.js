@@ -122,7 +122,12 @@ const handleSendResponse = async () => {
 };
 
 
-  if (loading) return <p style={loadingStyle}>Loading reports...</p>;
+  if (loading) return (
+             <div style={styles.loadingBox}>
+        <div style={styles.spinner}></div>
+        <p style={styles.loadingText}>Loading... please wait!</p>
+      </div>
+  );
 
   return (
     <div style={containerStyle}>
@@ -417,5 +422,39 @@ const modalBtn = {
   border: "none",
   cursor: "pointer",
 };
+
+const styles = {
+  loadingBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100vh',
+    width: '100%',
+  },
+  loadingText: {
+    fontSize: '16px',
+    color: '#555',
+    marginTop: '10px',
+    fontFamily: 'Arial, sans-serif',
+  },
+  spinner: {
+    border: '4px solid #f3f3f3',
+    borderTop: '4px solid #3498db',
+    borderRadius: '50%',
+    width: '40px',
+    height: '40px',
+    animation: 'spin 1s linear infinite',
+  },
+}
+const styleSheet = document.styleSheets[0];
+styleSheet.insertRule(`
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`, styleSheet.cssRules.length);
+// ...existing code...
+
 
 export default ReportPage;

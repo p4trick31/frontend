@@ -188,7 +188,12 @@ const applyFilters = (search, date, type, status = 'all') => {
     <div style={{ padding: '70px 50px', fontFamily: 'Arial, sans-serif', color: '#333' }}>
       <h2 style={{fontSize: '24px', fontWeight: 'bold', marginBottom: '30px', color: '#111827'}}>Application List</h2>
 
-      {loading && <p>Loading applications...</p>}
+      {loading && (
+                 <div style={styles.loadingBox}>
+        <div style={styles.spinner}></div>
+        <p style={styles.loadingText}>Loading... please wait!</p>
+      </div>
+      )}
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       {/* Search and Filter */}
@@ -718,5 +723,37 @@ const applyFilters = (search, date, type, status = 'all') => {
     </div>
   );
 };
+
+const styles = {
+  loadingBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100vh',
+    width: '100%',
+  },
+  loadingText: {
+    fontSize: '16px',
+    color: '#555',
+    marginTop: '10px',
+    fontFamily: 'Arial, sans-serif',
+  },
+  spinner: {
+    border: '4px solid #f3f3f3',
+    borderTop: '4px solid #3498db',
+    borderRadius: '50%',
+    width: '40px',
+    height: '40px',
+    animation: 'spin 1s linear infinite',
+  },
+}
+const styleSheet = document.styleSheets[0];
+styleSheet.insertRule(`
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`, styleSheet.cssRules.length);
 
 export default ApplicationList;
