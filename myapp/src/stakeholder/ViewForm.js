@@ -7,6 +7,7 @@ import { refreshAccessToken } from '../utils/tokenUtils';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { FaArrowLeft, FaSave } from 'react-icons/fa';
+import { FiLoader } from "react-icons/fi";
 
 
 
@@ -172,7 +173,41 @@ useEffect(() => {
 
 
 
-    if (loading) return <div>Loading...</div>;
+    
+if (loading)
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "200px",
+        flexDirection: "column",
+      }}
+    >
+      <FiLoader
+        size={40}
+        color="#2563eb"
+        style={{
+          animation: "spin 1s linear infinite",
+          marginBottom: "10px",
+        }}
+      />
+      <p style={{ color: "#374151", fontSize: "14px", fontWeight: "500" }}>
+        Loading, please wait...
+      </p>
+
+      {/* Inline keyframes for spin */}
+      <style>
+        {`
+          @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+        `}
+      </style>
+    </div>
+  );
     if (error) return <div>{error}</div>;
    
 
