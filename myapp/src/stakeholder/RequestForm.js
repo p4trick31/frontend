@@ -12,7 +12,7 @@ import { refreshAccessToken } from '../utils/tokenUtils';
 import RenewalModal from './modal/RenewalModal';
 import ViewApplicationModal from './modal/ViewApplicationModal';
 import { MdDashboard, MdNoteAdd, MdAutorenew, MdCheckCircle, MdPendingActions, MdVerified} from 'react-icons/md';
-import { FiKey, FiEdit, FiSave, FiX  } from "react-icons/fi"; 
+import { FiKey, FiEdit, FiSave, FiX, FiInbox } from "react-icons/fi"; 
 
 
 
@@ -1095,7 +1095,20 @@ const checkedRenewals = renewals.filter((r) => r.is_checked === true);
 
       <div style={{ flex: '1 1 auto', overflowY: 'auto', padding: '10px' }}>
         {filtered.length === 0 ? (
-          <p>There has no application request for this time.</p>
+                    <div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '200px', // adjust based on your layout
+    textAlign: 'center',
+  }}
+>
+  <FiInbox size={30} color="#9ca3af" style={{ marginBottom: '10px' }} />
+  <p style={{ color: '#6b7280', fontSize: '18px', fontWeight: '500' }}>
+    There is no application request at this time.
+  </p>
+</div>
         ) : (
           <div style={{ maxHeight: '400px', overflowY: 'auto', borderRadius: '0px' }}>
   <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 10px', padding: '10px' }}>
@@ -1275,7 +1288,20 @@ const checkedRenewals = renewals.filter((r) => r.is_checked === true);
   return false;
 })
 .length === 0 ? (
-        <p>There is no renewal request at this time.</p>
+                      <div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '200px', // adjust based on your layout
+    textAlign: 'center',
+  }}
+>
+  <FiInbox size={30} color="#9ca3af" style={{ marginBottom: '10px' }} />
+  <p style={{ color: '#6b7280', fontSize: '18px', fontWeight: '500' }}>
+    There is no renewal request at this time.
+  </p>
+</div>
       ) : (
         <div style={{ maxHeight: '400px', overflowY: 'auto', borderRadius: '0px' }}>
           <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 10px' }}>
