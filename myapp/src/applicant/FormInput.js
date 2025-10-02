@@ -115,7 +115,7 @@ const ApplicationForm = () => {
           const data = response.data;
 
           setFormData({
-            date: data.date ? data.date.slice(0, 10) : '',
+            date: today ? today.slice(0, 10) : '',
             name: data.name || '',
             address: data.address || '',
             contact: data.contact || '',
