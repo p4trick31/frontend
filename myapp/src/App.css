@@ -112,7 +112,8 @@ ul {
 .border {
   margin-top: 2rem;
   padding: 1rem;
-  border: 1px solid #facc15;
+  border-bottom: 2px solid #facc15;
+  border-left: 1px solid #facc15;
   background: #fefce8;
   border-radius: 8px;
 }

@@ -21,8 +21,10 @@ import ViewFormPage from './stakeholder/ViewForm';
 import RenewalForm  from './applicant/RenewalForm';
 import ForgotPassword from './ForgotPassword';
 import TemporarySticker from './applicant/TemporarySticker';
-import { FaUserShield, FaUserPlus, FaUsers, FaBars, FaTimes, FaSyncAlt  } from 'react-icons/fa';
+import { FaUserShield, FaUserPlus, FaUsers, FaBars, FaTimes, FaSyncAlt , FaQuestionCircle } from 'react-icons/fa';
 import debesLogo from './pic/DEBES.png';
+import { MdDashboard, MdNotes, MdCheckCircle, MdAssignment, MdPolicy, MdHelp, MdContactMail, MdAppRegistration } from "react-icons/md";
+
 
 // In your routing setu
 
@@ -432,7 +434,7 @@ function useFadeInOnScroll() {
                             </div>
 
                             <div className="right-section fade-in-section">
-                              <h3>Want to register?</h3>
+                              <h3><MdAppRegistration size={24} style={{ color: '#065f46', marginRight: '10px'}} />Want to register?</h3>
                               <p>Read instructions below and get started.</p>
                               <div className="btn_field fade-in-section" >
                                 <button
@@ -482,13 +484,13 @@ function useFadeInOnScroll() {
                                   onMouseEnter={() => setIsClientHovered(true)}
                                   onMouseLeave={() => setIsClientHovered(false)}
                                 >
-                                  <FaUsers style={{ fontSize: '18px', marginRight: '6px' }} />
+                                  <FaUsers style={{ fontSize: '35px', marginRight: '6px' }} />
                                   Admin Personnel
                                 </button>
                               </div>
 
                               <div className="border fade-in-section">
-                                <h4>Notes:</h4>
+                                <h4 style={{color: '#065f46'}}><MdNotes size={24} style={{ color: '#065f46' }} />Notes:</h4>
                                 <ul>
                                   <li>Incomplete requirements will not be processed.</li>
                                   <li>Only clear scotch tape allowed to protect the sticker.</li>
@@ -506,7 +508,7 @@ function useFadeInOnScroll() {
                       <div className="main-about">
                         <div className="about-left fade-in-section">
                           <div className="about-box fade-in-section">
-                            <h3>Our Story</h3>
+                            <h3><FaUsers size={24} style={{ color: '#065f46', marginRight: '10px'}} />Our Story</h3>
                                                        <p>   The Production and Commercialization & Security Services Unit of DEBESMSCAT was created to ensure safety, order, and discipline on campus. With the increasing number of vehicles, the Vehicle Pass Sticker Program was introduced to regulate traffic, secure the welfare of the community, and allow entry only to authorized vehicles.
 
 More than just a requirement, the sticker represents shared responsibility. By complying, students, employees, and partners help keep the campus safe, organized, and conducive to learning.</p>
@@ -526,7 +528,7 @@ More than just a requirement, the sticker represents shared responsibility. By c
 
                         <div className="about-right fade-in-section">
                           <div className="about-box fade-in-section">
-                                 <h3>Approval Process</h3>
+                                 <h3><MdCheckCircle  size={24} style={{ color: '#065f46', marginRight: '10px'}} />Approval Process</h3>
                             <p>The approval process typically includes:</p>
                             <ul>
                               <li>Applicant fills out the application form and attaches required documents.</li>
@@ -539,7 +541,7 @@ More than just a requirement, the sticker represents shared responsibility. By c
                         
 
                           <div className="terms-box fade-in-section">
-                               <h3>Terms and Conditions</h3>
+                               <h3><MdPolicy size={24} style={{ color: '#065f46', marginRight: '10px'}} />Terms and Conditions</h3>
                             <p>By applying for a vehicle sticker, you agree to comply with all relevant laws and regulations. Please read our full terms:</p>
                             <ul>
                               <li>Incomplete requirements will not be processed.</li>
@@ -555,7 +557,7 @@ More than just a requirement, the sticker represents shared responsibility. By c
 
                     <div id="Inquiry" className="section inquiry-section fade-in-section">
                       <div className="faq-box fade-in-section">
-                           <h2>Inquiries</h2>
+                           <h2><MdHelp size={24} style={{ color: '#065f46', marginRight: '10px'}} />Inquiries</h2>
                       <p>For specific questions or concerns regarding your application, please email or contact us using the information below. We are here to help you during office hours.</p>
                         <ul>
                               <li>Security Office / Assigned Personnel of Dr. Emilio B. Espinosa Sr. Memorial State College of Agriculture and Technology (DEBESMSCAT)</li>
@@ -567,7 +569,7 @@ More than just a requirement, the sticker represents shared responsibility. By c
                     <div id="FAQs" className="section faq-section fade-in-section">
                       
                       <div className="faq-box fade-in-section">
-                            <h2>Frequently Asked Questions</h2>
+                            <h2><FaQuestionCircle size={24} style={{ color: '#065f46', marginRight: '10px'}} />Frequently Asked Questions</h2>
                             <h4>Who can apply for a Vehicle Pass Sticker?</h4>
                             <ul>
                               <li>Employees of the institution</li>
@@ -596,7 +598,7 @@ More than just a requirement, the sticker represents shared responsibility. By c
                             </ul>
                           </div>
                                  <div className="faq-box fade-in-section">
-                      <h2>Contact Us</h2>
+                      <h2><MdContactMail size={24} style={{ color: '#065f46', marginRight: '10px'}} />Contact Us</h2>
                       <p>Visit us at: Cabitan, Mandaon, Masbate</p>
                       <p>Email: admission_debesmscat.edu.ph</p>
                       <p>Facebook: DEBESMSCAT_Masbate</p>
