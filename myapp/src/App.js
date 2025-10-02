@@ -641,7 +641,7 @@ More than just a requirement, the sticker represents shared responsibility. By c
     rel="noopener noreferrer" 
     className="text-blue-600 hover:underline"
   >
-    debesmscat.edu.ph
+    www.debesmscat.edu.ph
   </a>
       </p>
     </div>
