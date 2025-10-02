@@ -21,9 +21,9 @@ import ViewFormPage from './stakeholder/ViewForm';
 import RenewalForm  from './applicant/RenewalForm';
 import ForgotPassword from './ForgotPassword';
 import TemporarySticker from './applicant/TemporarySticker';
-import { FaUserShield, FaUserPlus, FaUsers, FaBars, FaTimes, FaSyncAlt , FaQuestionCircle } from 'react-icons/fa';
+import { FaUserShield, FaUserPlus, FaUsers, FaBars, FaTimes, FaSyncAlt , FaQuestionCircle, FaMapMarkerAlt, FaClock, FaPhoneAlt, FaFacebook  } from 'react-icons/fa';
 import debesLogo from './pic/DEBES.png';
-import { MdDashboard, MdNotes, MdCheckCircle, MdAssignment, MdPolicy, MdHelp, MdContactMail, MdAppRegistration } from "react-icons/md";
+import { MdLanguage , MdNotes, MdCheckCircle, MdAssignment, MdPolicy, MdHelp, MdContactMail, MdAppRegistration, MdEmail, MdLocationOn } from "react-icons/md";
 
 
 // In your routing setu
@@ -445,9 +445,9 @@ function useFadeInOnScroll() {
                                     marginRight: '10px',
                                     height: '50px',
                                     width: '150px',
-                                    border: '1px solid #d4af37',
-                                    color: isHovered ? '#fff' : '#d4af37',
-                                    backgroundColor: isHovered ? '#d4af37' : '#fff',
+                                    border: '1px solid #065f46',
+                                    color: isHovered ? '#fff' : '#065f46',
+                                    backgroundColor: isHovered ? '#065f46' : '#fff',
                                     fontSize: '15px',
                                     display: 'flex',
                                     flexDirection: 'row',
@@ -470,9 +470,9 @@ function useFadeInOnScroll() {
                                     borderRadius: '6px',
                                     height: '50px',
                                     width: '150px',
-                                    border: '1px solid #d4af37',
-                                    color: isClientHovered ? '#fff' : '#d4af37',
-                                    backgroundColor: isClientHovered ? '#d4af37' : '#fff',
+                                    border: '1px solid #065f46',
+                                    color: isClientHovered ? '#fff' : '#065f46',
+                                    backgroundColor: isClientHovered ? '#065f46' : '#fff',
                                     fontSize: '15px',
                                     display: 'flex',
                                     flexDirection: 'row',
@@ -484,7 +484,7 @@ function useFadeInOnScroll() {
                                   onMouseEnter={() => setIsClientHovered(true)}
                                   onMouseLeave={() => setIsClientHovered(false)}
                                 >
-                                  <FaUsers style={{ fontSize: '35px', marginRight: '6px' }} />
+                                  <FaUsers style={{ fontSize: '27px', marginRight: '6px' }} />
                                   Admin Personnel
                                 </button>
                               </div>
@@ -514,7 +514,7 @@ function useFadeInOnScroll() {
 More than just a requirement, the sticker represents shared responsibility. By complying, students, employees, and partners help keep the campus safe, organized, and conducive to learning.</p>
                           </div>
                           <div className="about-box fade-in-section">
-                           <h3>Requirements</h3>
+                           <h3><MdAssignment size={24} style={{ color: '#065f46', marginRight: '10px'}} />Requirements</h3>
                             <p>To apply for a vehicle sticker, you must provide:</p>
                             <ul>
                               <li>Proof of vehicle ownership (registration document)</li>
@@ -597,20 +597,54 @@ More than just a requirement, the sticker represents shared responsibility. By c
                               <li>Only CLEAR scotch tape is allowed for covering/protecting the sticker.</li>
                             </ul>
                           </div>
-                                 <div className="faq-box fade-in-section">
-                      <h2><MdContactMail size={24} style={{ color: '#065f46', marginRight: '10px'}} />Contact Us</h2>
-                      <p>Visit us at: Cabitan, Mandaon, Masbate</p>
-                      <p>Email: admission_debesmscat.edu.ph</p>
-                      <p>Facebook: DEBESMSCAT_Masbate</p>
-                      </div>
+                                <div className="faq-box fade-in-section">
+  <h2 className="flex items-center">
+    <MdContactMail size={24} style={{ color: '#065f46', marginRight: '10px' }} />
+    Contact Us
+  </h2>
+
+  <p className="flex items-center gap-2">
+    <MdLocationOn size={20} style={{ color: 'gray', marginRight: '5px' }} />
+    Visit us at: Cabitan, Mandaon, Masbate
+  </p>
+
+<p className="flex items-center gap-2">
+  <FaPhoneAlt size={20} style={{ color: 'gray', marginRight: '5px' }} />
+      Phone: 0993296513
+</p>
+
+  <p className="flex items-center gap-2">
+    <FaFacebook size={20} style={{ color: 'gray', marginRight: '5px' }} />
+    Facebook: DEBESMSCAT_Masbate
+  </p>
+</div>
                     </div>
 
                     <footer className="footer">
                       <div className="footer-content">
-                        <p className="footer-title">DEBESMSCAT Business Affairs and Security Service</p>
-                        <p>Cabitan, Mandaon, Masbate</p>
-                        <p>Office hours: 8:30 AM – 11:30 AM / 1:00 PM – 5:00 PM</p>
-                        <p>Phone: 00993296513</p>
+                    <p className="footer-title">DEBESMSCAT Business Affairs and Security Service</p>
+                           <div style={{color: 'gray'}} className="space-y-2">
+      <p  className="flex items-center gap-2">
+        <FaMapMarkerAlt size={18} style={{marginRight: '5px'}} className="text-red-600" />
+        Cabitan, Mandaon, Masbate
+      </p>
+      <p className="flex items-center gap-2">
+        <FaClock size={18} style={{marginRight: '5px'}} className="text-blue-600" />
+        Office hours: 8:30 AM – 11:30 AM / 1:00 PM – 5:00 PM
+      </p>
+      <p className="flex items-center gap-2">
+        <MdLanguage size={18} style={{marginRight: '5px'}} className="text-green-600" />
+    
+          <a 
+    href="https://debesmscat.edu.ph" 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="text-blue-600 hover:underline"
+  >
+    debesmscat.edu.ph
+  </a>
+      </p>
+    </div>
                         <p className="footer-copy">&copy; 2025 DEBESMSCAT. All rights reserved.</p>
                       </div>
                     </footer>
