@@ -1,27 +1,52 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { FaSave, FaSignature } from "react-icons/fa";
 import { FaEraser, FaX } from "react-icons/fa6";
 import SignaturePad from "react-signature-pad-wrapper";
+import axios from "axios";
 
-const SignatureModal = ({ onClose, onSave, defaultSignature }) => {
+const SignatureModal = ({ onClose, onSave }) => {
   const sigCanvas = useRef(null);
+  const [defaultSignature, setDefaultSignature] = useState(null);
 
-  // Load default signature if provided
+  // Fetch the signature directly inside the modal
+  useEffect(() => {
+    const fetchSignature = async () => {
+      try {
+        const token = localStorage.getItem("access");
+
+        const res = await axios.get("https://backendvss.pythonanywhere.com/api/current-user/", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const signature = res.data.profile?.signature;
+        if (signature) {
+          const fullURL = `https://backendvss.pythonanywhere.com${signature}`;
+          setDefaultSignature(fullURL);
+        }
+      } catch (err) {
+        console.error("Error fetching signature:", err);
+      }
+    };
+
+    fetchSignature();
+  }, []);
+
+  // Load signature onto canvas when available
   useEffect(() => {
     if (sigCanvas.current && defaultSignature) {
       const img = new Image();
-      img.crossOrigin = "anonymous"; // important for CORS
+      img.crossOrigin = "anonymous";
       img.src = defaultSignature;
 
       img.onload = () => {
-        const canvas = sigCanvas.current._sigPad._canvas; // access internal canvas
+        const canvas = sigCanvas.current._sigPad._canvas;
         const ctx = canvas.getContext("2d");
         sigCanvas.current.clear();
         ctx.drawImage(img, 0, 0);
       };
     }
   }, [defaultSignature]);
-console.log(defaultSignature)
+
   const handleSave = () => {
     if (sigCanvas.current) {
       const dataURL = sigCanvas.current.toDataURL("image/png");

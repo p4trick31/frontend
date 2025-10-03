@@ -1826,7 +1826,7 @@ const checkedRenewals = renewals.filter((r) => r.is_checked === true);
        <SignatureModal
   onClose={() => setShowSignatureModal(false)}
   onSave={handleSaveSignature}
-  defaultSignature={signatureImg}
+
 />
 
       )}
