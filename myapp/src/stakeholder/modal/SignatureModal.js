@@ -21,7 +21,7 @@ const SignatureModal = ({ onClose, onSave, defaultSignature }) => {
       };
     }
   }, [defaultSignature]);
-
+console.log(defaultSignature)
   const handleSave = () => {
     if (sigCanvas.current) {
       const dataURL = sigCanvas.current.toDataURL("image/png");

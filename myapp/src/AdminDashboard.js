@@ -229,6 +229,7 @@ useEffect(() => {
             fontWeight: 500,
             cursor: 'pointer',
             boxShadow: isSelected ? '0 3px 10px rgba(0,0,0,0.1)' : 'none',
+            fontWeight: '700'
           }}
           onClick={() => {
         setSelectedButton(page);  // save which button is selected
