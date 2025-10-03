@@ -220,8 +220,8 @@ useEffect(() => {
             width: '100%',
             padding: '12px 20px',
             marginBottom: '10px',
-            backgroundColor: isSelected ? '#333' : '#fff',
-            color: isSelected ? '#fff' : '#333',
+            backgroundColor: isSelected ? '#065f46' : '#fff',
+            color: isSelected ? '#fff' : '#065f46',
             border: '1px solid #ccc',
             borderRadius: '6px',
             textAlign: 'left',
@@ -242,13 +242,13 @@ useEffect(() => {
       onMouseEnter={(e) => {
         if (!isSelected) {
           e.target.style.backgroundColor = '#eaeaea';
-          e.target.style.color = '#000';
+          e.target.style.color = '#065f46';
         }
       }}
       onMouseLeave={(e) => {
         if (!isSelected) {
           e.target.style.backgroundColor = '#fff';
-          e.target.style.color = '#333';
+          e.target.style.color = '#065f46';
           
         }
       }}
@@ -280,7 +280,7 @@ useEffect(() => {
     fontFamily: 'Cambria',
     fontWeight: 'bold',
     transition: 'transform 0.3s ease',
-    background: selectedButton === page ? '#333' : '#fff'
+    background: selectedButton === page ? '#065f46' : '#fff'
   }}
   onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
   onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
