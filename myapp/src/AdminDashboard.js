@@ -6,7 +6,7 @@ import UserRegistered from './admin/UserRegistered';
 import ReportDashboard from './admin/ReportDashboard';
 import ReportsGenerated from './admin/ReportsGeneratedDashboard';
 import ApplicationList from './admin/ApplicationList';
-import { FaSignOutAlt } from 'react-icons/fa';
+import { FaSignOutAlt,   FaUserShield} from 'react-icons/fa';
 import { refreshAccessToken  } from './utils/tokenUtils';
 
 
@@ -194,13 +194,14 @@ useEffect(() => {
     borderRight: '1px solid #e0e0e0',
     transition: 'all 0.3s ease',
   }}>
-    <h2 style={{
+     <h2 style={{
       marginBottom: '30px',
       fontSize: '1.4rem',
-      borderBottom: '2px solid #222',
-      paddingBottom: '8px',
-      color: '#222'
+      borderBottom: '2px solid #065f46',
+      paddingBottom: '3px',
+      color: '#065f46'
     }}>
+      <FaUserShield style={{ color: "#065f46", marginRight: '8px', fontSize: '35px' }} />
       Admin Panel
     </h2>
 
