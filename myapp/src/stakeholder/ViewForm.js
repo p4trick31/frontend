@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -113,7 +112,7 @@ useEffect(() => {
   const fetchForm = async () => {
     try {
       const newToken = await refreshAccessToken();
-      const response = await axios.get(`http://localhost:8000/api/form-view/${id}/`, {
+      const response = await axios.get(`https://backendvss.pythonanywhere.com/api/form-view/${id}/`, {
         headers: { Authorization: `Bearer ${newToken}` }
       });
 
@@ -131,7 +130,7 @@ useEffect(() => {
         const newToken = await refreshAccessToken();
         if (newToken) {
           try {
-            const retryResponse = await axios.get(`http://localhost:8000/api/form-view/${id}/`, {
+            const retryResponse = await axios.get(`https://backendvss.pythonanywhere.com/api/form-view/${id}/`, {
               headers: { Authorization: `Bearer ${newToken}` }
             });
 
@@ -543,7 +542,7 @@ FORM
     src={
       selectedForm.picture_id.startsWith('http')
         ? selectedForm.picture_id
-        : `http://localhost:8000${selectedForm.picture_id}`
+        : `https://backendvss.pythonanywhere.com${selectedForm.picture_id}`
     }
     alt="Uploaded Photos"
     style={{
@@ -652,7 +651,7 @@ FORM
     src={
       selectedForm.signature.startsWith('http')
         ? selectedForm.signature
-        : `http://localhost:8000${selectedForm.signature}`
+        : `https://backendvss.pythonanywhere.com${selectedForm.signature}`
     }
     alt="Checker's Signature"
     style={{
@@ -681,7 +680,7 @@ FORM
   src={
     selectedForm.signature2.startsWith('http')
       ? selectedForm.signature2
-      : `http://localhost:8000${selectedForm.signature2}`
+      : `https://backendvss.pythonanywhere.com${selectedForm.signature2}`
   }
   alt="Approver's Signature"
   style={{
