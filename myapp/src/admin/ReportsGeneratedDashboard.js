@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { refreshAccessToken } from "../utils/tokenUtils";
 import { jsPDF } from "jspdf";
-import { FiDownload } from "react-icons/fi";
+import { FiDownload, FiRefreshCw} from "react-icons/fi";
 
 const ReportsGeneratedDashboard = () => {
   const [reports, setReports] = useState([]);
@@ -11,6 +11,10 @@ const ReportsGeneratedDashboard = () => {
   const [expandedIndex, setExpandedIndex] = useState(null);
 
   // 🔹 Save report to DB (finalize)
+      const handleRefresh = () => {
+    window.location.reload(); // Refreshes the page
+  };
+  
   const saveReportToDB = async (report) => {
     try {
       let token = localStorage.getItem("access");
@@ -291,7 +295,41 @@ ${Object.entries(group.vehicleTypeCount)
 
   return (
     <div style={containerStyle}>
+          <div style={{display: 'flex', justifyContent: 'space-between'}}>
       <h2 style={headerStyle}>Daily Report Summary</h2>
+     <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "10px",
+        padding: "10px 15px",
+        borderRadius: "10px",
+        fontFamily: "Poppins, sans-serif",
+        width: "fit-content",
+      }}
+    >
+      <button
+        onClick={handleRefresh}
+        style={{
+          background: "none",
+          border: "none",
+          cursor: "pointer",
+          fontSize: "22px",
+          color: "#2563eb",
+          transition: "transform 0.2s ease",
+        }}
+        onMouseOver={(e) => (e.currentTarget.style.transform = "rotate(90deg)")}
+        onMouseOut={(e) => (e.currentTarget.style.transform = "rotate(0deg)")}
+        title="Refresh Page"
+      >
+        <FiRefreshCw />
+      </button>
+
+      <p style={{ margin: 0, fontSize: "15px", color: "#333", padding: '5px', borderBottom: '1px solid #2563eb', borderRadius: '10px'}}>
+        Please <strong>refresh</strong> if you want to save from yesterday report.
+      </p>
+    </div>
+    </div>
 
   {reports.length > 0 ? (
         reports
@@ -343,7 +381,7 @@ ${Object.entries(group.vehicleTypeCount)
 
       {/* 🔹 DB Finalized Reports */}
       <h2 style={{ ...headerStyle, marginTop: 50 }}>
-        Finalized Reports (Saved in DB)
+          Saved Report History 
       </h2>
       {dbReports.length > 0 ? (
         dbReports.map((r, i) => (
