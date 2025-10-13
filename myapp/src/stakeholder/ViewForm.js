@@ -6,7 +6,7 @@ import logo_ph from '../pic/logo_ph.png'
 import { refreshAccessToken } from '../utils/tokenUtils';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { FaArrowLeft, FaSave, FaCut } from 'react-icons/fa';
+import { FaArrowLeft, FaSave, FaSpinner, FaCheck, FaCut } from 'react-icons/fa';
 
 
 
@@ -21,7 +21,8 @@ const ViewFormPage = () => {
     const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0); 
     const [photoProxy, setPhotoProxy] = useState(null);
     const [signature1Proxy, setSignature1Proxy] = useState(null);
-    const [signature2Proxy, setSignature2Proxy] = useState(null); // current vehicle photo index
+    const [signature2Proxy, setSignature2Proxy] = useState(null);
+    const [status, setStatus] = useState('idle');  // current vehicle photo index
 
   const formRef = useRef();
 
@@ -72,6 +73,20 @@ const ViewFormPage = () => {
 
   loadAllImages();
 }, [selectedForm]);
+
+const handleClick = async () => {
+    setStatus('loading');
+
+    // Simulate PDF generation time (replace this with your actual function)
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+
+    await handleDownloadPDF();
+
+    setStatus('done');
+
+    // Reset back to idle after 2 seconds
+    setTimeout(() => setStatus('idle'), 2000);
+  };
 
 const handleDownloadPDF = () => {
   const input = formRef.current;
@@ -291,28 +306,40 @@ useEffect(() => {
        <FaArrowLeft />
       </button>       
       <button
-  onClick={handleDownloadPDF}
-  style={{
-  
-    top: '50%',
-    left: '50%',
-    padding: '5px',
-    backgroundColor: '#ffffff',
-    border: '1px solid #065f46',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: '#065f46',
-    gap: '10px',
-    fontWeight: 'bold'
-  }}
-  title="Download as PDF"
->
-  <FaSave size={25} /> Download as PDF
-</button>
+        onClick={handleClick}
+        disabled={status === 'loading'}
+        style={{
+          padding: '10px 15px',
+          backgroundColor: status === 'done' ? '#065f46' : '#ffffff',
+          border: '1px solid #065f46',
+          borderRadius: '5px',
+          cursor: status === 'loading' ? 'not-allowed' : 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: status === 'done' ? '#fff' : '#065f46',
+          gap: '10px',
+          fontWeight: 'bold',
+          minWidth: '200px',
+          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+          transition: 'all 0.3s ease',
+        }}
+        title="Download as PDF"
+      >
+        <FaSave size={20} />
+        {status === 'loading' ? 'Generating PDF...' : status === 'done' ? 'Download Complete' : 'Download as PDF'}
 
+        {/* Right Side Icon */}
+        {status === 'loading' && (
+          <FaSpinner
+            size={18}
+            style={{ marginLeft: '8px', animation: 'spin 1s linear infinite' }}
+          />
+        )}
+        {status === 'done' && (
+          <FaCheck size={18} style={{ marginLeft: '8px', color: '#fff' }} />
+        )}
+      </button>
 
       
     </div>
