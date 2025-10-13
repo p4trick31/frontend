@@ -309,7 +309,7 @@ useEffect(() => {
         onClick={handleClick}
         disabled={status === 'loading'}
         style={{
-          padding: '10px 15px',
+          padding: '7px 12px',
           backgroundColor: status === 'done' ? '#065f46' : '#ffffff',
           border: '1px solid #065f46',
           borderRadius: '5px',
