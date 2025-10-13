@@ -36,8 +36,8 @@ const RenewalModal = ({ isOpen, onClose, renewal, handleApprove, handleClientApp
 
 
     useEffect(() => {
-    const timer1 = setTimeout(() => setLoadingORCR(false), 2000);
-    const timer2 = setTimeout(() => setLoadingLicense(false), 2000);
+    const timer1 = setTimeout(() => setLoadingORCR(false), 3000);
+    const timer2 = setTimeout(() => setLoadingLicense(false), 3000);
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
@@ -243,7 +243,7 @@ const confirmApprove = async () => {
               display: loadingORCR ? "none" : "block",
               transition: "opacity 0.5s ease-in-out",
             }}
-            onLoad={() => setTimeout(() => setLoadingORCR(false), 2000)} // waits 2s
+            onLoad={() => setTimeout(() => setLoadingORCR(false), 3000)} // waits 2s
             onClick={() => setPreviewImage(renewal.orcr_file_url)}
           />
         </div>
@@ -277,7 +277,7 @@ const confirmApprove = async () => {
               display: loadingLicense ? "none" : "block",
               transition: "opacity 0.5s ease-in-out",
             }}
-            onLoad={() => setTimeout(() => setLoadingLicense(false), 2000)} // waits 2s
+            onLoad={() => setTimeout(() => setLoadingLicense(false), 3000)} // waits 2s
             onClick={() => setPreviewImage(renewal.license_photo_url)}
           />
         </div>

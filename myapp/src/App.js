@@ -753,7 +753,6 @@ More than just a requirement, the sticker represents shared responsibility. By c
 
 
                             <Route path="/dashboard-client" element={<ClientLogin />} />
-                            <Route path="/admin" element={<AdminDashboard onLogout={handleLogout}/>} />
                             <Route path="/form-view" element={<ViewFormPage />} />
                             <Route path="/form-view/:id" element={<ViewFormPage />} />
                             <Route path="/temporary-sticker/:id" element={<TemporarySticker />} />
