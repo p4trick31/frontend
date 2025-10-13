@@ -161,7 +161,7 @@ const Person2Page = () => {
                     <p style={styles.infoDetail}><strong>Validated by:</strong> Nonalyn Tombocon (Approving Officer)</p>
                     <p style={styles.infoDetail}>
                       <strong>Date & Time Approved:</strong>{' '}
-                       {new Date(application.approved_time).toLocaleString('en-US', {
+                       {new Date(application.client2_approved_time).toLocaleString('en-US', {
                           year: 'numeric',
                           month: 'long',
                           day: 'numeric',
