@@ -204,7 +204,7 @@ document.head.appendChild(style);
         <h4 style={{margin: '2px'}}>Republic of the Philippines</h4>
         <h3 style={{margin: '2px'}}>DEBESMSCAT</h3>
         <h4 style={{margin: '2px'}}>(Masbate State College)</h4>
-        <h4 style={{margin: '2px'}}>PRODUCTION AND COMMERCIALIZATION</h4>
+        <h4 style={{margin: '2px'}}>PRODUCTION AND AUXILIARY SERVICES</h4>
         <p style={{ color: '#065f46', margin: '2px' }}>www.debesmscat.edu.ph</p>
         <h3>(DEBESMSCAT Vehicle Pass)</h3>
       </div>

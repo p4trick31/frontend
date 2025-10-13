@@ -503,7 +503,7 @@ if (formData.photos.length) {
           <h4 style={textStyle}>DR. EMILIO B. ESPINOSA, SR. MEMORIAL</h4>
           <h4 style={textStyle}>STATE COLLEGE OF AGRICULTURE AND TECHNOLOGY</h4>
           <h5 style={textStyle}>(Masbate State College)</h5>
-          <h4 style={{ ...textStyle, color: '#065f46' }}>PRODUCTION AND COMMERCIALIZATION</h4>
+          <h4 style={{ ...textStyle, color: '#065f46' }}>PRODUCTION AND AUXILIARY SERVICES</h4>
           <h5 style={textStyle}>Mandaon, Masbate</h5>
           <h5 style={textStyle}>www.debesmscat.edu.ph</h5>
           <h5 style={textStyle}>(DEBESMSCAT Vehicle Pass)</h5>

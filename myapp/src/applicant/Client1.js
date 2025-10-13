@@ -108,7 +108,7 @@ const Person1Page = () => {
 
       <img src={logo} alt="Logo" style={styles.logo} />
       <h2 style={styles.header}>DEBESMSCAT</h2>
-      <h4 style={styles.subHeader}>PRODUCTION AND COMMERCIALIZATION</h4>
+      <h4 style={styles.subHeader}>PRODUCTION AND AUXILIARY SERVICES</h4>
       <p style={styles.subText}>Cabitan, Mandaon, Masbate</p>
       <p style={styles.subText}>www.debesmscat.edu.ph</p>
       <p style={styles.subText}>(DEBESMSCAT Vehicle Pass)</p>

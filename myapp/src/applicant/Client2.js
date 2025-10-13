@@ -90,7 +90,7 @@ const Person2Page = () => {
 
       <img src={logo} alt="Logo" style={styles.logo} />
       <h2 style={styles.header}>DEBESMSCAT</h2>
-      <h4 style={styles.subHeader}>PRODUCTION AND COMMERCIALIZATION</h4>
+      <h4 style={styles.subHeader}>PRODUCTION AND AUXILIARY SERVICES</h4>
       <p style={styles.subText}>Cabitan, Mandaon, Masbate</p>
       <p style={styles.subText}>www.debesmscat.edu.ph</p>
       <p style={styles.subText}>(DEBESMSCAT Vehicle Pass)</p>
@@ -143,12 +143,12 @@ const Person2Page = () => {
                 {approvalStatus[application.id] ? (
                   <p style={styles.messageApproved}>
                       <FaCheckCircle style={{ color: '#16a34a', marginRight: '8px', verticalAlign: 'middle' }} />
-                    Hi <strong>{application.name}</strong>, your application has been approved by Nonalyn Tombocon!
+                    Hi <strong>{application.name}</strong>, your application has been approved by Mr. Erwin S. Oliva!
                   </p>
                 ) : (
                   <p style={styles.messageChecking}>
                      <FaHourglassHalf style={{ color: '#f59e0b', marginRight: '8px', verticalAlign: 'middle' }} />
-                    Hi <strong>{application.name}</strong>, your request form has been generated submit to Nonalyn Tombocon. Please wait for approval within several hours.
+                    Hi <strong>{application.name}</strong>, your request form has been generated submit to Mr. Erwin S. Oliva. Please wait for approval within several hours.
                   </p>
                 )}
               </p>
@@ -158,7 +158,7 @@ const Person2Page = () => {
 
               {application.is_client2_approved && (
                 <div style={styles.approvalInfo}>
-                    <p style={styles.infoDetail}><strong>Validated by:</strong> Nonalyn Tombocon (Approving Officer)</p>
+                    <p style={styles.infoDetail}><strong>Validated by:</strong> Mr. Erwin S. Oliva (Approving Officer)</p>
                     <p style={styles.infoDetail}>
                       <strong>Date & Time Approved:</strong>{' '}
                        {new Date(application.client2_approved_time).toLocaleString('en-US', {
@@ -219,8 +219,8 @@ const Person2Page = () => {
                  }}
                >
                  <FaUserCircle size={50} color="#065f46" />
-                 <p style={{ margin: '6px 0 0', fontWeight: 'bold' }}>Ms. Nonalyn D. Tombocon</p>
-                 <p style={{ margin: '2px 0', fontSize: '12px', color: '#6b7280' }}>Director, Production & Commercialization</p>
+                 <p style={{ margin: '6px 0 0', fontWeight: 'bold' }}>Atty. Erwin S. Oliva</p>
+                 <p style={{ margin: '2px 0', fontSize: '12px', color: '#6b7280' }}>Chief Administrative Officer</p>
                </div>
              )}
            </div>

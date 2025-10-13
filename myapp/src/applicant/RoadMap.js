@@ -161,7 +161,7 @@ const isStep3Clickable = stickerDoneStatus === 'active' || stickerDoneStatus ===
             />
             {hoveredStep === 2 && (
               <div style={styles.tooltip}>
-                Nonalyn Tombocon validating your approved application.
+                 Erwin Oliva validating your approved application.
               </div>
             )}
           </div>

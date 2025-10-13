@@ -722,10 +722,10 @@ const checkedRenewals = renewals.filter((r) => r.is_checked === true);
   <FaUserCircle size={70} color="#065f46" style={{ marginBottom: '10px' }} />
 
   <h4 style={{ margin: '0', fontSize: '16px', color: '#333', textAlign: 'center' }}>
-    <strong>{userPosition === 'personnel1' ? 'Mr. Richard J. Sales' : 'Nonalyn D. Tombocon' }</strong>
+    <strong>{userPosition === 'personnel1' ? 'Mr. Richard J. Sales' : 'Atty. Erwin S. Oliva' }</strong>
   </h4>
   <p style={{ fontSize: '12px', color: '#065f46', marginTop: '4px', textAlign: 'center' }}>
-    {userPosition === 'personnel1' ? 'Chief, Security Service' : 'Director, Production & Commercialization'}
+    {userPosition === 'personnel1' ? 'Chief, Security Service' : 'Chief Administrative Officer'}
   </p>
 </div>
 
@@ -733,7 +733,7 @@ const checkedRenewals = renewals.filter((r) => r.is_checked === true);
   <div style={{ textAlign: 'center', flexGrow: 1, color: '#1f2937' }}>
     <img src={logo} alt="Logo" style={{ width: '80px', marginBottom: '5px' }} />
     <h2 style={{ margin: '2px 0' }}>DEBESMSCAT</h2>
-    <h5 style={{ margin: '2px 0' }}>PRODUCTION AND COMMERCIALIZATION</h5>
+    <h5 style={{ margin: '2px 0' }}>PRODUCTION AND AUXILIARY SERVICES</h5>
     <p style={{ margin: '2px 0' }}>Cabitan, Mandaon, Masbate</p>
     <h5 style={{ margin: '2px 0', color: '#065f46' }}>www.debesmscat.edu.ph</h5>
     <h5 style={{ margin: '2px 0' }}>(DEBESMSCAT Vehicle Pass)</h5>

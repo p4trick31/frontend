@@ -713,7 +713,7 @@ useEffect(() => {
           <h3 style={{ margin: '5px 0' }}>DR. EMILIO B. ESPINOSA, SR. MEMORIAL</h3>
           <h4 style={{ margin: '5px 0' }}>STATE COLLEGE OF AGRICULTURE AND TECHNOLOGY</h4>
           <h5 style={{ margin: '5px 0' }}>(Masbate State College)</h5>
-          <h5 style={{ margin: '5px 0' }}>PRODUCTION AND COMMERCIALIZATION</h5>
+          <h5 style={{ margin: '5px 0' }}>PRODUCTION AND AUXILIARY SERVICES</h5>
           <h5 style={{ margin: '5px 0', color: '#065f46' }}>www.debesmscat.edu.ph</h5>
           <h5 style={{ margin: '5px 0' }}>(DEBESMSCAT Vehicle Pass)</h5>
         </div>
