@@ -18,9 +18,57 @@ const ViewFormPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);  // current vehicle photo index
+    const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0); 
+    const [photoProxy, setPhotoProxy] = useState(null);
+    const [signature1Proxy, setSignature1Proxy] = useState(null);
+    const [signature2Proxy, setSignature2Proxy] = useState(null); // current vehicle photo index
 
   const formRef = useRef();
+
+   const loadImageWithProxy = async (url) => {
+    try {
+      const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+      const response = await fetch(proxyUrl);
+      const blob = await response.blob();
+      return URL.createObjectURL(blob);
+    } catch (error) {
+      console.error("Proxy image load failed:", error);
+      return null;
+    }
+  };
+
+  // 🔹 Load all 3 images through the proxy
+  useEffect(() => {
+    const loadAllImages = async () => {
+      // Picture (photo)
+      if (selectedForm.picture_id) {
+        const url = selectedForm.picture_id.startsWith("http")
+          ? selectedForm.picture_id
+          : `https://backendvss.pythonanywhere.com${selectedForm.picture_id}`;
+        const proxy = await loadImageWithProxy(url);
+        setPhotoProxy(proxy);
+      }
+
+      // Checker’s signature
+      if (selectedForm.signature) {
+        const url = selectedForm.signature.startsWith("http")
+          ? selectedForm.signature
+          : `https://backendvss.pythonanywhere.com${selectedForm.signature}`;
+        const proxy = await loadImageWithProxy(url);
+        setSignature1Proxy(proxy);
+      }
+
+      // Approver’s signature
+      if (selectedForm.signature2) {
+        const url = selectedForm.signature2.startsWith("http")
+          ? selectedForm.signature2
+          : `https://backendvss.pythonanywhere.com${selectedForm.signature2}`;
+        const proxy = await loadImageWithProxy(url);
+        setSignature2Proxy(proxy);
+      }
+    };
+    loadAllImages();
+  }, [selectedForm.picture_id, selectedForm.signature, selectedForm.signature2]);
 
 const handleDownloadPDF = () => {
   const input = formRef.current;
@@ -566,34 +614,31 @@ FORM
 
 
 </div>
-<div
-    style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        marginTop: '5px'
-    }}
->
-   {selectedForm.picture_id ? (
-  <img
-    src={
-      selectedForm.picture_id.startsWith('http')
-        ? selectedForm.picture_id
-        : `https://backendvss.pythonanywhere.com${selectedForm.picture_id}`
-    }
-    alt="Uploaded Photos"
-    style={{
-      width: '140px',
-      height: '140px',
-      borderRadius: '2px',
-      border: '1px solid #333 ',
-    }}
-  />
-) : (
-  <span>No photos uploaded.</span>
-)}
 
-</div>
+ <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop: "10px",
+          }}
+        >
+          {photoProxy ? (
+            <img
+              src={photoProxy}
+              alt="Uploaded Photo"
+              style={{
+                width: "140px",
+                height: "140px",
+                borderRadius: "2px",
+                border: "1px solid #333",
+              }}
+            />
+          ) : (
+            <span>No photo uploaded.</span>
+          )}
+        </div>
+
 </div>
 
                
@@ -683,23 +728,19 @@ FORM
   <div style={{ textAlign: 'center' }}>
     <p style={{ fontSize: '14px',  marginTop: '40px', textAlign: 'left', marginLeft: '-100px'}}>Checked & <br></br><span style={{marginLeft: '20px'}}>Inspected by:</span></p>
     
-{selectedForm.signature && (
-  <img
-    src={
-      selectedForm.signature.startsWith('http')
-        ? selectedForm.signature
-        : `https://backendvss.pythonanywhere.com${selectedForm.signature}`
-    }
-    alt="Checker's Signature"
-    style={{
-      display: 'flex',
-      position: 'absolute',
-      width: '100px',
-      marginLeft: '60px',
-      marginTop: '-40px',
-    }}
-  />
-)}
+ {signature1Proxy && (
+            <img
+              src={signature1Proxy}
+              alt="Checker's Signature"
+              style={{
+                display: "flex",
+                position: "absolute",
+                width: "100px",
+                marginLeft: "180px",
+                marginTop: "-40px",
+              }}
+            />
+          )}
 
 
     <div style={{ borderBottom: '2px solid black', width: '160px', paddingBottom: '1px', marginLeft: '35px' }}>
@@ -711,25 +752,19 @@ FORM
   {/* Approval Section */}
   <div style={{ textAlign: 'center' }}>
     <p style={{ fontSize: '14px',  marginTop: '20px', textAlign: 'left', marginLeft: '-100px' }}>Approved:</p>
-    {selectedForm.signature2 && (
- <img
-  crossOrigin="anonymous"
-  src={
-    selectedForm.signature2.startsWith('http')
-      ? selectedForm.signature2
-      : `https://backendvss.pythonanywhere.com${selectedForm.signature2}`
-  }
-  alt="Approver's Signature"
-  style={{
-    display: 'flex',
-    position: 'absolute',
-    width: '100px',
-    marginLeft: '60px',
-    marginTop: '-40px',
-  }}
-/>
-
-)}
+            {signature2Proxy && (
+            <img
+              src={signature2Proxy}
+              alt="Approver's Signature"
+              style={{
+                display: "flex",
+                position: "absolute",
+                width: "100px",
+                marginLeft: "60px",
+                marginTop: "-40px",
+              }}
+            />
+          )}
       <div style={{ borderBottom: '2px solid black', width: '190px', paddingBottom: '1px', marginLeft: '20px' }}>
       <strong>ATTY. ERWIN S. OLIVA</strong>
     </div>
