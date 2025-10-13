@@ -10,7 +10,6 @@ const PendingRenewalPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedRenewalId, setSelectedRenewalId] = useState(null);
   const [newPicture, setNewPicture] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   
 
@@ -81,14 +80,6 @@ const PendingRenewalPage = () => {
     }
   };
 
-  
-     if (loading) return (
-     <div style={styles.loadingBox}>
-        <div style={styles.spinner}></div>
-        <p style={styles.loadingText}>Loading... please wait!</p>
-      </div>
-  );
-  if (error) return <div>{error}</div>;
 
   return (
    
@@ -383,7 +374,6 @@ const modalOverlay = {
   zIndex: 9999
 };
 
-
 const modalContent = {
   backgroundColor: '#fff',
   padding: '30px',
@@ -438,29 +428,6 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
   },
-    loadingBox: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100vh',
-    width: '100%',
-  },
-  loadingText: {
-    fontSize: '16px',
-    color: '#555',
-    marginTop: '10px',
-    fontFamily: 'Arial, sans-serif',
-  },
-  spinner: {
-    border: '4px solid #f3f3f3',
-    borderTop: '4px solid #3498db',
-    borderRadius: '50%',
-    width: '40px',
-    height: '40px',
-    animation: 'spin 1s linear infinite',
-  },
 }
-
 
 export default PendingRenewalPage;
