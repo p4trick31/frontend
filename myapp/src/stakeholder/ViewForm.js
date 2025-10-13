@@ -739,8 +739,8 @@ FORM
                 display: "flex",
                 position: "absolute",
                 width: "100px",
-                marginLeft: "80px",
-                marginTop: "-40px",
+                marginLeft: "70px",
+                marginTop: "-45px",
               }}
             />
           )}
@@ -764,7 +764,7 @@ FORM
                 position: "absolute",
                 width: "100px",
                 marginLeft: "60px",
-                marginTop: "-50px",
+                marginTop: "-45px",
               }}
             />
           )}
