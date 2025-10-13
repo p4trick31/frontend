@@ -39,36 +39,39 @@ const ViewFormPage = () => {
 
   // 🔹 Load all 3 images through the proxy
   useEffect(() => {
-    const loadAllImages = async () => {
-      // Picture (photo)
-      if (selectedForm.picture_id) {
-        const url = selectedForm.picture_id.startsWith("http")
-          ? selectedForm.picture_id
-          : `https://backendvss.pythonanywhere.com${selectedForm.picture_id}`;
-        const proxy = await loadImageWithProxy(url);
-        setPhotoProxy(proxy);
-      }
+  const loadAllImages = async () => {
+    if (!selectedForm) return; // ⛔ Stop if selectedForm is null
 
-      // Checker’s signature
-      if (selectedForm.signature) {
-        const url = selectedForm.signature.startsWith("http")
-          ? selectedForm.signature
-          : `https://backendvss.pythonanywhere.com${selectedForm.signature}`;
-        const proxy = await loadImageWithProxy(url);
-        setSignature1Proxy(proxy);
-      }
+    // Picture (photo)
+    if (selectedForm.picture_id) {
+      const url = selectedForm.picture_id.startsWith("http")
+        ? selectedForm.picture_id
+        : `https://backendvss.pythonanywhere.com${selectedForm.picture_id}`;
+      const proxy = await loadImageWithProxy(url);
+      setPhotoProxy(proxy);
+    }
 
-      // Approver’s signature
-      if (selectedForm.signature2) {
-        const url = selectedForm.signature2.startsWith("http")
-          ? selectedForm.signature2
-          : `https://backendvss.pythonanywhere.com${selectedForm.signature2}`;
-        const proxy = await loadImageWithProxy(url);
-        setSignature2Proxy(proxy);
-      }
-    };
-    loadAllImages();
-  }, [selectedForm.picture_id, selectedForm.signature, selectedForm.signature2]);
+    // Checker’s signature
+    if (selectedForm.signature) {
+      const url = selectedForm.signature.startsWith("http")
+        ? selectedForm.signature
+        : `https://backendvss.pythonanywhere.com${selectedForm.signature}`;
+      const proxy = await loadImageWithProxy(url);
+      setSignature1Proxy(proxy);
+    }
+
+    // Approver’s signature
+    if (selectedForm.signature2) {
+      const url = selectedForm.signature2.startsWith("http")
+        ? selectedForm.signature2
+        : `https://backendvss.pythonanywhere.com${selectedForm.signature2}`;
+      const proxy = await loadImageWithProxy(url);
+      setSignature2Proxy(proxy);
+    }
+  };
+
+  loadAllImages();
+}, [selectedForm]);
 
 const handleDownloadPDF = () => {
   const input = formRef.current;
