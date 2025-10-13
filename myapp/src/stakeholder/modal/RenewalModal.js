@@ -12,6 +12,37 @@ const RenewalModal = ({ isOpen, onClose, renewal, handleApprove, handleClientApp
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isApproving, setIsApproving] = useState(false);
   const [userPosition, setUserPosition] = useState(null);
+  const [loadingORCR, setLoadingORCR] = useState(true);
+  const [loadingLicense, setLoadingLicense] = useState(true);
+  
+
+  const shimmerStyle = {
+    width: "250px",
+    height: "200px",
+    borderRadius: "5px",
+    border: "1px solid #333",
+    background: "linear-gradient(90deg, #f5f5f5 25%, #dcdcdc 50%, #f5f5f5 75%)",
+    backgroundSize: "200% 100%",
+    animation: "shimmer 5s infinite", // slower shimmer
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#333",
+    fontWeight: "600",
+    fontFamily: "Cambria",
+    fontSize: "14px",
+    textShadow: "0 1px 1px rgba(255,255,255,0.3)",
+  };
+
+
+    useEffect(() => {
+    const timer1 = setTimeout(() => setLoadingORCR(false), 2000);
+    const timer2 = setTimeout(() => setLoadingLicense(false), 2000);
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
+  }, []);
   
 
   
@@ -183,40 +214,89 @@ const confirmApprove = async () => {
 </div>
 
 
-          <div style={{display: 'flex', gap: '50px'}}>
-          {renewal.orcr_file_url && (
-            <div>
-              <p style={{color: '#333',
-    fontFamily: 'Cambria',
-    fontWeight: 'bold',
-    fontSize: '18px',}}>OR/CR:</p>
-              
+                   <div style={{ display: "flex", gap: "50px" }}>
+      {/* OR/CR Section */}
+      {renewal.orcr_file_url && (
+        <div>
+          <p
+            style={{
+              color: "#333",
+              fontFamily: "Cambria",
+              fontWeight: "bold",
+              fontSize: "18px",
+            }}
+          >
+            OR/CR:
+          </p>
 
-             <img
-  src={renewal.orcr_file_url}
-  alt="OR/CR"
-  style={{ width: '250px', height: '200px', cursor: 'pointer', border: '1px solid #065f46', borderRadius: '5px' }}
-  onClick={() => setPreviewImage(renewal.orcr_file_url)}
-/>
+          {loadingORCR && <div style={shimmerStyle}>Loading...</div>}
 
-            </div>
-          )}
-          {renewal.license_photo_url && (
-            <div>
-              <p  style={{color: '#333',
-    fontFamily: 'Cambria',
-    fontWeight: 'bold',
-    fontSize: '18px',}}>Driver's License:</p>
-             <img
-  src={renewal.license_photo_url}
-  alt="License"
-  style={{ width: '250px', height: '200px', cursor: 'pointer', border: '1px solid #065f46', borderRadius: '5px' }}
-  onClick={() => setPreviewImage(renewal.license_photo_url)}
-/>
-
-            </div>
-          )}
+          <img
+            src={renewal.orcr_file_url}
+            alt="OR/CR"
+            style={{
+              width: "250px",
+              height: "200px",
+              cursor: "pointer",
+              border: "1px solid #065f46",
+              borderRadius: "5px",
+              display: loadingORCR ? "none" : "block",
+              transition: "opacity 0.5s ease-in-out",
+            }}
+            onLoad={() => setTimeout(() => setLoadingORCR(false), 2000)} // waits 2s
+            onClick={() => setPreviewImage(renewal.orcr_file_url)}
+          />
         </div>
+      )}
+
+      {/* Driver's License Section */}
+      {renewal.license_photo_url && (
+        <div>
+          <p
+            style={{
+              color: "#333",
+              fontFamily: "Cambria",
+              fontWeight: "bold",
+              fontSize: "18px",
+            }}
+          >
+            Driver's License:
+          </p>
+
+          {loadingLicense && <div style={shimmerStyle}>Loading...</div>}
+
+          <img
+            src={renewal.license_photo_url}
+            alt="License"
+            style={{
+              width: "250px",
+              height: "200px",
+              cursor: "pointer",
+              border: "1px solid #065f46",
+              borderRadius: "5px",
+              display: loadingLicense ? "none" : "block",
+              transition: "opacity 0.5s ease-in-out",
+            }}
+            onLoad={() => setTimeout(() => setLoadingLicense(false), 2000)} // waits 2s
+            onClick={() => setPreviewImage(renewal.license_photo_url)}
+          />
+        </div>
+      )}
+
+      {/* CSS animation */}
+      <style>
+        {`
+          @keyframes shimmer {
+            0% {
+              background-position: -200% 0;
+            }
+            100% {
+              background-position: 200% 0;
+            }
+          }
+        `}
+      </style>
+    </div>
         </div>
 
        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
