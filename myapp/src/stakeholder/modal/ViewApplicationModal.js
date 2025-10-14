@@ -624,7 +624,6 @@ const disapproveApplication = async () => {
       border: '1px solid #ccc',
       background: '#fafafa',
       cursor: 'pointer',
-      opacity: isImageLoading ? 0 : 1,
       transition: 'opacity 1.5s ease', // smooth fade-in
     }}
     onClick={() => setIsFullscreen(true)}
