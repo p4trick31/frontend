@@ -59,6 +59,33 @@ const ViewApplicationModal = ({ application, selectedForm, onClose, onApprove, o
   const [showReasonModal, setshowReasonModal] = useState(false);
   const [selectedReason, setSelectedReason] = useState('');
   const [disapproveMessage, setDisapproveMessage] = useState('');
+  const [loading, setLoading] = useState(true);
+
+
+  useEffect(() => {
+    if (application.picture_id) {
+      const timer = setTimeout(() => setLoading(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [application.picture_id]);
+
+    const shimmerStyle = {
+    width: "120px",
+    height: "120px",
+    borderRadius: "4px",
+    border: "1px solid #333",
+    background: "linear-gradient(90deg, #f5f5f5 25%, #dcdcdc 50%, #f5f5f5 75%)",
+    backgroundSize: "200% 100%",
+    animation: "shimmer 3s infinite", // slow gradient shimmer
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#333",
+    fontWeight: "600",
+    fontFamily: "Cambria",
+    fontSize: "14px",
+    textShadow: "0 1px 1px rgba(255,255,255,0.3)",
+  };
 
 
 
@@ -332,20 +359,42 @@ const disapproveApplication = async () => {
   {/* Right: Application Details */}
   <div>
    <div style={{ display: 'flex', justifyContent: 'left' }}>
-          {application.picture_id ? (
-  <img src={`https://backendvss.pythonanywhere.com/${application.picture_id}`} 
-              alt="Uploaded"
-              style={{
-                width: '120px',
-                height: '120px',
-                borderRadius: '4px',
-                objectFit: 'cover',
-                marginBottom: '20px',
-              }}
-            />
-          ) : (
-            <p>No photo uploaded</p>
-          )}
+ {application.picture_id ? (
+        <>
+          {loading && <div style={shimmerStyle}>Loading...</div>}
+
+          <img
+            src={`http://localhost:8000/${application.picture_id}`}
+            alt="Uploaded"
+            onLoad={() => setTimeout(() => setLoading(false), 2000)}
+            style={{
+              width: "120px",
+              height: "120px",
+              borderRadius: "4px",
+              objectFit: "cover",
+              display: loading ? "none" : "block",
+              opacity: loading ? 0 : 1,
+              transition: "opacity 0.5s ease-in-out",
+            }}
+          />
+        </>
+      ) : (
+        <p>No photo uploaded</p>
+      )}
+
+      {/* CSS for shimmer animation */}
+      <style>
+        {`
+          @keyframes shimmer {
+            0% {
+              background-position: -200% 0;
+            }
+            100% {
+              background-position: 200% 0;
+            }
+          }
+        `}
+      </style>
            <div style={{
     display: 'flex',
     alignItems: 'center',
@@ -528,52 +577,73 @@ const disapproveApplication = async () => {
         </button>
 
         {/* Image with loader */}
-        <div style={{ width: '420px', height: '320px', position: 'relative' }}>
-          {isImageLoading && (
-            <div
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: '#fafafa',
-                borderRadius: '10px',
-              }}
-            >
-              <div
-                style={{
-                  border: '4px solid #f3f3f3',
-                  borderTop: '4px solid #3498db',
-                  borderRadius: '50%',
-                  width: '40px',
-                  height: '40px',
-                  animation: 'spin 1s linear infinite',
-                }}
-              />
-            </div>
-          )}
-          <img
-            src={currentImage.url}
-            alt={currentImage.label}
-            style={{
-              width: '100%',
-              maxWidth: '420px',
-              maxHeight: '320px',
-              objectFit: 'contain',
-              borderRadius: '10px',
-              border: '1px solid #ccc',
-              background: '#fafafa',
-              cursor: 'pointer',
-              display: isImageLoading ? 'none' : 'block',
-            }}
-            onClick={() => setIsFullscreen(true)}
-            onLoad={() => setIsImageLoading(false)}
-          />
-        </div>
+      <div style={{ width: '420px', height: '320px', position: 'relative' }}>
+  {isImageLoading && (
+    <div
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '10px',
+        background: 'linear-gradient(270deg, #999797ff, #fff, #999797ff)',
+        backgroundSize: '400% 400%',
+        animation: 'bwGradientMove 4s ease infinite',
+        transition: 'opacity 0.6s ease',
+        zIndex: 5,
+      }}
+    >
+      <span
+        style={{
+          color: '#000',
+          fontWeight: 'bold',
+          fontFamily: 'Cambria',
+          fontSize: '18px',
+          padding: '10px 20px',
+          borderRadius: '6px',
+        }}
+      >
+        Loading image...
+      </span>
+    </div>
+  )}
+
+  <img
+    src={currentImage.url}
+    alt={currentImage.label}
+    style={{
+      width: '100%',
+      maxWidth: '420px',
+      maxHeight: '320px',
+      objectFit: 'contain',
+      borderRadius: '10px',
+      border: '1px solid #ccc',
+      background: '#fafafa',
+      cursor: 'pointer',
+      opacity: isImageLoading ? 0 : 1,
+      transition: 'opacity 1.5s ease', // smooth fade-in
+    }}
+    onClick={() => setIsFullscreen(true)}
+    onLoad={() => {
+      setTimeout(() => setIsImageLoading(false), 2000); // ⏳ Delay 2 seconds
+    }}
+  />
+</div>
+
+<style>
+{`
+@keyframes bwGradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+`}
+</style>
+
 
         {/* Right button */}
         <button
