@@ -142,7 +142,7 @@ const handleSendResponse = async () => {
           <div style={listStyle}>
             {reports.map((report) => {
               const reporterName =
-                report.position === "personnel1" ? "Richard Sales" : "Nonalyn Tombocon";
+                report.position === "personnel1" ? "Richard J. Sales" : "Atty. Erwin S. Oliva";
 
               return (
                 <div key={report.id} style={messageCard}>
