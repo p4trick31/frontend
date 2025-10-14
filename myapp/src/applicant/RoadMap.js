@@ -20,12 +20,12 @@ const StepsPage = () => {
       try {
         const token = localStorage.getItem('token');
   
-        const response = await axios.get('https://backendvss.pythonanywhere.com/api/get-application-id/', {
+        const response = await axios.get('https://backendvss.pythonanywhere.com/api/application/', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         console.log(response.data)
 
-        const application = response.data[0];
+        const application = response.data.find(app => app.app_status === "Pending");
         
         const approved = application.is_approved;
         const client2Approved = application.is_client2_approved;

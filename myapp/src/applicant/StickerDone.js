@@ -189,7 +189,12 @@ const StickerDone = () => {
 
 
 
-      setApplications(response.data);
+          const pendingApplications = response.data.filter(
+      (app) => app.app_status === "Pending"
+    );
+
+
+      setApplications(pendingApplications);
 
       // Fetch approval and disapproval status
       const statusMap = {};

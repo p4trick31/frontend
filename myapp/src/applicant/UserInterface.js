@@ -25,6 +25,7 @@ const Dashboard = ({ onLogout }) => {
   const [showProfile, setShowProfile] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState({ username: "", email: "" });
+  const [showConfirmDoneModal, setShowConfirmDoneModal] = useState(false);
 
 useEffect(() => {
   const fetchCurrentUser = async () => {
@@ -245,14 +246,27 @@ useEffect(() => {
 
 
 
-  const handleApplySticker = () => {
-    const hasPending = applications.some(app => app.app_status === 'Pending');
-    if (hasPending) {
-      setShowPendingModal(true);
-    } else {
-      navigate('/input');
-    }
-  };
+const handleApplySticker = () => {
+  // Check if there's an application where BOTH conditions are true
+  const hasPendingAndDone = applications.some(
+    app => app.app_status === 'Pending' && app.status === 'Application Done'
+  );
+
+  const hasPendingOnly = applications.some(
+    app => app.app_status === 'Pending' && app.status !== 'Application Done'
+  );
+
+  if (hasPendingAndDone) {
+    // ✅ If both Pending and Application Done
+    setShowConfirmDoneModal(true);
+  } else if (hasPendingOnly) {
+    // ✅ If only Pending
+    setShowPendingModal(true);
+  } else {
+    // ✅ Otherwise, continue to form
+    navigate('/input');
+  }
+};
 
   const handlePendingTransactions = () => {
     navigate('/steps/');
@@ -1058,6 +1072,103 @@ The system performs data validation to verify if the vehicle is eligible for ren
     </div>
   </div>
 )}
+{showConfirmDoneModal && (
+  <div
+    style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 999,
+    }}
+  >
+    <div
+      style={{
+        backgroundColor: '#ffffff',
+        padding: '25px',
+        borderRadius: '10px',
+        maxWidth: '270px',
+        textAlign: 'center',
+        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
+      }}
+    >
+      <h3 style={{ marginBottom: '15px', color: '#1f2937' }}>
+        <FaExclamationTriangle style={{ marginRight: '10px', color: '#3b82f6' }} />
+        Application Done
+      </h3>
+      <p style={{ fontSize: '15px', color: '#1f2937' }}>
+        You have an application marked as <strong>Done</strong>.<br />
+        Do you want to create a new one?
+      </p>
+
+      <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', gap: '10px' }}>
+        <button
+          onClick={() => setShowConfirmDoneModal(false)}
+          style={{
+            padding: '10px 15px',
+            backgroundColor: '#9ca3af',
+            color: '#ffffff',
+            border: 'none',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontWeight: '600',
+          }}
+        >
+          Cancel
+        </button>
+      <button
+  onClick={async () => {
+    try {
+      const token = localStorage.getItem('token');
+
+      const targetApp = applications.find(
+        (app) => app.app_status === 'Pending' || app.status === 'Application Done'
+      );
+
+      if (targetApp) {
+        await axios.patch(
+          `http://localhost:8000/api/application/${targetApp.id}/set_done/`,
+          {}, // no body needed, backend sets it to Done
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          }
+        );
+
+        console.log('Application status updated to Done ✅');
+      }
+
+      setShowConfirmDoneModal(false);
+      navigate('/input');
+    } catch (error) {
+      console.error('Error updating application status:', error);
+      alert('Failed to update status. Please try again.');
+    }
+  }}
+  style={{
+    padding: '10px 15px',
+    backgroundColor: '#065f46',
+    color: '#ffffff',
+    border: 'none',
+    borderRadius: '6px',
+    cursor: 'pointer',
+    fontWeight: '600',
+  }}
+>
+  Yes, Create
+</button>
+
+      </div>
+    </div>
+  </div>
+)}
+
 
     </div>
   );

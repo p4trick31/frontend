@@ -43,8 +43,13 @@ const Person2Page = () => {
       });
       console.log("API response:", response.data);
 
-      setApplications(response.data);
+          const pendingApplications = response.data.filter(
+      (app) => app.app_status === "Pending"
+    );
 
+
+      setApplications(pendingApplications);
+      
       const statusMap = {};
       const statusPromises = response.data.map(async (app) => {
         try {
