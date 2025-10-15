@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logo from '../logo.jpg';
-import { FaArrowLeft, FaUserTie, FaUserCheck, FaStamp, FaInfoCircle } from 'react-icons/fa';
+import { FaArrowLeft, FaUserTie, FaUserCheck, FaStamp, FaInfoCircle, FaHistory, FaExclamationTriangle } from 'react-icons/fa';
 import { refreshAccessToken } from '../utils/tokenUtils';
 
 
@@ -12,7 +12,8 @@ const StepsPage = () => {
   const [person2Status, setPerson2Status] = useState('none');
   const [stickerDoneStatus, setStickerDoneStatus] = useState('none');
   const [hoveredStep, setHoveredStep] = useState(null);
-  const [application, setApplication] = useState(null); // new
+  const [showHistoryModal, setShowHistoryModal] = useState(false);
+  const [historyApplications, setHistoryApplications] = useState([]); // new
 
 
   useEffect(() => {
@@ -82,6 +83,210 @@ const isStep3Clickable = stickerDoneStatus === 'active' || stickerDoneStatus ===
       <button onClick={() => navigate('/dashboard')} style={styles.backButton}>
         <FaArrowLeft />
       </button>
+
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '15px' }}>
+  <button
+    onClick={async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('https://backendvss.pythonanywhere.com/api/application/', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        // ✅ Filter applications that are "Application Done" & "Done"
+        const doneApps = response.data.filter(
+          (app) => app.status === 'Application Done' && app.app_status === 'Done'
+        );
+
+        setHistoryApplications(doneApps);
+        setShowHistoryModal(true);
+      } catch (error) {
+        console.error('Error fetching application history:', error);
+      }
+    }}
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      backgroundColor: '#065f46',
+      color: '#ffffff',
+      padding: '10px 18px',
+      borderRadius: '6px',
+      border: 'none',
+      cursor: 'pointer',
+      fontWeight: '600',
+      boxShadow: '0 2px 6px rgba(0, 0, 0, 0.2)',
+      marginTop: '-10px',
+    }}
+  >
+    <FaHistory size={16} /> View History
+  </button>
+</div>
+
+{showHistoryModal && (
+  <div
+    style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 999,
+
+    }}
+  >
+    <div
+      style={{
+        backgroundColor: '#ffffff',
+        padding: '25px',
+        borderRadius: '10px',
+        maxWidth: '600px',
+        width: '100%',
+        textAlign: 'center',
+        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
+        maxHeight: '80vh',
+        overflowY: 'auto',
+        margin: '0 10px',
+        marginRight: '8px',
+
+      }}
+    >
+      <h3 style={{ marginBottom: '15px', color: '#1f2937' }}>
+        <FaExclamationTriangle style={{ marginRight: '10px', color: '#3b82f6' }} />
+        Application History
+      </h3>
+
+      {historyApplications.length > 0 ? (
+        <ul style={{ listStyleType: 'none', padding: 0 }}>
+          {historyApplications.map((app) => (
+            <li
+              key={app.id}
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '15px',
+                borderRadius: '8px',
+                marginBottom: '10px',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                display: 'flex',
+                flexWrap: 'wrap', // ✅ allows wrapping on small screens
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '15px',
+              }}
+            >
+              {/* --- Left side: Picture ID --- */}
+              <img
+                src={
+                  app.picture_id?.startsWith('http')
+                    ? app.picture_id
+                    : `https://${app.picture_id}`
+                }
+                alt="ID"
+                style={{
+                  width: '80px',
+                  height: '80px',
+                  borderRadius: '8px',
+                  objectFit: 'cover',
+                  border: '2px solid #d1d5db',
+                  flexShrink: 0,
+                }}
+              />
+
+              {/* --- Right side: Details --- */}
+              <div
+                style={{
+                  flex: '1 1 250px', // ✅ responsive grid behavior
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr',
+                  gap: '8px 16px',
+                  textAlign: 'left',
+                }}
+              >
+                <div>
+                  <p style={{ margin: '2px 0' }}>
+                    <strong>Name:</strong> {app.name || 'N/A'}
+                  </p>
+                </div>
+                <div>
+                  <p style={{ margin: '2px 0' }}>
+                    <strong>Vehicle Model:</strong> {app.model_make || 'N/A'}
+                  </p>
+                </div>
+                <div>
+             <p style={{ margin: '2px 0' }}>
+  <strong>Date Created:</strong>{' '}
+  {new Date(app.created_at).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  })}
+</p>
+                </div>
+                <div>
+        <p style={{ margin: '2px 0' }}>
+  <strong>Last Validation:</strong>{' '}
+  {app.client2_approved_time
+    ? new Date(app.client2_approved_time).toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+      })
+    : 'N/A'}
+</p>
+                </div>
+              </div>
+
+              {/* --- View Button --- */}
+              <div style={{ flexShrink: 0 }}>
+                <button
+                  onClick={() => navigate(`/form-view/${app.id}`)}
+                  style={{
+                    padding: '8px 14px',
+                    backgroundColor: '#1d4ed8',
+                    color: '#ffffff',
+                    border: 'none',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    fontWeight: '600',
+                    width: '100%',
+                  }}
+                >
+                  View
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p style={{ color: '#1f2937' }}>No completed applications found.</p>
+      )}
+
+      <button
+        onClick={() => setShowHistoryModal(false)}
+        style={{
+          marginTop: '20px',
+          padding: '10px 20px',
+          backgroundColor: '#065f46',
+          color: '#ffffff',
+          border: 'none',
+          borderRadius: '6px',
+          cursor: 'pointer',
+          fontWeight: '600',
+          width: '100%',
+          maxWidth: '150px',
+        }}
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
+
+
 
       <img src={logo} alt="Logo" style={styles.logo} />
       <h2 style={styles.header}>DEBESMSCAT</h2>
