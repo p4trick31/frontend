@@ -157,7 +157,7 @@ const isStep3Clickable = stickerDoneStatus === 'active' || stickerDoneStatus ===
     >
       <h3 style={{ marginBottom: '15px', color: '#1f2937' }}>
         <FaExclamationTriangle style={{ marginRight: '10px', color: '#3b82f6' }} />
-        Application History
+        Application Done History
       </h3>
 
       {historyApplications.length > 0 ? (
