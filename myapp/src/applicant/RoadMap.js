@@ -116,7 +116,7 @@ const isStep3Clickable = stickerDoneStatus === 'active' || stickerDoneStatus ===
       cursor: 'pointer',
       fontWeight: '600',
       boxShadow: '0 2px 6px rgba(0, 0, 0, 0.2)',
-      marginTop: '-10px',
+  
     }}
   >
     <FaHistory size={16} /> View History
