@@ -31,7 +31,10 @@ const PendingRenewalPage = () => {
       }
     });
 
-    setRenewals(response.data);
+      const activeRenewals = response.data.filter(
+      (renew) => renew.renewal_status !== 'Done'
+    );
+    setRenewals(activeRenewals);
     console.log(response.data);
   } catch (error) {
     console.error('Error fetching pending renewals:', error);
