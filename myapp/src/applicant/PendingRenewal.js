@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FaClock, FaArrowLeft, FaFileAlt, FaSpinner, FaEdit} from 'react-icons/fa';
+import { FaClock, FaArrowLeft, FaFileAlt, FaSpinner, FaEdit, FaHistory, FaExclamationTriangle} from 'react-icons/fa';
 import { MdVerified } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,6 +10,8 @@ const PendingRenewalPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedRenewalId, setSelectedRenewalId] = useState(null);
   const [newPicture, setNewPicture] = useState(null);
+  const [historyRenewals, setHistoryRenewals] = useState([]);
+  const [showRenewalHistoryModal, setShowRenewalHistoryModal] = useState(false);
 
   
 
@@ -86,7 +88,209 @@ const PendingRenewalPage = () => {
     <div style={{ padding: '10px', textAlign: 'center' }}>
         <button onClick={() => navigate('/dashboard')} style={styles.backButton}>
                 <FaArrowLeft />
-              </button>
+        </button>
+
+         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '15px' }}>
+  <button
+    onClick={async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('https://backendvss.pythonanywhere.com/api/renewal/', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        // ✅ Filter renewals that are "Renewal Done" & "Done"
+        const doneRenewals = response.data.filter(
+          (renew) => renew.status === 'Renewal Done'
+        );
+
+        setHistoryRenewals(doneRenewals);
+        setShowRenewalHistoryModal(true);
+      } catch (error) {
+        console.error('Error fetching renewal history:', error);
+      }
+    }}
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      backgroundColor: '#065f46',
+      color: '#ffffff',
+      padding: '10px 18px',
+      borderRadius: '6px',
+      border: 'none',
+      cursor: 'pointer',
+      fontWeight: '600',
+      boxShadow: '0 2px 6px rgba(0, 0, 0, 0.2)',
+      marginTop: '10px',
+    }}
+  >
+    <FaHistory size={16} /> View Renewal History
+  </button>
+</div>
+
+{/* ✅ Renewal History Modal */}
+{showRenewalHistoryModal && (
+  <div
+    style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 999,
+    }}
+  >
+    <div
+      style={{
+        backgroundColor: '#ffffff',
+        padding: '25px',
+        borderRadius: '10px',
+        maxWidth: '600px',
+        width: '100%',
+        textAlign: 'center',
+        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
+        maxHeight: '80vh',
+        overflowY: 'auto',
+        margin: '0 10px',
+      }}
+    >
+      <h3 style={{ marginBottom: '15px', color: '#1f2937' }}>
+        <FaExclamationTriangle style={{ marginRight: '10px', color: '#065f46' }} />
+        Renewal Done History
+      </h3>
+
+      {historyRenewals.length > 0 ? (
+        <ul style={{ listStyleType: 'none', padding: 0 }}>
+          {historyRenewals.map((renew) => (
+            <li
+              key={renew.id}
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '15px',
+                borderRadius: '8px',
+                marginBottom: '10px',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '15px',
+              }}
+            >
+              {/* --- Left: Picture ID --- */}
+              <img
+                src={
+                  renew.picture_id?.startsWith('http')
+                    ? renew.picture_id
+                    : `https://backendvss.pythonanywhere.com${renew.picture_id}`
+                }
+                alt="ID"
+                style={{
+                  width: '80px',
+                  height: '80px',
+                  borderRadius: '8px',
+                  objectFit: 'cover',
+                  border: '2px solid #d1d5db',
+                  flexShrink: 0,
+                }}
+              />
+
+              {/* --- Right: Renewal Details --- */}
+              <div
+                style={{
+                  flex: '1 1 250px',
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr',
+                  gap: '8px 16px',
+                  textAlign: 'left',
+                }}
+              >
+                <div>
+                  <p style={{ margin: '2px 0' }}>
+                    <strong>Name:</strong> {renew.full_name || 'N/A'}
+                  </p>
+                </div>
+                <div>
+                  <p style={{ margin: '2px 0' }}>
+                    <strong>Vehicle Model:</strong> {renew.vehicle_model || 'N/A'}
+                  </p>
+                </div>
+                <div>
+                  <p style={{ margin: '2px 0' }}>
+                    <strong>Date Created:</strong>{' '}
+                    {new Date(renew.created_at).toLocaleDateString('en-US', {
+                      month: 'long',
+                      day: 'numeric',
+                      year: 'numeric',
+                    })}
+                  </p>
+                </div>
+                <div>
+                  <p style={{ margin: '2px 0' }}>
+                    <strong>Last Validation:</strong>{' '}
+                    {renew.approved_at
+                      ? new Date(renew.approved_at).toLocaleDateString('en-US', {
+                          month: 'long',
+                          day: 'numeric',
+                          year: 'numeric',
+                        })
+                      : 'N/A'}
+                  </p>
+                </div>
+              </div>
+
+              {/* --- View Button --- */}
+              <div style={{ flexShrink: 0 }}>
+                <button
+                  onClick={() => navigate(`/form-view/${renew.id}`)}
+                  style={{
+                    padding: '8px 14px',
+                    backgroundColor: '#065f46',
+                    color: '#ffffff',
+                    border: 'none',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    fontWeight: '600',
+                    width: '100%',
+                  }}
+                >
+                  View
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p style={{ color: '#1f2937' }}>No completed renewals found.</p>
+      )}
+
+      <button
+        onClick={() => setShowRenewalHistoryModal(false)}
+        style={{
+          marginTop: '20px',
+          padding: '10px 20px',
+          backgroundColor: '#065f46',
+          color: '#ffffff',
+          border: 'none',
+          borderRadius: '6px',
+          cursor: 'pointer',
+          fontWeight: '600',
+          width: '100%',
+          maxWidth: '150px',
+        }}
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
+
+
      <div style={{ textAlign: 'center', color: '#1f2937', margin: '40px 0' }}>
           <h4 style={{ margin: '3px 0' }}>Republic of the Philippines</h4>
           <h3 style={{ margin: '3px 0' }}>DR. EMILIO B. ESPINOSA, SR. MEMORIAL</h3>
