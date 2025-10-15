@@ -95,7 +95,7 @@ const isStep3Clickable = stickerDoneStatus === 'active' || stickerDoneStatus ===
 
         // ✅ Filter applications that are "Application Done" & "Done"
         const doneApps = response.data.filter(
-          (app) => app.status === 'Application Done' && app.app_status === 'Done'
+          (app) => app.status === 'Application Done'
         );
 
         setHistoryApplications(doneApps);
