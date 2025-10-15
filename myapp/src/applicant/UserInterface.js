@@ -26,6 +26,7 @@ const Dashboard = ({ onLogout }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState({ username: "", email: "" });
   const [showConfirmDoneModal, setShowConfirmDoneModal] = useState(false);
+  const [showRenewalConfirmDoneModal, setShowRenewalConfirmDoneModal] = useState(false);
 
 useEffect(() => {
   const fetchCurrentUser = async () => {
@@ -272,15 +273,28 @@ const handleApplySticker = () => {
     navigate('/steps/');
   };
 
-  const handleRenewal = () => {
-    const hasPending = renewals.some(renew => renew.renewal_status === 'Pending');
-    if (hasPending) {
-      setShowRenewalPendingModal(true);
-    } else {
-    setShowRenewalModal(true);
-   }
-  };
+const handleRenewal = () => {
+  // Check for both Pending and Renewal Done
+  const hasPendingAndDone = renewals.some(
+    renew => renew.renewal_status === 'Pending' && renew.status === 'Renewal Done'
+  );
 
+  // Check if only Pending (not Renewal Done)
+  const hasPendingOnly = renewals.some(
+    renew => renew.renewal_status === 'Pending' && renew.status !== 'Renewal Done'
+  );
+
+  if (hasPendingAndDone) {
+    // ✅ If both Pending and Renewal Done
+    setShowRenewalConfirmDoneModal(true);
+  } else if (hasPendingOnly) {
+    // ✅ If only Pending
+    setShowRenewalPendingModal(true);
+  } else {
+    // ✅ Otherwise, continue to renewal form
+    setShowRenewalModal(true);
+  }
+};
 
    const handlePendingRenewal = () => {
     navigate('/pending-renewal/');
@@ -1132,7 +1146,7 @@ The system performs data validation to verify if the vehicle is eligible for ren
 
       if (targetApp) {
         await axios.patch(
-          `http://localhost:8000/api/application/${targetApp.id}/set_done/`,
+          `https://backendvss.pythonanywhere.com/api/application/${targetApp.id}/set_done/`,
           {}, // no body needed, backend sets it to Done
           {
             headers: {
@@ -1168,6 +1182,108 @@ The system performs data validation to verify if the vehicle is eligible for ren
     </div>
   </div>
 )}
+
+{showRenewalConfirmDoneModal && (
+  <div
+    style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 999,
+    }}
+  >
+    <div
+      style={{
+        backgroundColor: '#ffffff',
+        padding: '25px',
+        borderRadius: '10px',
+        maxWidth: '270px',
+        textAlign: 'center',
+        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
+      }}
+    >
+      <h3 style={{ marginBottom: '15px', color: '#1f2937' }}>
+        <FaExclamationTriangle style={{ marginRight: '10px', color: '#3b82f6' }} />
+        Renewal Done
+      </h3>
+      <p style={{ fontSize: '15px', color: '#1f2937' }}>
+        You have a renewal marked as <strong>Done</strong>.<br />
+        Do you want to renew again?
+      </p>
+
+      <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', gap: '10px' }}>
+        {/* Cancel Button */}
+        <button
+          onClick={() => setShowRenewalConfirmDoneModal(false)}
+          style={{
+            padding: '10px 15px',
+            backgroundColor: '#9ca3af',
+            color: '#ffffff',
+            border: 'none',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontWeight: '600',
+          }}
+        >
+          Cancel
+        </button>
+
+        {/* Confirm Button */}
+        <button
+          onClick={async () => {
+            try {
+              const token = localStorage.getItem('token');
+
+              const targetRenewal = renewals.find(
+                renew =>
+                  renew.renewal_status === 'Pending' ||
+                  renew.status === 'Renewal Done'
+              );
+
+              if (targetRenewal) {
+                await axios.patch(
+                  `https://backendvss.pythonanywhere.com/api/renewal/${targetRenewal.id}/set_done/`,
+                  {},
+                  {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  }
+                );
+
+                console.log('Renewal status updated to Done ✅');
+              }
+
+              setShowRenewalConfirmDoneModal(false);
+              setShowRenewalModal(true); // open renewal modal
+            } catch (error) {
+              console.error('Error updating renewal status:', error);
+              alert('Failed to update renewal status. Please try again.');
+            }
+          }}
+          style={{
+            padding: '10px 15px',
+            backgroundColor: '#065f46',
+            color: '#ffffff',
+            border: 'none',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontWeight: '600',
+          }}
+        >
+          Yes, Renew
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
 
 
     </div>
