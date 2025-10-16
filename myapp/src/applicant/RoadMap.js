@@ -152,6 +152,7 @@ const isStep3Clickable = stickerDoneStatus === 'active' || stickerDoneStatus ===
         overflowY: 'auto',
         margin: '0 10px',
         marginRight: '8px',
+        marginTop: '-10px',
 
       }}
     >
