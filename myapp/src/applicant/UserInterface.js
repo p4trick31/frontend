@@ -733,10 +733,11 @@ const handleRenewal = () => {
             height: '80px',
             borderRadius: '50%',
             objectFit: 'cover',
+            marginTop: '20px'
           }}
         />
 
-        <div style={{ textAlign: 'center', color: '#1f2937', margin: '10px 0' }}>
+        <div style={{ textAlign: 'center', color: '#1f2937', margin: '-15px 0' }}>
           <h4 style={{ margin: '5px 0' }}>Republic of the Philippines</h4>
           <h3 style={{ margin: '5px 0' }}>DR. EMILIO B. ESPINOSA, SR. MEMORIAL</h3>
           <h4 style={{ margin: '5px 0' }}>STATE COLLEGE OF AGRICULTURE AND TECHNOLOGY</h4>
@@ -944,6 +945,7 @@ The system performs data validation to verify if the vehicle is eligible for ren
               maxWidth: '270px',
               textAlign: 'center',
               boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
+              marginRight: '15px'
             }}
           >
             

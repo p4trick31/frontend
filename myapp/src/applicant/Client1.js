@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import logo from '../logo.jpg';
-import { FaArrowLeft, FaUserCircle, FaCheckCircle, FaHourglassHalf, FaInfoCircle} from 'react-icons/fa';
+import { FaArrowLeft, FaUserCircle, FaCheckCircle, FaHourglassHalf, FaInfoCircle, FaTimesCircle} from 'react-icons/fa';
 
 // Add this at the top, before your component
 async function refreshAccessToken() {
@@ -149,10 +149,10 @@ const Person1Page = () => {
                 />
 
               <h2 style={styles.applicantName}>Name: {application.name}</h2>
-              <h4 style={styles.info}>Purpose: {application.position} for processing vehicle sticker</h4>
+              <h4 style={styles.info}><i>Purpose:</i> {application.position} for processing vehicle sticker</h4>
               
               <p style={styles.info}>
-                <strong>Date & Time Submitted:</strong>{' '}
+                <strong><i>Date & Time Submitted:</i></strong>{' '}
                 {new Date(application.created_at).toLocaleString('en-US', {
                   year: 'numeric',
                   month: 'long',
@@ -163,7 +163,7 @@ const Person1Page = () => {
                 })}
               </p>
 
-              <p style={styles.info}><strong>Status:</strong> {application.status}</p>
+              <p style={styles.info}><strong><i>Status:</i></strong> {application.status}</p>
 
               <p style={styles.message}>
                 {approvalStatus[application.id] ? (
@@ -175,9 +175,10 @@ const Person1Page = () => {
                  <div style={styles.messageDisapproved}>
                  
                            <div>
-  <p style={{ margin: 0 }}>
+  <p style={{ margin: 0, fontSize: '15px', marginBottom: '15px'}}>
+ <FaTimesCircle style={{fontSize: '17px', margin: '0px 8px'}}/><i>
     We regret to inform you that your application has been disapproved by the reviewing personnel.
-  </p>
+  </i></p>
 
   {application.disapprove_reason && (
     <p style={{ marginTop: '8px' }}>
@@ -287,6 +288,20 @@ const Person1Page = () => {
       <h3>Confirm</h3>
       <p>Are you sure you want to edit and resubmit your application?</p>
       <div style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
+          <button
+    onClick={() => setShowModal(false)}
+    style={{
+      ...styles.modalButton,
+        backgroundColor: '#fff',
+      border: '1px solid #065f46',
+       // yellow for cancel
+      color: '#065f46',
+      fontWeight: '700',
+      flex: 1,
+    }}
+  >
+    Cancel
+  </button>
   <button
     onClick={() => navigate(`/input/${selectedAppId}`)}
     style={{
@@ -294,21 +309,12 @@ const Person1Page = () => {
       backgroundColor: '#065f46', // deep green for confirm
       color: '#ffffff',
       flex: 1,
+         fontWeight: '700',
     }}
   >
     Yes, Edit
   </button>
-  <button
-    onClick={() => setShowModal(false)}
-    style={{
-      ...styles.modalButton,
-      backgroundColor: '#facc15', // yellow for cancel
-      color: '#1f2937',
-      flex: 1,
-    }}
-  >
-    Cancel
-  </button>
+
 </div>
 
     </div>
@@ -348,13 +354,14 @@ const styles = {
 },
 tryAgainButton: {
   marginTop: '10px',
-  backgroundColor: '#dc2626', // red
-  color: '#fff',
+  backgroundColor: '#fff', // red
+  color: '#dc2626',
   border: 'none',
   borderRadius: '5px',
   padding: '8px 12px',
   cursor: 'pointer',
   fontSize: '14px',
+  border: '1px solid #dc2626',
 },
 
 userName: {
@@ -477,28 +484,35 @@ subText: {
     animation: 'spin 1s linear infinite',
   },
 
-  card: {
-    backgroundColor: '#f9fafb',
+   card: {
+    backgroundColor: 'rgba(250, 255, 250, 1)',
     borderRadius: '10px',
     boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
     padding: '10px',
     marginBottom: '20px',
     textAlign: 'left',
+    borderLeft: '2px solid #065f46',
+     borderBottom: '2px solid #065f46'
   },
   applicantName: {
-    color: '#065f46',
+    color: '#333',
     marginBottom: '8px',
+    borderBottom: '2px solid #636262ff',
+    padding: '2px',
+    marginRight: '30px'
   },
   info: {
     margin: '7px 0',
-    color: '#475569',
+    color: '#545556ff',
     fontSize: '15px',
+    marginTop: '10px'
   },
   messageChecking: {
+  borderLeft: '1px solid #92400e ',
   margin: '12px 0',
   fontSize: '17px',
   color: '#92400e', // dark yellow text
-  backgroundColor: '#fef9c3', // light yellow background
+  backgroundColor: '#faf8e2ff', // light yellow background
   padding: '10px',
   borderRadius: '5px',
 },
@@ -510,6 +524,7 @@ messageApproved: {
   backgroundColor: '#d1fae5', // light green background
   padding: '10px',
   borderRadius: '5px',
+    borderLeft: '1px solid #065f46'
 },
 
 messageDisapproved: {
@@ -522,6 +537,7 @@ messageDisapproved: {
   display: 'flex',
   alignItems: 'center',
   gap: '5px',
+    borderTop: '2px solid #991b1b',
 },
 
   buttonGroup: {
