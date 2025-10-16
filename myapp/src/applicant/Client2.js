@@ -129,10 +129,10 @@ const Person2Page = () => {
                 />
 
               <h2 style={styles.applicantName}>Name: {application.name}</h2>
-              <h4 style={styles.info}>Purpose: {application.position} for processing vehicle sticker</h4>
+              <h4 style={styles.info}><i>Purpose: </i>{application.position} for processing vehicle sticker</h4>
               
               <p style={styles.info}>
-                <strong>Date & Time Submitted:</strong>{' '}
+                <strong><i>Date & Time Submitted:</i></strong>{' '}
                 {new Date(application.person2_received_at).toLocaleString('en-US', {
                   year: 'numeric',
                   month: 'long',
@@ -142,7 +142,7 @@ const Person2Page = () => {
                   hour12: true,
                 })}
               </p>
-              <p style={styles.info}><strong>Status:</strong> {application.status}</p>
+              <p style={styles.info}><strong><i>Status:</i></strong> {application.status}</p>
 
               <p style={styles.message}>
                 {approvalStatus[application.id] ? (
@@ -344,22 +344,28 @@ const styles = {
     height: '40px',
     animation: 'spin 1s linear infinite',
   },
-  card: {
-    backgroundColor: '#f9fafb',
+   card: {
+    backgroundColor: 'rgba(250, 255, 250, 1)',
     borderRadius: '10px',
     boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
     padding: '10px',
     marginBottom: '20px',
     textAlign: 'left',
+    borderLeft: '2px solid #065f46',
+     borderBottom: '2px solid #065f46'
   },
   applicantName: {
-    color: '#065f46',
+    color: '#333',
     marginBottom: '8px',
+    borderBottom: '2px solid #636262ff',
+    padding: '2px',
+    marginRight: '30px'
   },
   info: {
     margin: '7px 0',
-    color: '#475569',
+    color: '#545556ff',
     fontSize: '15px',
+    marginTop: '10px'
   },
   approvalInfo: {
   backgroundColor: '#f0fdf4',
@@ -380,14 +386,15 @@ thankYou: {
   fontWeight: 'bold',
 },
   messageChecking: {
+  borderLeft: '1px solid #92400e ',
   margin: '12px 0',
   fontSize: '17px',
   color: '#92400e', // dark yellow text
-  backgroundColor: '#fef9c3', // light yellow background
+  backgroundColor: '#faf8e2ff', // light yellow background
   padding: '10px',
   borderRadius: '5px',
-  textAlign: 'center'
 },
+
 
 messageApproved: {
   margin: '12px 0',
@@ -396,6 +403,7 @@ messageApproved: {
   backgroundColor: '#d1fae5', // light green background
   padding: '10px',
   borderRadius: '5px',
+    borderLeft: '1px solid #065f46'
 },
   buttonGroup: {
     display: 'flex',
