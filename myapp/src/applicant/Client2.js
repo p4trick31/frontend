@@ -359,7 +359,7 @@ const styles = {
     marginBottom: '8px',
     borderBottom: '2px solid #636262ff',
     padding: '2px',
-    marginRight: '30px'
+
   },
   info: {
     margin: '7px 0',

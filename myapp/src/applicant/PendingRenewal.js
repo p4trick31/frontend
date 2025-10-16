@@ -419,7 +419,7 @@ const PendingRenewalPage = () => {
        {/* Status Message */}
     {renewal.status === 'Waiting Approval' && (
   <div>
-<p style={{ backgroundColor: '#e6f4ea', padding: '10px 15px', borderRadius: '8px', color: '#065f46', marginBottom: '30px'}}><MdVerified size={20} style={{ margin: '0px 10px' }}  />
+<p style={{ backgroundColor: '#e6f4ea', padding: '10px 15px', borderRadius: '8px', color: '#065f46', marginBottom: '30px', borderLeft: '2px solid #065f46'}}><MdVerified size={20} style={{ margin: '0px 10px' }}  />
   Congratulations! Your renewal application has been validated by <strong>{renewal.checked_by}</strong> on{' '}
   {new Date(renewal.checked_at).toLocaleString('en-US', {
     year: 'numeric',
@@ -431,7 +431,7 @@ const PendingRenewalPage = () => {
   })}. Thank you for your patience.
 </p>
 
-<p style={{ backgroundColor: '#f3f4e6ff', padding: '10px 15px', borderRadius: '8px', color: '#065f46'}}><FaSpinner size={20} style={{ margin: '0px 10px' }} />
+<p style={{ backgroundColor: '#f3f4e6ff', padding: '10px 15px', borderRadius: '8px', color: '#065f46', borderLeft: '2px solid #065f46'}}><FaSpinner size={20} style={{ margin: '0px 10px' }} />
 
   Hello {renewal.full_name}, your renewal application has now been forwarded to <strong>Ms. Nonalyn D. Tombocon</strong> for final validation. Thank you.
 </p>
@@ -450,7 +450,7 @@ const PendingRenewalPage = () => {
       {/* View Form Button */}
       {renewal.status === 'Renewal Done' && (
           <div>
-<p style={{ backgroundColor: '#e6f4ea', padding: '10px 15px', borderRadius: '8px', color: '#065f46', marginBottom: '30px' }}><MdVerified size={20} style={{ margin: '0px 10px' }}  />
+<p style={{ backgroundColor: '#e6f4ea', padding: '10px 15px', borderRadius: '8px', color: '#065f46', marginBottom: '30px',  borderLeft: '2px solid #065f46' }}><MdVerified size={20} style={{ margin: '0px 10px' }}  />
   Congratulations! Your renewal application has been validated by <strong>{renewal.approved_by}</strong> on{' '}
   {new Date(renewal.approved_at).toLocaleString('en-US', {
     year: 'numeric',
@@ -462,9 +462,13 @@ const PendingRenewalPage = () => {
   })}. Thank you for your patience.
 </p>
 
-<p style={{ backgroundColor: '#f3f4e6ff', padding: '10px 15px', borderRadius: '8px', color: '#065f46' }}>
+<p style={{ backgroundColor: '#f3f4e6ff', padding: '10px 15px', borderRadius: '8px', color: '#065f46', borderTop: '2px solid #065f46'}}>
   <MdVerified size={20} style={{ margin: '0px 10px' }}  />
-  Hello {renewal.full_name}, your vehicle sticker form is now ready for download. It includes the signatures of the validating officers. Thank you.
+  <i>Hello {renewal.full_name}, your vehicle sticker form is now <strong>ready for download.</strong> It includes the signatures of the validating officers. Thank you.
+</i>
+      <p style={styles.note}>
+      👉 Click the button below to download the document you need.
+    </p>
 <button
       onClick={() => navigate(`/form-view/${renewal.id}`)}
       style={{
@@ -613,6 +617,11 @@ const styles = {
     alignItems: 'center',
     gap: '10px',
   },
+    note: {
+  fontStyle: 'italic',
+  color: '#555',
+  marginTop: '15px',
+},
   card: {
     marginTop: '20px',
     padding: '20px',
