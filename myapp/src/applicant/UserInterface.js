@@ -1143,7 +1143,7 @@ The system performs data validation to verify if the vehicle is eligible for ren
       const token = localStorage.getItem('token');
 
       const targetApp = applications.find(
-        (app) => app.app_status === 'Pending' || app.status === 'Application Done'
+        (app) => app.app_status === 'Pending' && app.status === 'Application Done'
       );
 
       if (targetApp) {
