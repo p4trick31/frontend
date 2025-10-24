@@ -1244,7 +1244,7 @@ The system performs data validation to verify if the vehicle is eligible for ren
 
               const targetRenewal = renewals.find(
                 renew =>
-                  renew.renewal_status === 'Pending' ||
+                  renew.renewal_status === 'Pending' &&
                   renew.status === 'Renewal Done'
               );
 
