@@ -20,9 +20,12 @@ const ApplicationList = () => {
 
 
 
+
+
 const handleConfirmClaim = async () => {
   if (!claimingAppForConfirmation) return;
   setClaiming(true);
+
   try {
     const response = await axios.post(
       `https://backendvss.pythonanywhere.com/api/applications/${claimingAppForConfirmation.id}/claim/`,
@@ -30,10 +33,37 @@ const handleConfirmClaim = async () => {
       { headers: { Authorization: `Bearer ${localStorage.getItem('access')}` } }
     );
 
+    // ✅ Generate local release date
+    const today = new Date();
+    const releaseDate = today.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
+
+    // ✅ Determine academic year based on PH school calendar (August–June)
+    const month = today.getMonth() + 1; // 1 = January
+    const currentYear = today.getFullYear();
+    let expirationDate = '';
+
+    if (month >= 1 && month <= 6) {
+      // January–June → same academic year (e.g., Jan 2024 → S.Y. 2024 - 2025)
+      expirationDate = `S.Y. ${currentYear} - ${currentYear + 1}`;
+    } else {
+      // July–December → next academic year (e.g., Sept 2024 → S.Y. 2025 - 2026)
+      expirationDate = `S.Y. ${currentYear + 1} - ${currentYear + 2}`;
+    }
+
+    // ✅ Save to localStorage
+    const savedDates = JSON.parse(localStorage.getItem('claimedDates')) || {};
+    savedDates[claimingAppForConfirmation.id] = { releaseDate, expirationDate };
+    localStorage.setItem('claimedDates', JSON.stringify(savedDates));
+
+    // ✅ Update state so UI refreshes immediately
     setApplications((prev) =>
       prev.map((item) =>
         item.id === claimingAppForConfirmation.id
-          ? { ...item, is_claimed: response.data.is_claimed }
+          ? { ...item, is_claimed: response.data.is_claimed, releaseDate, expirationDate }
           : item
       )
     );
@@ -41,17 +71,22 @@ const handleConfirmClaim = async () => {
     setFilteredApplications((prev) =>
       prev.map((item) =>
         item.id === claimingAppForConfirmation.id
-          ? { ...item, is_claimed: response.data.is_claimed }
+          ? { ...item, is_claimed: response.data.is_claimed, releaseDate, expirationDate }
           : item
       )
+    );
+
+    alert(
+      `Sticker successfully claimed!\nRelease Date: ${releaseDate}\nExpiration: ${expirationDate}`
     );
   } catch (err) {
     console.error(err);
   } finally {
     setClaiming(false);
-    setClaimingAppForConfirmation(null); // close the modal
+    setClaimingAppForConfirmation(null); // close modal
   }
 };
+
 
 
 
@@ -83,6 +118,11 @@ const handleConfirmClaim = async () => {
 
   // Search
 // Search
+const getSavedDates = (appId) => {
+  const savedDates = JSON.parse(localStorage.getItem("claimedDates")) || {};
+  return savedDates[appId] || null;
+};
+
 const handleSearch = (query) => {
   setSearchQuery(query);
   applyFilters(query, dateFilter, typeFilter);
@@ -302,7 +342,7 @@ const applyFilters = (search, date, type, status = 'all') => {
   <div
     style={{
       display: 'grid',
-      gridTemplateColumns: '80px 1.5fr 2fr 1fr 1fr 1.5fr 1fr 1fr', // 8 columns
+      gridTemplateColumns:'80px 1.5fr 2fr 1fr 1fr 1.5fr 1fr 1fr 1fr 1fr', // 8 columns
       padding: '12px 15px',
       backgroundColor: '#f3f4f6',
       fontWeight: '600',
@@ -318,6 +358,8 @@ const applyFilters = (search, date, type, status = 'all') => {
     <span>Type</span>
     <span>Status</span>
     <span>Submitted At</span>
+    <span>Release Date</span>
+    <span>Expiration Date</span>
     <span>Claimed Sticker</span>
     <span>Action</span>
   </div>
@@ -336,7 +378,7 @@ const applyFilters = (search, date, type, status = 'all') => {
             className="application-row"
             style={{
               display: 'grid',
-              gridTemplateColumns: '80px 1.5fr 2fr 1fr 1fr 1.5fr 1fr 1fr',
+              gridTemplateColumns: '80px 1.5fr 2fr 1fr 1fr 1.5fr 1fr 1fr 1fr 1fr',
               padding: '12px 15px',
               borderBottom: '1px solid #f3f4f6',
               alignItems: 'center',
@@ -420,6 +462,30 @@ const applyFilters = (search, date, type, status = 'all') => {
                   })
                 : 'N/A'}
             </span>
+            <span style={{ fontSize: '13px', color: '#6b7280' }}>
+  {(() => {
+    const saved = getSavedDates(app.id);
+    if (saved) return saved.releaseDate;
+    if (['Application Done', 'Renewal Done'].includes(app.status) && !app.is_claimed) 
+      return 'Waiting for Release';
+    if (['Disapproved', 'Checking Renewal', 'Checking Application', 'Waiting Approval'].includes(app.status))
+      return 'Pending';
+    return 'N/A';
+  })()}
+</span>
+
+{/* Expiration Date */}
+<span style={{ fontSize: '13px', color: '#6b7280' }}>
+  {(() => {
+    const saved = getSavedDates(app.id);
+    if (saved) return saved.expirationDate;
+    if (['Application Done', 'Renewal Done'].includes(app.status) && !app.is_claimed) 
+      return 'Waiting for Release';
+    if (['Disapproved', 'Checking Renewal', 'Checking Application', 'Waiting Approval'].includes(app.status))
+      return 'Pending';
+    return 'N/A';
+  })()}
+</span>
 
             {/* Claimed Button */}
 <button
