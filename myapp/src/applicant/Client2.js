@@ -102,6 +102,7 @@ const Person2Page = () => {
       <h3 style={styles.title}>Approving Your Application</h3>
 
       <hr style={styles.hr} />
+      <div style={styles.con}>
 
       
       <div className="appBox" style={styles.appBox}>
@@ -231,6 +232,7 @@ const Person2Page = () => {
            </div>
       </div>
     </div>
+    </div>
   );
 };
 
@@ -242,6 +244,12 @@ const styles = {
     width: '100%',
     boxShadow: '0 2px 6px rgba(0, 0, 0, 0.3)',
   },
+  con: {
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center'
+
+},
   userBox: {
     minWidth: '150px',
     textAlign: 'center',

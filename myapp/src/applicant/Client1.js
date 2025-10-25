@@ -120,6 +120,7 @@ const Person1Page = () => {
       <h3 style={styles.title}>Checking Your Application</h3>
 
       <hr style={styles.hr} />
+        <div style={styles.con}>
 
       <div className="appBox" style={styles.appBox}>
   {loading ? (
@@ -278,7 +279,7 @@ const Person1Page = () => {
         </div>
       )}
     </div>
-
+     </div>
 
       </div>
 
@@ -341,6 +342,12 @@ const styles = {
   cursor: 'pointer',
   fontSize: '14px',
   transition: 'background-color 0.3s',
+},
+con: {
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center'
+
 },
 
 

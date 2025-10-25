@@ -142,6 +142,12 @@ approvalInfo: {
   borderLeft: '5px solid #065f46',
   borderRadius: '5px',
 },
+  con: {
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center'
+
+},
 
 };
 
@@ -255,7 +261,7 @@ const StickerDone = () => {
       <h3 style={styles.title}>Checking Your Application</h3>
 
       <hr style={styles.hr} />
-
+         <div style={styles.con}>
        <div className="appBox" style={styles.appBox}>
   {loading ? (
     <div style={styles.loadingBox}>
@@ -397,6 +403,7 @@ const StickerDone = () => {
 </div>
 
 
+    </div>
     </div>
 
   );

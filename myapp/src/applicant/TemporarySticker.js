@@ -229,7 +229,7 @@ const generatePDF = () => {
     <p style={styles.signatureLabel}>Date Issued</p>
     {/* Text above the signature line */}
     <p style={styles.signatureText}>
-  {new Date(applicationData.client2_approved_time).toLocaleDateString('en-US', {
+  {new Date(applicationData.is_renewal === true ? applicationData.approved_at : applicationData.client2_approved_time).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
