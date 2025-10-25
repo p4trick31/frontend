@@ -85,13 +85,10 @@ useEffect(() => {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      let data = response.data.data;
-
-      // Normalize picture_id
+      let { data, is_renewal } = response.data;
       data.name = data.name || data.full_name || null;
-      
 
-      setApplicationData(data);
+     setApplicationData({ ...data, is_renewal }); 
     } catch (err) {
       if (err.response && err.response.status === 401) {
         const newToken = await refreshAccessToken();
