@@ -364,7 +364,7 @@ const disapproveApplication = async () => {
           {loading && <div style={shimmerStyle}>Loading...</div>}
 
           <img
-            src={`http://localhost:8000/${application.picture_id}`}
+            src={`https://backendvss.pythonanywhere.com/${application.picture_id}`}
             alt="Uploaded"
             onLoad={() => setTimeout(() => setLoading(false), 2000)}
             style={{
