@@ -151,6 +151,7 @@ const generatePDF = () => {
 
   return (
     
+    
     <div style={styles.pageWrapper}>
              <div style={styles.buttonRow}>
                           <button onClick={() => navigate(-1)} style={styles.backButton}>
@@ -258,6 +259,8 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     fontFamily: '"Times New Roman", Times, serif',
+    width: '100%'
+
   },
     backButton: {
     position: 'absolute',
