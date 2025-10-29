@@ -293,6 +293,7 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
+     margin: 'auto'
   },
   watermark: {
     position: 'absolute',
