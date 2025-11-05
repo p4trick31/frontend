@@ -67,7 +67,7 @@ try {
     }
 } catch (error) {
     if (error.response && error.response.data) {
-        setMessage(error.response.data.error || 'Signup failed. Please try again.');
+        setMessage(error.response.data.error || 'Username or email may already be taken.');
     } else {
         setMessage('Server unavailable. Please try again later.');
     }
