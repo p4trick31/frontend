@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import logo from '../pic/DEBES.png'; // School logo// Placeholder for e-signature
-import { FaBars, FaSignOutAlt, FaFileAlt, FaBook, FaUserCircle, FaPen, FaPlus, FaEye, FaCheckCircle, FaSign  } from 'react-icons/fa';
+import { FaBars, FaSignOutAlt, FaFileAlt, FaBook, FaUserCircle, FaPen, FaPlus, FaEye,  FaEyeSlash, FaCheckCircle, FaSign  } from 'react-icons/fa';
 import { FaCalendarDays, FaSignature } from 'react-icons/fa6';
 import LogoutModal from './modal/LogoutModal';
 import ReportModal from './modal/ReportModal';
@@ -57,6 +57,7 @@ const DisplayPage = ({onLogout}) => {
   const [userPosition, setUserPosition] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState({ username: "", email: "" });
+  const [showPanel, setShowPanel] = useState(false);
 
 
 
@@ -1572,71 +1573,120 @@ const checkedRenewals = renewals.filter((r) => r.is_checked === true);
 
 
         {/* E-signature Panel */}
-       <div
+      <div
       style={{
-        minWidth: '250px',
+        position: "relative",
+        minWidth: "250px",
         backgroundColor: colors.white,
         color: colors.black,
-        padding: '20px',
-        borderRadius: '10px',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-        transition: 'box-shadow 0.3s ease',
+        padding: "20px",
+        borderRadius: "10px",
+        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+        transition: "box-shadow 0.3s ease",
       }}
     >
-      <div style={{ marginBottom: '12px', fontWeight: '600', fontSize: '14px' }}>
-        <FaSignature size={25}/> Your E-signature
-      </div>
-<div
-  style={{
-    backgroundColor: '#f9f9f9',
-    height: '100px',
-    borderRadius: '8px',
-    border: '1px dashed #ccc',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
-  }}
->
-  {signatureImg ? (
-    <img
-      src={signatureImg}
-      alt="E-signature"
-      style={{ maxHeight: '80px' }}
-      onError={() => setSignatureImg(null)}
-    />
-  ) : (
-    <span style={{ color: '#aaa', fontSize: '13px' }}>No signature yet</span>
-  )}
-</div>
-
-
-
-
-
-       <div
+      {/* Header (click to toggle) */}
+      <div
+        onClick={() => setShowPanel(!showPanel)}
         style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          gap: '12px',
-          marginTop: '12px',
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          cursor: "pointer",
+          fontWeight: "600",
+          fontSize: "14px",
         }}
       >
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <FaSignature size={25} />
+          <span>Your E-signature</span>
+        </div>
+  <div>
+    {showPanel ? (
+      <FaEyeSlash size={18} color="#333" title="Hide panel" />
+    ) : (
+      <FaEye size={18} color="#333" title="Show panel" />
+    )}
+  </div>
+
+      </div>
+
+      {/* Collapsible Panel */}
+      <div
+        style={{
+          maxHeight: showPanel ? "200px" : "0",
+          overflow: "hidden",
+          opacity: showPanel ? 1 : 0,
+          transition: "all 0.3s ease",
+          marginTop: showPanel ? "12px" : "0",
+        }}
+      >
+        {/* Signature Preview Box */}
         <div
-          onClick={() => setShowSignatureModal(true)}
           style={{
-            cursor: 'pointer',
-            padding: '6px',
-            borderRadius: '4px',
-            transition: 'background 0.2s ease',
+            backgroundColor: "#f9f9f9",
+            height: "100px",
+            borderRadius: "8px",
+            border: "1px dashed #ccc",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            overflow: "hidden",
           }}
-          onMouseOver={(e) => (e.currentTarget.style.background = '#eee')}
-          onMouseOut={(e) => (e.currentTarget.style.background = 'transparent')}
-          title={signatureImg ? 'Edit Signature' : 'Add Signature'}
         >
-          <span>{signatureImg ? <FaPen size={18} color="#444" /> : <FaPlus size={18} color="#444" />}{signatureImg ? 'Edit' : 'Add'} </span>
+          {signatureImg ? (
+            <img
+              src={signatureImg}
+              alt="E-signature"
+              style={{ maxHeight: "80px" }}
+              onError={() => setSignatureImg(null)}
+            />
+          ) : (
+            <span style={{ color: "#aaa", fontSize: "13px" }}>No signature yet</span>
+          )}
+        </div>
+
+        {/* Action Button */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            marginTop: "12px",
+          }}
+        >
+<button
+  onClick={() => setShowSignatureModal(true)}
+  style={{
+    display: "flex",
+    alignItems: "center",
+    gap: "6px",
+    cursor: "pointer",
+    backgroundColor: signatureImg ? "#fff" : "#007bff",
+    color: signatureImg ? "#065f46" : "white",
+    border: "1px solid #065f46",
+    borderRadius: "6px",
+    padding: "6px 12px",
+    fontSize: "13px",
+    transition: "all 0.2s ease",
+    fontWeight: "500",
+  }}
+  onMouseOver={(e) => {
+    e.currentTarget.style.backgroundColor = "#065f46";
+    e.currentTarget.style.color = "white";
+  }}
+  onMouseOut={(e) => {
+    e.currentTarget.style.backgroundColor = signatureImg ? "#fff" : "#007bff";
+    e.currentTarget.style.color = signatureImg ? "#065f46" : "white";
+  }}
+  title={signatureImg ? "Edit Signature" : "Add Signature"}
+>
+  {signatureImg ? <FaPen size={14} /> : <FaPlus size={14} />}
+  {signatureImg ? "Edit Signature" : "Add Signature"}
+</button>
+
         </div>
       </div>
+    
       <div
       style={{
         borderRadius: "10px",
