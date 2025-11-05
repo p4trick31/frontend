@@ -44,33 +44,37 @@ const SignupForm = () => {
         password,
     };
 
-    try {
-        const response = await axios.post('https://backendvss.pythonanywhere.com/api/signup/', signupData);
-        if (response && response.data) {
-            setMessage('✅ User created successfully! You can now login.');
-            setSuccess(true);
-            setTimeout(() => {
-                setMessage('');
-                setSuccess(false);
-                setUsername('');
-                setEmail('');
-                setPassword('');
-                
-            }, 2000);
-        } else {
-            setMessage('Unexpected response from the server.');
+
+try {
+    const response = await axios.post('https://backendvss.pythonanywhere.com/api/signup/', signupData);
+
+    if (response && response.data) {
+        setMessage('📩 Verification email sent! Please check your inbox to verify your account.');
+        setSuccess(true);
+
+        // Clear input fields and redirect to login after delay
+        setTimeout(() => {
+            setUsername('');
+            setEmail('');
+            setPassword('');
+            setMessage('');
             setSuccess(false);
-        }
-    } catch (error) {
-        if (error.response && error.response.data) {
-            setMessage(error.response.data.error || 'Username already exists, please choose another one.');
-        } else {
-            setMessage('Server unavailable. Please try again later.');
-        }
+           // Redirect to login page after verification email sent
+        }, 3000);
+    } else {
+        setMessage('Unexpected response from the server.');
         setSuccess(false);
-    } finally {
-        setLoading(false);
     }
+} catch (error) {
+    if (error.response && error.response.data) {
+        setMessage(error.response.data.error || 'Signup failed. Please try again.');
+    } else {
+        setMessage('Server unavailable. Please try again later.');
+    }
+    setSuccess(false);
+} finally {
+    setLoading(false);
+}
 };
 
     return (
