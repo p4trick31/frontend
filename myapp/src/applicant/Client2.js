@@ -154,7 +154,7 @@ const Person2Page = () => {
                 ) : (
                   <p style={styles.messageChecking}>
                      <FaHourglassHalf style={{ color: '#f59e0b', marginRight: '8px', verticalAlign: 'middle' }} />
-                    Hi <strong>{application.name}</strong>, your request form has been generated submit to Mr. Erwin S. Oliva. Please wait for approval within several hours.
+                    Hi <strong>{application.name}</strong>, your request form has been generated submit to Mr. Erwin S. Oliva. Please wait for ongoing verification within several hours.
                   </p>
                 )}
               </p>

@@ -207,7 +207,7 @@ const Person1Page = () => {
                 ) : (
                   <p style={styles.messageChecking}>
                     <FaHourglassHalf style={{ color: '#f59e0b', marginRight: '8px', verticalAlign: 'middle' }} />
-                    Hi <strong>{application.name}</strong>, your request form is submitted. Wait for the approval by Richard Sales.
+                    Hi <strong>{application.name}</strong>, your request form is submitted. Wait for ongoing verification by Richard Sales.
                   </p>
                 )}
 
@@ -215,7 +215,7 @@ const Person1Page = () => {
 
               {application.is_forwarded_to_person2 && (
                 <div style={styles.approvalInfo}>
-                  <p style={styles.infoDetail}><strong>Validated by:</strong> Richard Sales (Checker Person)</p>
+                  <p style={styles.infoDetail}><strong>Validated by:</strong> Richard Sales (Reviewer Person)</p>
                   <p style={styles.infoDetail}>
                     <strong>Date & Time Checked:</strong>{' '}
                 {new Date(application.person2_received_at).toLocaleString('en-US', {
