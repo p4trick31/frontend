@@ -324,7 +324,7 @@ const isStep3Clickable = stickerDoneStatus === 'active' || stickerDoneStatus ===
             <div style={styles.arrow}></div>
           </div>
           <div style={styles.textWrapper}>
-            <p style={styles.stepTitle}>Checker Person</p>
+            <p style={styles.stepTitle}>Reviewer Person</p>
             <p style={styles.stepSubtitle}>Admin 1 checks your application</p>
             <FaInfoCircle
               style={styles.infoIcon}
