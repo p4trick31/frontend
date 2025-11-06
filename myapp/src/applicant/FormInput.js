@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate,  useParams} from 'react-router-dom';
 import { FaCheckCircle, FaTimesCircle, FaArrowLeft, FaSpinner } from 'react-icons/fa';
 import logo from '../logo.jpg';
+import { MdNotes } from 'react-icons/md';
 
 async function refreshAccessToken() {
   try {
@@ -1010,6 +1011,39 @@ if (formData.photos.length) {
 </div>
 
 
+ <div
+
+  style={{
+    border: "1px solid #065f46",
+    borderRadius: "10px",
+    padding: "5px",
+    backgroundColor: "#f9fdf0ff",
+    boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)",
+    marginTop: "10px",
+    transition: "all 0.3s ease-in-out",
+  }}
+>
+  <h4
+    style={{
+      color: "#065f46",
+      display: "flex",
+      alignItems: "center",
+      gap: "8px",
+      marginBottom: "10px",
+      fontWeight: "600",
+      fontSize: "18px",
+    }}
+  >
+    <MdNotes size={24} style={{ color: "#065f46" }} />
+    Notes:
+  </h4>
+  <ul style={{ marginLeft: "24px", color: "#1b4332", lineHeight: "1.6" }}>
+    <li>Incomplete requirements will not be processed.</li>
+    <li>Only clear scotch tape allowed to protect the sticker.</li>
+    <li>Tampering or unauthorized transfer leads to revocation.</li>
+    <li>Follow campus rules and regulations.</li>
+  </ul>
+</div>
     
 
           <div
